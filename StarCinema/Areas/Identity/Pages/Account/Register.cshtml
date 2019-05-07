@@ -1,0 +1,39 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" class="app-form">
+            <h2 class="app-form-h2"><i class="glyphicon glyphicon-user"></i> @ViewData["Title"]</h2>
+            <h4 class="app-form-h4">Create a new account to book shows, rate and comment movies!</h4>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Input.Username" placeholder="Username" class="form-control app-form-input" />
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Input.Email" placeholder="Emai" class="form-control app-form-input" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Input.Password" placeholder="Password" class="form-control app-form-input" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Input.ConfirmPassword" placeholder="Confirm password" class="form-control app-form-input" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-danger app-form-submit">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

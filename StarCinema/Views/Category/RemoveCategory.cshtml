@@ -1,0 +1,15 @@
+﻿@model string
+@{
+    ViewData["Title"] = "RemoveCategory";
+    Layout = "~/Views/Shared/_CRUDLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <h2 class="app-form-h2"> <i class="glyphicon glyphicon-ok"></i> Successfully removed category @Model</h2>
+        <form asp-action="Categories" asp-controller="Category" method="get">
+            <button type="submit" class="btn btn-info app-form-submit"> <i class="glyphicon glyphicon-arrow-left"></i> BACK TO LIST</button>
+        </form>
+    </div>
+</div>
+

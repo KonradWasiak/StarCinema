@@ -1,0 +1,15 @@
+﻿@model StarCinema.Models.IndexModels.IndexMoviesListViewModel
+@{
+    ViewData["Title"] = "AddDataAsync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AddDataAsync</h2>
+
+@foreach(var m in Model.LatestMovies)
+{
+    <h1>@m.Title</h1>
+    <h2>@m.Category.CategoryName</h2>
+    <h3>@m.ReleaseDate</h3>
+
+}

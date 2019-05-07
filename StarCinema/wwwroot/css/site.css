@@ -1,0 +1,239 @@
+﻿body {
+    background: linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.img-carousel {
+    opacity: 0.7;
+}
+
+.item {
+    background-color: black;
+    max-height: 400px;
+}
+
+.navbar {
+    background: none !important;
+    border-bottom: none !important;
+}
+
+.app-form {
+    color: #9d9d9 !important;
+    background-color: rgba(255, 112, 112, 0.13);
+    padding:10%;
+    padding-top:5%;
+}
+.app-form-table{
+    float:left;
+}
+.app-form-h2 {
+    text-align: center;
+    color: white;
+}
+
+.app-form-input {
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    height: 50px;
+    text-align: center;
+}
+
+.wide{
+    height: 10rem;
+}
+
+.app-form-submit {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 0;
+}
+
+.app-form-select {
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    height: 50px;
+    text-align-last: center !important;
+}
+
+
+.app-form-table-submit{
+    height: 35px;
+    min-width:80px;
+    border: none;
+    border-radius: 0;
+}
+
+footer {
+    background-color: rgb(30, 30, 30, 0.95);
+    color: firebrick;
+    text-align: center;
+}
+
+.index-content {
+    margin-top: 10px;
+    background-color: white !important;
+}
+
+
+.app-form-h4 {
+    text-align: center;
+    color:white
+
+}
+
+.item-container-left{
+    background-size:cover;
+    width:100%;
+    min-height: 400px;    
+}
+
+.item-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    min-height: 400px !important;
+    text-align: center;
+    color: white;
+    bottom: 0;
+    padding-top: 10%;
+}
+.item-content-transparent {
+    background-color: rgba(0, 0, 0, 0.2);
+    min-height: 400px !important;
+    text-align: center;
+    color: white;
+    bottom: 0;
+    padding-top: 12%;
+}
+
+.carousel-icon{
+    font-size:12rem;
+}
+.carousel-icon:hover {
+    font-size: 12rem;
+    color: rgb(255, 192, 192);
+}
+.carousel-button{
+    background-color: rgb(154, 0, 0);
+    border: none;
+    border-radius: 0;   
+    width:47%;
+    height:4.5rem;
+    margin-bottom:5%;
+}
+
+#indexTab li.active a {
+    color:white;
+    border-radius: 0;
+    background-color: rgb(154, 0, 0);
+}
+#indexTab li a {
+    color: rgb(154, 0, 0);
+    font-size:1.65rem;
+}
+
+.watch-trailer-h1{
+    vertical-align:central;
+    font-size: 3.4rem;
+}
+#indexTab li a:hover {
+    border-radius: 0;
+    background-color: rgb(255, 188, 188);
+}
+#indexTab li.active a:hover {
+    border-radius: 0;
+    background-color: rgb(154, 0, 0);
+}
+.btn-search {
+    background-color: rgb(154, 0, 0);
+    border: 1px solid rgb(154, 0, 0);
+    border-radius: 0;
+}
+
+.nav-search {
+    border: none;
+    border-radius: 0px;
+    text-align: center;
+
+}
+
+nav{
+    padding-top:1%;
+    padding-left:8%;
+}
+
+#bs-example-navbar-collapse-1 li a {
+    font-size: 1.65rem;
+}
+.navbar-brand {
+    font-size: 2.5rem;
+    color: rgb(154, 0, 0) !important;
+    text-decoration:solid !important;
+}
+.navbar-logo{
+    max-height:40px;
+}
+
+.navbar-right{
+    padding-right: 10%;
+}
+
+.movie-card-img{
+    max-height:250px;
+}
+.thumbnail{
+    border:none !important;
+    text-align:center;
+}
+
+.movie-card-a {
+    color: rgb(154, 0, 0) !important;
+}
+
+.movie-card-a:hover{
+    text-decoration:none;
+}
+
+.btn-category {
+    border: none;
+    border-radius: 0;
+    border-left: 1px solid rgb(0, 0, 0);
+
+}
+
+.btn-category:hover {
+    background-color: rgb(255, 188, 188);
+    border: none;
+    border-radius: 0;
+    border-left: 1px solid rgb(0, 0, 0);
+}
+.table{
+    background-color: white;
+}
+tr{
+    text-align: center;
+    font-size: 1.55rem;
+}
+tr:hover{
+    background-color: rgb(255, 220, 220);
+}
+td {
+    display: table-cell;
+    vertical-align: middle !important;
+}
+thead tr{
+    height:6rem!important;
+    background-color: rgb(255, 209, 209);
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+}
+h2{
+    color:white;
+}
+
+.img-table{
+    height:50px;
+}
