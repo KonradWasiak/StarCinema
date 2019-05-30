@@ -66,3 +66,8 @@ C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor
 C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CRUDLayout.g.cshtml.cs
 C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\Movies.g.cshtml.cs
 C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\AddMovie.g.cshtml.cs
+C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\RemoveMovie.g.cshtml.cs
+C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\EditMovie.g.cshtml.cs
+C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\ShowMovie.g.cshtml.cs
+C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_AddCommentPartial.g.cshtml.cs
+C:\Users\Konrad\source\repos\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\MoviesFromCategory.g.cshtml.cs

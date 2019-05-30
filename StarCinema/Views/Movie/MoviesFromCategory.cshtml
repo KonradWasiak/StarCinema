@@ -1,0 +1,36 @@
+﻿@model StarCinema.Models.IndexModels.MoviesFromCategoryViewModel
+@{
+    ViewData["Title"] = "MoviesFromCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-th-lis"></i> @Model.CategoryName</h2>
+        <hr />
+    </div>
+</div>
+
+@foreach (var movie in Model.MoviesFromCategory)
+{
+    var imgSrc = "../../images/MoviesPosters/" + movie.Id + ".jpg";
+    <div class="row list-movie-panel">
+        <div class="col-md-3">
+            <img class="" src="@imgSrc" alt="...">
+        </div>
+        <div class="col-md-9">
+            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@movie.Id">
+                <h2><i class="glyphicon glyphicon-film"></i> @movie.Title</h2>
+            </a>
+                <h4><i class="glyphicon glyphicon-calendar"></i> Release: @movie.ReleaseDate.ToShortDateString()</h4>
+                <p>@movie.Description</p>
+                <h4><i class="glyphicon glyphicon-comment"></i> Comments: @movie.Comments.Count</h4>
+                <form method="get" asp-action="ShowMovie" asp-controller="Movie">
+                    <input type="hidden" name="id" value="@movie.Id" />
+                    <button class="btn btn-warning btn-big"> <i class="glyphicon glyphicon-zoom-in"></i> SHOW MORE</button>
+                </form>
+                <br />
+        </div>
+    </div>
+    <br />
+}

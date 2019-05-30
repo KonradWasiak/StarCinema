@@ -1,4 +1,5 @@
 ﻿using StarCinema.Areas.Identity.Data;
+using System;
 
 namespace StarCinema.DomainModels
 {
@@ -7,7 +8,8 @@ namespace StarCinema.DomainModels
         public int Id { get; set; }
         public string Content { get; set; }
         public string UserId { get; set; }
-        public virtual StarCinemaUser User { get; set; }
+        public DateTime AddedDate { get; set; }
+        public StarCinemaUser User { get; set; }
 
     }
 }

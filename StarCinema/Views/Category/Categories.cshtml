@@ -24,7 +24,15 @@
                 <thead>
                     <tr>
                         <td>#</td>
-                        <td>Name</td>
+                        <td>
+                            <a asp-controller="Category" asp-action="SortCategoriesByNameAsc">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                            Name
+                            <a asp-controller="Category" asp-action="SortCategoriesByNameDesc">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                        </td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -33,9 +41,9 @@
                     {
                         i++;
                         <tr>
-                            <td>@i</td>
-                            <td>@c.Name</td>
-                            <td>
+                            <td class="td-center">@i</td>
+                            <td class="td-center">@c.Name</td>
+                            <td class="td-center">
                                 <form asp-action="RemoveCategory" asp-controller="Category">
                                     <input type="hidden" name="categoryName" value="@c.Name" />
                                     <button type="submit" class="btn btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>

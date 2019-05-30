@@ -1,0 +1,43 @@
+﻿@model StarCinema.Models.CRUDModels.MovieViewModel
+@using Microsoft.AspNetCore.Identity
+@using StarCinema.Areas.Identity.Data
+@inject SignInManager<StarCinemaUser> SignInManager
+@inject UserManager<StarCinemaUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form class="app-form" method="post" asp-action="AddComment" asp-controller="Movie">
+                <h2><i class="glyphicon glyphicon-comment"></i> Add Comment</h2>
+                <div class="form-group">
+                    <input type="hidden" asp-for="@Model.UserComment.Username" value="@User.Identity.Name" />
+                    <input type="hidden" asp-for="@Model.UserComment." value="@User.Identity.Name" />
+                    <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+                    <textarea class="app-form-input comment wide" placeholder="Comment" asp-for="@Model.UserComment.Comment"></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success app-form-submit btn-big">
+                        <i class="glyphicon glyphicon-ok-circle"></i> ADD COMMENT
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    
+}
+else
+{
+    <div class="row">
+        <h2 class="comments-h2">You must be logged in to add comments</h2>
+        <br />
+        <div class="col-md-6 col-md-offset-3">
+            <form method="get" asp-area="Identity" asp-page="/Account/Login">
+                <button type="submit" class="btn btn-success app-form-submit btn-big"> <i class="glyphicon glyphicon-user"></i> LOG IN</button>
+            </form>
+        </div>
+    </div>
+    <br />
+
+}
