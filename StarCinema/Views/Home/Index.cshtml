@@ -10,17 +10,17 @@
         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
     </ol>
     @{
-        var imgName = "images/MoviesPosters/2149.jpg";
+        var path = "images/MoviesPosters/";
     }
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@imgName)">
+            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path+Model.LatestMovies.ElementAt(0).Id.ToString()+"Index.jpg")">
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(0).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(0).ReleaseDate.ToShortDateString()</h3>
                     <button class="btn btn-danger carousel-button">SHOW MORE</button>
-                    <button class="btn btn-danger carousel-button">BOOK A TICKET</button>
+                    <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
                 </div>
                 <div class="item-content-transparent col-md-7">
                     <i class="glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
@@ -28,12 +28,12 @@
             </div>
         </div>
         <div class="item">
-            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@imgName)">
+            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path+Model.LatestMovies.ElementAt(1).Id.ToString()+"Index.jpg")">
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(1).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(1).ReleaseDate.ToShortDateString()</h3>
                     <button class="btn btn-danger carousel-button">SHOW MORE</button>
-                    <button class="btn btn-danger carousel-button">BOOK A TICKET</button>
+                    <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
                 </div>
                 <div class="item-content-transparent col-md-7">
                     <i class="glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
@@ -41,12 +41,12 @@
             </div>
         </div>
         <div class="item">
-            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@imgName)">
+            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path+Model.LatestMovies.ElementAt(2).Id.ToString()+"Index.jpg")">
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(2).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(2).ReleaseDate.ToShortDateString()</h3>
                     <button class="btn btn-danger carousel-button">SHOW MORE</button>
-                    <button class="btn btn-danger carousel-button">BOOK A TICKET</button>
+                    <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
                 </div>
                 <div class="item-content-transparent col-md-7">
                     <i class="glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
@@ -61,8 +61,12 @@
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
             @foreach (var category in Model.Categories)
             {
+
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn-category btn btn-default">@category.CategoryName</button>
+                    <form method="get" asp-controller="Movie" asp-action="MoviesFromCategory">
+                        <input type="hidden" name="categoryName" value="@category.CategoryName" />
+                        <button type="submit" class="btn-category btn btn-default">@category.CategoryName</button>
+                    </form>
                 </div>
             }
         </div>
@@ -82,38 +86,63 @@
 <div class="row">
     <div class="index-content col-lg-12">
         <ul class="nav nav-pills nav-justified" id="indexTab">
-            <li class="active"><a data-toggle="tab" href="#home">Newest</a></li>
-            <li><a data-toggle="tab" href="#menu1">Coming soon</a></li>
-            <li><a data-toggle="tab" href="#menu2">Highest rated</a></li>
+            <li class="active"><a data-toggle="tab" href="#newest"><i class="glyphicon glyphicon-time"></i> Newest</a></li>
+            <li><a data-toggle="tab" href="#soon"><i class="glyphicon glyphicon-calendar"></i> Coming soon</a></li>
+            <li><a data-toggle="tab" href="#highestRated"><i class="glyphicon glyphicon-fire"></i> Most popular</a></li>
         </ul>
         <br />
         <div class="tab-content">
-            <div id="home" class="tab-pane fade in active">
+            <div id="newest" class="tab-pane fade in active">
                 @foreach (var m in Model.LatestMovies)
                 {
-                    var imgSrc = "images/MoviesPosters/123.jpg";
+                    var imgSrc = "images/MoviesPosters/" + m.Id.ToString() + ".jpg";
                     <div class="col-sm-6 col-md-4">
                         <br />
                         <div class="thumbnail">
-                            <a class="movie-card-a" asp-action="Index" asp-controller="Home">
+                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id">
                                 <img class="movie-card-img" src="@imgSrc" alt="...">
                                 <h4>@m.Title</h4>
-                                @*<p>@m.Category.CategoryName</p>*@
+                                <p>@m.Category.CategoryName</p>
                             </a>
                         </div>
                     </div>
-
                 }
             </div>
-            <div id="menu1" class="tab-pane fade">
-                <h3>Coming soon</h3>
-                <p>Some content in menu 1.</p>
+            <div id="soon" class="tab-pane fade">
+                @foreach (var m in Model.ComingSoonMovies)
+                {
+                    var imgSrc = "images/MoviesPosters/" + m.Id.ToString() + ".jpg";
+                    <div class="col-sm-6 col-md-4">
+                        <br />
+                        <div class="thumbnail">
+                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id">
+                                <img class="movie-card-img" src="@imgSrc">
+                                <h4>@m.Title</h4>
+                                <p>@m.Category.CategoryName</p>
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
-            <div id="menu2" class="tab-pane fade">
-                <h3>Highest rated</h3>
-                <p>Some content in menu 2.</p>
+            <div id="highestRated" class="tab-pane fade">
+                @foreach (var m in Model.MostPopularMovies)
+                {
+                    var imgSrc = "images/MoviesPosters/" + m.Id.ToString() + ".jpg";
+                    <div class="col-sm-6 col-md-4">
+                        <br />
+                        <div class="thumbnail">
+                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id">
+                                <img class="movie-card-img" src="@imgSrc">
+                                <h4>@m.Title</h4>
+                                <p>@m.Category.CategoryName</p>
+                            </a>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
 
 </div>
+<br />
+<br />

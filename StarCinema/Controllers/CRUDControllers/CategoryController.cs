@@ -19,12 +19,7 @@ namespace StarCinema.Controllers.CRUDControllers
         }
         public async Task<IActionResult> Categories()
         {
-            var allCategories = await this._repo.AllCategories();
-            List<CategoryViewModel> categoriesViewModel = new List<CategoryViewModel>(); 
-            foreach (var c in allCategories)
-            {
-                categoriesViewModel.Add(new CategoryViewModel(c));
-            }
+            var categoriesViewModel = await getAllCategories();
             return View(categoriesViewModel);
         }
 
@@ -53,6 +48,29 @@ namespace StarCinema.Controllers.CRUDControllers
                 return View();
             }
             return View(category);
+        }
+
+        public async Task<IActionResult> SortCategoriesByNameAsc()
+        {
+            var categoriesViewModel = await getAllCategories();
+            return View("Categories", categoriesViewModel.OrderBy(c => c.Name));
+        }
+
+        public async Task<IActionResult> SortCategoriesByNameDesc()
+        {
+            var categoriesViewModel = await getAllCategories();
+            return View("Categories", categoriesViewModel.OrderByDescending(c => c.Name));
+        }
+
+        private async Task<List<CategoryViewModel>> getAllCategories()
+        {
+            var allCategories = await this._repo.AllCategories();
+            var categoriesViewModel = new List<CategoryViewModel>();
+            foreach (var c in allCategories)
+            {
+                categoriesViewModel.Add(new CategoryViewModel(c));
+            }
+            return categoriesViewModel;
         }
 
     }

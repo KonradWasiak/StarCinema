@@ -1,0 +1,163 @@
+﻿@model StarCinema.Models.CRUDModels.MovieViewModel
+@using Microsoft.AspNetCore.Identity
+@using StarCinema.Areas.Identity.Data
+@inject SignInManager<StarCinemaUser> SignInManager
+@inject UserManager<StarCinemaUser> UserManager
+@{
+    ViewData["Title"] = "ShowMovie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var imgSrc = "../../images/MoviesPosters/" + Model.Id + ".jpg";
+    var is3D = Model.Is3D? "YES" : "NO";
+}
+
+<div class="row">
+    <div class="col-sm-5">
+        <h2><i class="glyphicon glyphicon-film"></i> @Model.Title</h2>
+    </div>
+    <div class="col-sm-3 col-sm-offset-4">
+        <button class="btn btn-warning app-form-submit"> <i class="glyphicon glyphicon-tag"></i> BOOK A TICKET</button>
+    </div>
+</div>
+<hr />
+<div class="row movie-trailer">
+    <div class="col-sm-12">
+        <iframe height="500" src="@Model.TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+<hr />
+<div class="row movie-panel">
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-12">
+                <h2><i class="glyphicon glyphicon-film"></i> @Model.Title</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p>@Model.Description</p>
+                <br />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table movie-panel-table">
+                    <tbody>
+                        <tr>
+                            <td class="td-solid"><i class="glyphicon glyphicon-th"></i> Genre:</td>
+                            <td>@Model.Category</td>
+                        </tr>
+                        <tr>
+                            <td class="td-solid"><i class="glyphicon glyphicon-calendar"></i> Released:</td>
+                            <td>@Model.ReleaseDate.ToShortDateString()</td>
+                        </tr>
+                        <tr>
+                            <td class="td-solid"><i class="glyphicon glyphicon-user"></i> Directory:</td>
+                            <td>@Model.Directory</td>
+                        </tr>
+                        <tr>
+                            <td class="td-solid"><i class="glyphicon glyphicon-time"></i> Duration time:</td>
+                            <td>@Model.DurationTime</td>
+                        </tr>
+                        <tr>
+                            <td class="td-solid"><i class="glyphicon glyphicon-sunglasses"></i> 3D:</td>
+                            <td>
+                                @is3D
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-danger app-form-submit btn-big"> <i class="glyphicon glyphicon-tag"></i> BOOK A TICKET</button>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="col-md-4 col-md-offset-1 movie-panel-right">
+
+        <img class="img-thumbnail movie" src="@imgSrc" />
+        @if (!Model.CanRate)
+        {
+
+            <p id="rate-error" class="text-danger">You have already voted</p>
+
+        }
+        <div class="row">
+
+            <div class="col-md-6 col-md-offset-3">
+
+                <div class="rates">
+                    <form method="post" asp-action="AddRate" asp-controller="Movie">
+                        <input type="hidden" asp-for="@Model.UserRate.Rate" value="1" />
+                        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+                        <input type="hidden" asp-for="@Model.UserRate.UserName" value="@User.Identity.Name" />
+
+                        <button id="up" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                        </button>
+                    </form>
+                    <p class="movie-rate">@Model.Rates.Count(r => r.IfLike == true)</p>
+                </div>
+                <div class="rates rates-right">
+                    <form method="post" asp-action="AddRate" asp-controller="Movie">
+                        <input type="hidden" asp-for="@Model.UserRate.Rate" value="0" />
+                        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+                        <input type="hidden" asp-for="@Model.UserRate.UserName" value="@User.Identity.Name" />
+                        <button id="down" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom">
+                            <i class="glyphicon glyphicon-thumbs-down"></i>
+                        </button>
+                    </form>
+                    <p class="movie-rate">@Model.Rates.Count(r => r.IfLike == false)</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="index-content col-lg-12">
+        <ul class="nav nav-pills nav-justified" id="indexTab">
+            <li class="active"><a data-toggle="tab" href="#comments">COMMENTS</a></li>
+            <li><a data-toggle="tab" href="#addComment">ADD COMMENT</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="comments" class="tab-pane fade in active">
+                <h2 class="h2">@Model.Comments.Count Comments</h2>
+                @if (Model.Comments != null)
+                {
+                    foreach (var c in Model.Comments.OrderByDescending(c => c.AddedDate))
+                    {
+                        <div class="well well-sm">
+                            <h4>@c.User.UserName</h4>
+                            <h6>@c.AddedDate</h6>
+                            <br />
+                            <p>@c.Content</p>
+                        </div>
+
+                    }
+                }
+            </div>
+            <div id="addComment" class="tab-pane fade">
+                <br />
+                @Html.Partial("_AddCommentPartial")
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+
+@*<div class="rates">
+        <a class="rate-movie"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+        <p class="movie-rate">231</p>
+    </div>
+    <div class="rates">
+        <a class="rate-movie"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+        <p class="movie-rate">12</p>
+    </div>*@

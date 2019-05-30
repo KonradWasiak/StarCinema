@@ -11,7 +11,9 @@ namespace StarCinema.DomainModels
         public string Title { get; set; }
         public string Directory { get; set; }
         public string Description { get; set; }
-        public string PhotoUrl { get; set; }
+        public string TrailerUrl { get; set; }
+        public bool Is3D { get; set; }
+        public int DurationTime { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public DateTime ReleaseDate { get; set; }

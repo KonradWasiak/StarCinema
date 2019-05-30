@@ -267,6 +267,8 @@ namespace StarCinema.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("AddedDate");
+
                     b.Property<string>("Content");
 
                     b.Property<int?>("MovieId");
@@ -294,11 +296,15 @@ namespace StarCinema.Migrations
 
                     b.Property<string>("Directory");
 
-                    b.Property<string>("PhotoUrl");
+                    b.Property<int>("DurationTime");
+
+                    b.Property<bool>("Is3D");
 
                     b.Property<DateTime>("ReleaseDate");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("TrailerUrl");
 
                     b.HasKey("Id");
 

@@ -24,10 +24,31 @@
                     <tr>
                         <td>#</td>
                         <td>Poster</td>
-                        <td>Title</td>
-                        <td>Description</td>
-                        <td>Category</td>
-                        <td>Release Date</td>
+                        <td>
+                            <a asp-controller="Movie" asp-action="SortMoviesByTitleAsc">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                            Title
+                            <a asp-controller="Movie" asp-action="SortMoviesByTitleDesc">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                        <td>
+                            <a asp-controller="Movie" asp-action="SortMoviesByCategoryAsc">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                            Category
+                            <a asp-controller="Movie" asp-action="SortMoviesByCategoryDesc">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-controller="Movie" asp-action="SortMoviesByDateAsc">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>                            Release date
+                            <a asp-controller="Movie" asp-action="SortMoviesByDateDesc">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                        </td>
                         <td>Comments</td>
                         <td>Shows</td>
                         <td>Action</td>
@@ -37,26 +58,27 @@
                     @foreach (var c in Model)
                     {
                         i++;
-                    <tr>
-                        <td>@i</td>
-                        <td><img class="img-table" src="~/images/MoviesPosters/123.jpg" /></td>
-                        <td>@c.Title</td>
-                        <td>@c.Description.Substring(0,12) ...</td>
-                        <td>@c.Category</td>
-                        <td>@c.ReleaseDate.ToShortDateString()</td>
-                        <td><button type="button" class="app-form-table-submit btn btn-info">COMMENTS</button></td>
-                        <td><button type="button" class="app-form-table-submit btn btn-info">SHOWS</button></td>
-                        <td>
-                            <form class="app-form-table" asp-action="RemoveCategory" asp-controller="Category">
-                                <input type="hidden" name="categoryName" value="@c.Id" />
-                                <button type="submit" class="btn btn-xs btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
-                            </form>
-                            <form class="app-form-table" asp-action="RemoveCategory" asp-controller="Category">
-                                <input type="hidden" name="categoryName" value="@c.Id" />
-                                <button type="submit" class="btn btn-xs btn-warning app-form-table-submit"><i class="glyphicon glyphicon-pencil"></i> EDIT</button>
-                            </form>
-                        </td>
-                    </tr>
+                        var imgSrc = "../images/MoviesPosters/" + c.Id.ToString() + ".jpg";
+
+                        <tr>
+                            <td>@i</td>
+                            <td><img class="img-table" src="@imgSrc" /></td>
+                            <td>@c.Title</td>
+                            <td>@c.Category</td>
+                            <td>@c.ReleaseDate.ToShortDateString()</td>
+                            <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button></td>
+                            <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
+                            <td>
+                                <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
+                                    <input type="hidden" name="movieId" value="@c.Id" />
+                                    <button type="submit" class="btn btn-xs btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
+                                </form>
+                                <form class="app-form-table" method="get" asp-action="EditMovie" asp-controller="Movie">
+                                    <input type="hidden" name="movieId" value="@c.Id" />
+                                    <button type="submit" class="btn btn-xs btn-warning app-form-table-submit"><i class="glyphicon glyphicon-pencil"></i> EDIT</button>
+                                </form>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

@@ -21,12 +21,14 @@
 .app-form {
     color: #9d9d9 !important;
     background-color: rgba(255, 112, 112, 0.13);
-    padding:10%;
-    padding-top:5%;
+    padding: 10%;
+    padding-top: 5%;
 }
-.app-form-table{
-    float:left;
+
+.app-form-table {
+    float: left;
 }
+
 .app-form-h2 {
     text-align: center;
     color: white;
@@ -40,7 +42,7 @@
     text-align: center;
 }
 
-.wide{
+.wide {
     height: 10rem;
 }
 
@@ -60,17 +62,40 @@
 }
 
 
-.app-form-table-submit{
+.app-form-table-submit {
     height: 35px;
-    min-width:80px;
+    min-width: 80px;
     border: none;
     border-radius: 0;
 }
 
 footer {
-    background-color: rgb(30, 30, 30, 0.95);
+    padding-top: 3%;
+    padding-bottom: 3%;
+    background-color: rgba(30, 30, 30, 0.95);
     color: firebrick;
     text-align: center;
+}
+
+#addComment h2 {
+    text-align: center;
+    color: black;
+}
+
+footer ul li a {
+    color: rgb(255, 192, 192) !important;
+}
+
+footer ul li {
+    text-decoration: none;
+    padding-bottom: 1%;
+}
+
+footer ul {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .index-content {
@@ -81,14 +106,13 @@ footer {
 
 .app-form-h4 {
     text-align: center;
-    color:white
-
+    color: white
 }
 
-.item-container-left{
-    background-size:cover;
-    width:100%;
-    min-height: 400px;    
+.item-container-left {
+    background-size: cover;
+    width: 100%;
+    min-height: 400px;
 }
 
 .item-content {
@@ -99,6 +123,7 @@ footer {
     bottom: 0;
     padding-top: 10%;
 }
+
 .item-content-transparent {
     background-color: rgba(0, 0, 0, 0.2);
     min-height: 400px !important;
@@ -108,44 +133,50 @@ footer {
     padding-top: 12%;
 }
 
-.carousel-icon{
-    font-size:12rem;
-}
-.carousel-icon:hover {
+.carousel-icon {
     font-size: 12rem;
-    color: rgb(255, 192, 192);
 }
-.carousel-button{
-    background-color: rgb(154, 0, 0);
+
+    .carousel-icon:hover {
+        font-size: 12rem;
+        color: rgb(255, 192, 192);
+    }
+
+.carousel-button {
+    /*background-color: rgb(154, 0, 0);*/
     border: none;
-    border-radius: 0;   
-    width:47%;
-    height:4.5rem;
-    margin-bottom:5%;
+    border-radius: 0;
+    width: 47%;
+    height: 4.5rem;
+    margin-bottom: 5%;
 }
 
 #indexTab li.active a {
-    color:white;
+    color: white;
     border-radius: 0;
     background-color: rgb(154, 0, 0);
 }
+
 #indexTab li a {
     color: rgb(154, 0, 0);
-    font-size:1.65rem;
+    font-size: 1.65rem;
 }
 
-.watch-trailer-h1{
-    vertical-align:central;
+.watch-trailer-h1 {
+    vertical-align: central;
     font-size: 3.4rem;
 }
+
 #indexTab li a:hover {
     border-radius: 0;
     background-color: rgb(255, 188, 188);
 }
+
 #indexTab li.active a:hover {
     border-radius: 0;
     background-color: rgb(154, 0, 0);
 }
+
 .btn-search {
     background-color: rgb(154, 0, 0);
     border: 1px solid rgb(154, 0, 0);
@@ -156,84 +187,202 @@ footer {
     border: none;
     border-radius: 0px;
     text-align: center;
-
 }
 
-nav{
-    padding-top:1%;
-    padding-left:8%;
+nav {
+    padding-top: 1%;
+    padding-left: 8%;
 }
 
 #bs-example-navbar-collapse-1 li a {
     font-size: 1.65rem;
 }
+
 .navbar-brand {
     font-size: 2.5rem;
     color: rgb(154, 0, 0) !important;
-    text-decoration:solid !important;
-}
-.navbar-logo{
-    max-height:40px;
+    text-decoration: solid !important;
 }
 
-.navbar-right{
+.navbar-logo {
+    max-height: 40px;
+}
+
+.navbar-right {
     padding-right: 10%;
 }
 
-.movie-card-img{
-    max-height:250px;
+.movie-card-img {
+    max-height: 250px;
 }
-.thumbnail{
-    border:none !important;
-    text-align:center;
+
+.thumbnail {
+    border: none !important;
+    text-align: center;
 }
 
 .movie-card-a {
     color: rgb(154, 0, 0) !important;
 }
 
-.movie-card-a:hover{
-    text-decoration:none;
-}
+    .movie-card-a:hover {
+        text-decoration: none;
+    }
 
 .btn-category {
     border: none;
     border-radius: 0;
     border-left: 1px solid rgb(0, 0, 0);
-
 }
 
-.btn-category:hover {
-    background-color: rgb(255, 188, 188);
-    border: none;
-    border-radius: 0;
-    border-left: 1px solid rgb(0, 0, 0);
-}
-.table{
+    .btn-category:hover {
+        background-color: rgb(255, 188, 188);
+        border: none;
+        border-radius: 0;
+        border-left: 1px solid rgb(0, 0, 0);
+    }
+
+.app-form-table {
     background-color: white;
 }
-tr{
-    text-align: center;
-    font-size: 1.55rem;
-}
-tr:hover{
-    background-color: rgb(255, 220, 220);
-}
+
+    .app-form-table tr {
+        text-align: center;
+        font-size: 1.55rem;
+    }
+
+        .app-form-table tr:hover {
+            background-color: rgb(255, 220, 220);
+        }
+
 td {
     display: table-cell;
     vertical-align: middle !important;
 }
-thead tr{
-    height:6rem!important;
+
+thead tr {
+    height: 6rem !important;
     background-color: rgb(255, 209, 209);
     font-weight: bold;
     font-size: large;
     text-align: center;
 }
-h2{
-    color:white;
+
+h2 {
+    color: white;
 }
 
-.img-table{
-    height:50px;
+.img-table {
+    height: 50px;
+}
+
+iframe {
+    width: 100%;
+}
+
+.movie-panel {
+    background-color: rgba(255,255,255,0.95);
+}
+
+    .movie-panel img {
+        height: 400px;
+        margin-top: 3%;
+    }
+
+    .movie-panel h2 {
+        color: black;
+    }
+
+    .movie-panel h4 {
+        float: right;
+    }
+
+.td-solid {
+    font-weight: bold;
+}
+
+.rate-movie {
+    font-size: 2.5rem;
+    color: black;
+    background: none;
+    border: none;
+}
+
+.movie-rate {
+    font-size: 1.6rem;
+}
+
+.rates {
+    float: left;
+    text-align: center;
+}
+
+    .rates a:hover {
+        color: green;
+    }
+
+.rates-right {
+    padding-left: 20%;
+}
+
+#up:hover {
+    color: green;
+}
+
+#down:hover {
+    color: red;
+}
+
+.rates-right a:hover {
+    color: red;
+}
+
+.btn-big {
+    font-size: 3rem;
+    height: 80px;
+}
+
+.comment {
+    text-align: left;
+}
+
+table {
+    background-color: white;
+}
+
+.well {
+    border: none;
+    border-radius: 0;
+}
+
+    .well h4 {
+        font-weight: bold;
+    }
+
+.list-movie-panel {
+    background-color: rgba(255,255,255,0.95);
+}
+
+    .list-movie-panel img {
+        padding: 5%;
+        max-width: 300px;
+        max-height:300px;
+    }
+
+    .list-movie-panel h2 {
+        padding-right: 10%;
+        color: black;
+    }
+.btn{
+    border:none;
+    border-radius: 0;
+}
+thead a{
+    color:black;
+}
+thead a:hover{
+    text-decoration:none;
+}
+.td-center{
+    text-align: center;
 }
