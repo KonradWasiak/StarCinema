@@ -13,13 +13,13 @@ namespace StarCinema.Models.CRUDModels
     {
         public int Id { get; set; }
         [Required]
-        [Range(15, 100, ErrorMessage = "Title must have between 1 and 100 charcters")]
+        [MaxLength(100, ErrorMessage = "Max title length is 100 characters")]
         public string Title { get; set; }
         [Required]
-        [Range(15, 100, ErrorMessage = "Directory must have between 1 and 100 charcters")]
+        [MaxLength(100, ErrorMessage = "Directory max  length is 100 characters")]
         public string Directory { get; set; }
         [Required]
-        [Range(15, 2000, ErrorMessage = "Description must have between 1 and 2000 charcters")]
+        [MaxLength(2000, ErrorMessage = "Description max length is 2000 characters")]
         public string Description { get; set; }
         [Required]
         public string Category { get; set; }
@@ -27,7 +27,7 @@ namespace StarCinema.Models.CRUDModels
         [Range(1,1000,ErrorMessage ="Duration time must be between 1 and 1000 minutes")]
         public int DurationTime { get; set; }
         [Required]
-        [Range(1, 1000, ErrorMessage = "Trailer url time must be between 1 and 1000 minutes")]
+        [MaxLength(1000, ErrorMessage = "Trailer url max length is 1000 characters")]
         public string TrailerUrl { get; set; }
         [Required]
         public bool Is3D { get; set; }
@@ -44,7 +44,6 @@ namespace StarCinema.Models.CRUDModels
         public CommentViewModel UserComment { get; set; }
         public RateViewModel UserRate { get; set; }
         public bool CanRate { get; set; }
-        public static PagingInfo PagingInfo { get; set; }
 
         public MovieViewModel()
         {
