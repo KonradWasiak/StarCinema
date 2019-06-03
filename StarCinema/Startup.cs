@@ -34,6 +34,8 @@ namespace StarCinema
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IRateRepository, RateRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
         }

@@ -11,11 +11,14 @@ namespace StarCinema.Controllers.CRUDControllers
 {
     public class CategoryController : Controller
     {
-        private readonly IMovieRepository _repo;
+        private readonly IMovieRepository _movieRepo;
+        private readonly ICategoryRepository _categoryRepo;
 
-        public CategoryController(IMovieRepository repo)
+        public CategoryController(IMovieRepository movieRepo, ICategoryRepository categoryRepo)
         {
-            this._repo = repo; 
+            this._movieRepo = movieRepo; 
+            this._categoryRepo = categoryRepo; 
+
         }
         public async Task<IActionResult> Categories()
         {
@@ -26,7 +29,7 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpPost]
         public async Task<ActionResult> RemoveCategory(string categoryName)
         {
-            await this._repo.RemoveCategory(categoryName);
+            await this._categoryRepo.RemoveCategory(categoryName);
             return View((object)categoryName);
         }
 
@@ -41,7 +44,8 @@ namespace StarCinema.Controllers.CRUDControllers
         {
             if (ModelState.IsValid)
             {
-                this._repo.AddCategory(new Category()
+                this._categoryRepo
+                    .AddCategory(new Category()
                 {
                     CategoryName = category.Name
                 });
@@ -64,7 +68,7 @@ namespace StarCinema.Controllers.CRUDControllers
 
         private async Task<List<CategoryViewModel>> getAllCategories()
         {
-            var allCategories = await this._repo.AllCategories();
+            var allCategories = await this._categoryRepo.AllCategories();
             var categoriesViewModel = new List<CategoryViewModel>();
             foreach (var c in allCategories)
             {

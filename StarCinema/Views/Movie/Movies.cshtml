@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StarCinema.Models.CRUDModels.MovieViewModel>
+﻿@model StarCinema.Models.CRUDModels.IndexModels.PaginatedMoviesViewModel;
 @{
     ViewData["Title"] = "Movies";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -55,15 +55,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var c in Model)
+                    @foreach (var c in Model.Movies)
                     {
                         i++;
-                        var imgSrc = "../images/MoviesPosters/" + c.Id.ToString() + ".jpg";
+                        var imgSrc = "/images/MoviesPosters/" + c.Id.ToString() + ".jpg";
 
                         <tr>
                             <td>@i</td>
                             <td><img class="img-table" src="@imgSrc" /></td>
-                            <td>@c.Title</td>
+                            <td>
+                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@c.Id">
+                                    @c.Title
+                                </a>
+                            </td>
                             <td>@c.Category</td>
                             <td>@c.ReleaseDate.ToShortDateString()</td>
                             <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button></td>
@@ -82,6 +86,51 @@
                     }
                 </tbody>
             </table>
+
+
         </div>
+    </div>
+</div>
+
+
+@{
+    int nextPage = Model.PagingInfo.CurrentPage == Model.PagingInfo.TotalPages ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage + 1;
+    int prevPage = Model.PagingInfo.CurrentPage == 1 ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage - 1;
+    int startPage = Model.PagingInfo.CurrentPage >= 10 ? Model.PagingInfo.CurrentPage : 1;
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="1" class="page-link">
+                        <i class="glyphicon glyphicon-fast-backward"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                </li>
+
+                @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
+                {
+                    if (j == Model.PagingInfo.CurrentPage)
+                    {
+                        <li class="page-item active"><a asp-action="Movies" asp-controller="Movie" asp-route-id="@j" class="page-link">@j</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a asp-action="Movies" asp-controller="Movie" asp-route-id="@j" class="page-link">@j</a></li>
+                    }
+                }
+                <li class="page-item">
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>

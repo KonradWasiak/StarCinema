@@ -37,7 +37,7 @@ namespace StarCinema.DataLayer.Concrete
                                         .Include(c => c.Cinemas)
                                         .ThenInclude(ci => ci.CinemaHalls)
                                         .FirstOrDefaultAsync(c => c.CityName == city.CityName);
-                                       
+        }
 
         public Task<City> FindCity(string cityName)
         {

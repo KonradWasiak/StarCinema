@@ -19,12 +19,6 @@ namespace StarCinema.DataLayer.Abstract
             this.context = context;
         }
 
-        public void AddCategory(Category category)
-        {
-            context.Categories.Add(category);
-            context.SaveChanges();
-        }
-
         public async Task AddComment(int movieId, Comment comment)
         {
             var movieToUpdate = await FindMovie(movieId);
@@ -36,22 +30,6 @@ namespace StarCinema.DataLayer.Abstract
         {
             this.context.Movies.Add(movie);
             this.context.SaveChanges();
-        }
-
-        public async Task AddRate(int movieId, Rate rate)
-        {
-            var movieToUpdate = await FindMovie(movieId);
-            if (!(await UserRated(movieId, rate.User.UserName)))
-            {
-                movieToUpdate.Rates.Add(rate);
-                await context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<IEnumerable<Category>> AllCategories()
-        {
-            IEnumerable<Category> allCategories = await context.Categories.Include(m => m.Movies).ToListAsync();
-            return allCategories;
         }
 
         public async Task<IEnumerable<Movie>> AllMovies()
@@ -79,12 +57,6 @@ namespace StarCinema.DataLayer.Abstract
                 movie.DurationTime = updatedMovie.DurationTime;
             }
             await this.context.SaveChangesAsync();
-        }
-
-        public async Task<Category> FindCategory(string categoryName)
-        {
-            var category = await context.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
-            return category;
         }
 
         public async Task<Movie> FindMovie(int id)
@@ -117,15 +89,9 @@ namespace StarCinema.DataLayer.Abstract
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Movie>> FindMoviesFromCategory(string category)
+        public async Task<int> MoviesCount()
         {
-            var cat = await FindCategory(category);
-            IEnumerable<Movie> moviesToReturn = await context.Movies.Include(m => m.Comments)
-                                                               .Include(m => m.Rates)
-                                                               .Include(m => m.Shows)
-                                                               .Where(m => m.Category.CategoryName == category)
-                                                               .ToListAsync();
-            return moviesToReturn;
+            return await this.context.Movies.CountAsync();
         }
 
         public async Task<IEnumerable<Movie>> PaginatedMovies(int page, int itemsPerPage)
@@ -141,17 +107,6 @@ namespace StarCinema.DataLayer.Abstract
             return movies;
         }
 
-        public async Task<Category> RemoveCategory(string category)
-        {
-            var categoryToRemove = await FindCategory(category);
-            if (categoryToRemove != null)
-                context.Categories.Remove(categoryToRemove);
-
-            await context.SaveChangesAsync();
-
-            return categoryToRemove;
-        }
-
         public async Task<Movie> RemoveMovie(Movie movie)
         {
             var movieToRemove = await FindMovie(movie.Id);
@@ -163,17 +118,6 @@ namespace StarCinema.DataLayer.Abstract
             return movieToRemove;
         }
 
-        public async Task<bool> UserRated(int movieId, string userName)
-        {
-            var movie = await FindMovie(movieId);
-            var rates = movie.Rates.ToList();
-         
-            foreach(var r in rates)
-            {
-                if (r.User.UserName.Equals(userName))
-                    return true;
-            }
-            return false;
-        }
+
     }
 }
