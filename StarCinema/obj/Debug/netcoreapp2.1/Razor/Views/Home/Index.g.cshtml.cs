@@ -221,7 +221,7 @@ WriteAttributeValue("", 2697, path+Model.LatestMovies.ElementAt(2).Id.ToString()
             WriteLiteral("                <div class=\"btn-group\" role=\"group\">\r\n                    ");
             EndContext();
             BeginContext(3835, 319, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "049676fa13244b05b7774a3f9e25169b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fb229f00502f4f99a1aeff3dd67d637b", async() => {
                 BeginContext(3909, 66, true);
                 WriteLiteral("\r\n                        <input type=\"hidden\" name=\"categoryName\"");
                 EndContext();
@@ -277,7 +277,7 @@ WriteAttributeValue("", 3983, category.CategoryName, 3983, 22, false);
             WriteLiteral("        </div>\r\n    </div>\r\n\r\n    <div class=\"col-lg-4\">\r\n        ");
             EndContext();
             BeginContext(4261, 369, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b88526934194d3191a7ee8d66d5351c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f76d66046861402995a2ca67b7c4eb3b", async() => {
                 BeginContext(4267, 356, true);
                 WriteLiteral(@"
             <div class=""input-group"">
@@ -329,7 +329,7 @@ WriteAttributeValue("", 3983, category.CategoryName, 3983, 22, false);
             WriteLiteral("                    <div class=\"col-sm-6 col-md-4\">\r\n                        <br />\r\n                        <div class=\"thumbnail\">\r\n                            ");
             EndContext();
             BeginContext(5594, 327, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d896620694ba4f32bf54d7e55dec5691", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9df2aa689885449d890422e3ddfa081b", async() => {
                 BeginContext(5685, 61, true);
                 WriteLiteral("\r\n                                <img class=\"movie-card-img\"");
                 EndContext();
@@ -415,7 +415,7 @@ WriteAttributeValue("", 5752, imgSrc, 5752, 7, false);
             WriteLiteral("                    <div class=\"col-sm-6 col-md-4\">\r\n                        <br />\r\n                        <div class=\"thumbnail\">\r\n                            ");
             EndContext();
             BeginContext(6400, 317, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4b32522171414485b23070e2c954b38e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2efea466a8c14ceea1ced06cdd5ccb7f", async() => {
                 BeginContext(6491, 61, true);
                 WriteLiteral("\r\n                                <img class=\"movie-card-img\"");
                 EndContext();
@@ -501,7 +501,7 @@ WriteAttributeValue("", 6558, imgSrc, 6558, 7, false);
             WriteLiteral("                    <div class=\"col-sm-6 col-md-4\">\r\n                        <br />\r\n                        <div class=\"thumbnail\">\r\n                            ");
             EndContext();
             BeginContext(7205, 317, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1f2907238d534507ac3e1204abedf032", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "335e867c77ac46f287489a92f0cb3bf8", async() => {
                 BeginContext(7296, 61, true);
                 WriteLiteral("\r\n                                <img class=\"movie-card-img\"");
                 EndContext();
