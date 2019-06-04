@@ -23,13 +23,16 @@ namespace StarCinema.Controllers.CRUDControllers
         private readonly IUserRepository _usrRepo;
         private readonly ICategoryRepository _categoryRepo;
         private readonly IRateRepository _rateRepo;
+        private readonly ICommentRepository _commentRepo;
 
-        public MovieController(IMovieRepository movieRepo, IUserRepository usrRepo, ICategoryRepository categoryRepo, IRateRepository rateRepo)
-        {
+
+        public MovieController(IMovieRepository movieRepo, IUserRepository usrRepo, ICategoryRepository categoryRepo, IRateRepository rateRepo, ICommentRepository commentRepo)
+        { 
             this._movieRepo = movieRepo;
             this._usrRepo = usrRepo;
             this._categoryRepo = categoryRepo;
             this._rateRepo = rateRepo;
+            this._commentRepo = commentRepo;
         }
         public async Task<IActionResult> Movies(int id)
         {
@@ -63,12 +66,21 @@ namespace StarCinema.Controllers.CRUDControllers
 
             return View(moviesViewModel);
         }
-        public async Task<IActionResult> ShowMovie(string id)
+        public async Task<IActionResult> ShowMovie(int id, int commentsPage)
         {
-            var movie = await this._movieRepo.FindMovie(Int32.Parse(id));
-            var movieViewModel = new MovieViewModel(movie);
+            int itemsPerPage = 2;
+            var movie = await this._movieRepo.FindMovie(id);
+            var comments = await this._commentRepo.PaginatedComments(id, commentsPage, itemsPerPage);
+            int commentsPagesCount = movie.Comments.Count() % 2 > 0 ? movie.Comments.Count() / itemsPerPage + 1 : movie.Comments.Count()/2;
 
+            var movieViewModel = new MovieViewModel(movie, new PagingInfo {
+                CurrentPage = commentsPage,
+                TotalPages = commentsPagesCount,
+                ItemsPerPage= itemsPerPage
+            });
+            movieViewModel.Comments = comments.ToList();
             movieViewModel.CanRate = TempData["RateErrorData"] == null ? true : false;
+            movieViewModel.TotalCommentsCount = movie.Comments.Count();
 
             TempData["RateErrorData"] = null;
             return View(movieViewModel);

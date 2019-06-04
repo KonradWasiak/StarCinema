@@ -27,6 +27,12 @@ namespace StarCinema.DataLayer.Concrete
             IEnumerable<Category> allCategories = await context.Categories.Include(m => m.Movies).ToListAsync();
             return allCategories;
         }
+
+        public async Task<int> CategoriesCount()
+        {
+            return await this.context.Categories.CountAsync();
+        }
+
         public async Task<Category> FindCategory(string categoryName)
         {
             var category = await context.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
@@ -42,6 +48,16 @@ namespace StarCinema.DataLayer.Concrete
                                                                .ToListAsync();
             return moviesToReturn;
         }
+
+        public async Task<IEnumerable<Category>> PaginatedCategories(int page, int itemsPerPage)
+        {
+            return await this.context.Categories.Include(c => c.Movies)
+                                                .Skip((page - 1) * itemsPerPage)
+                                                .Take(itemsPerPage)
+                                                .ToListAsync();
+                                                
+        }
+
         public async Task<Category> RemoveCategory(string category)
         {
             var categoryToRemove = await FindCategory(category);

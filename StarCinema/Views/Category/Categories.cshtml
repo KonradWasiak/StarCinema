@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StarCinema.Models.CRUDModels.CategoryViewModel>
+﻿@model StarCinema.Models.CRUDModels.PaginatedCategoriesViewModel;
 @{
     ViewData["Title"] = "Categories";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var c in Model)
+                    @foreach (var c in Model.Categories)
                     {
                         i++;
                         <tr>
@@ -54,5 +54,47 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+
+@{
+    int nextPage = Model.PagingInfo.CurrentPage == Model.PagingInfo.TotalPages ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage + 1;
+    int prevPage = Model.PagingInfo.CurrentPage == 1 ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage - 1;
+    int startPage = Model.PagingInfo.CurrentPage >= 10 ? Model.PagingInfo.CurrentPage : 1;
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a asp-action="Categories" asp-controller="Category" asp-route-id="1" class="page-link">
+                        <i class="glyphicon glyphicon-fast-backward"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Categories" asp-controller="Category" asp-route-id="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                </li>
+
+                @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
+                {
+                    if (j == Model.PagingInfo.CurrentPage)
+                    {
+                        <li class="page-item active"><a asp-action="Categories" asp-controller="Category" asp-route-id="@j" class="page-link">@j</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a asp-action="Categories" asp-controller="Category" asp-route-id="@j" class="page-link">@j</a></li>
+                    }
+                }
+                <li class="page-item">
+                    <a asp-action="Categories" asp-controller="Category" asp-route-id="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Categories" asp-controller="Category" asp-route-id="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </div>

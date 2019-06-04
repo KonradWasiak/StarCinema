@@ -7,7 +7,7 @@
     ViewData["Title"] = "ShowMovie";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var imgSrc = "../../images/MoviesPosters/" + Model.Id + ".jpg";
-    var is3D = Model.Is3D? "YES" : "NO";
+    var is3D = Model.Is3D ? "YES" : "NO";
 }
 
 <div class="row">
@@ -126,7 +126,7 @@
         </ul>
         <div class="tab-content">
             <div id="comments" class="tab-pane fade in active">
-                <h2 class="h2">@Model.Comments.Count Comments</h2>
+                <h2 class="h2">@Model.TotalCommentsCount Comments</h2>
                 @if (Model.Comments != null)
                 {
                     foreach (var c in Model.Comments.OrderByDescending(c => c.AddedDate))
@@ -150,14 +150,51 @@
     </div>
 
 </div>
+
+
+@{
+    int nextPage = Model.CommentsPagingInfo.CurrentPage == Model.CommentsPagingInfo.TotalPages ? Model.CommentsPagingInfo.CurrentPage : Model.CommentsPagingInfo.CurrentPage + 1;
+    int prevPage = Model.CommentsPagingInfo.CurrentPage == 1 ? Model.CommentsPagingInfo.CurrentPage : Model.CommentsPagingInfo.CurrentPage - 1;
+    int startPage = Model.CommentsPagingInfo.CurrentPage >= 10 ? Model.CommentsPagingInfo.CurrentPage : 1;
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="1" class="page-link">
+                        <i class="glyphicon glyphicon-fast-backward"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@prevPage"  class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                </li>
+
+                @for (int j = startPage; j <= Model.CommentsPagingInfo.TotalPages; j++)
+                {
+                    if (j == Model.CommentsPagingInfo.CurrentPage)
+                    {
+                        <li class="page-item active"><a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@j" class="page-link">@j</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@j" class="page-link">@j</a></li>
+                    }
+                }
+                <li class="page-item">
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@Model.CommentsPagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
 <br />
 <br />
 
-@*<div class="rates">
-        <a class="rate-movie"><i class="glyphicon glyphicon-thumbs-up"></i></a>
-        <p class="movie-rate">231</p>
-    </div>
-    <div class="rates">
-        <a class="rate-movie"><i class="glyphicon glyphicon-thumbs-down"></i></a>
-        <p class="movie-rate">12</p>
-    </div>*@

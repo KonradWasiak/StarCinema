@@ -218,3 +218,4 @@ E:\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.RazorTargetAssemblyI
 E:\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.RazorTargetAssemblyInfo.cs
 E:\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.Views.pdb
 E:\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.csproj.CopyComplete
+C:\Users\User\Desktop\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\City\AddCity.g.cshtml.cs

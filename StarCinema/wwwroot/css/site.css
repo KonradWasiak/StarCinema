@@ -1,4 +1,8 @@
-﻿body {
+﻿@media only screen and (max-width: 600px) {
+    
+}
+
+body {
     background: linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(../images/background.jpg);
     background-size: cover;
     background-attachment: fixed;
@@ -385,4 +389,22 @@ thead a:hover{
 }
 .td-center{
     text-align: center;
+}
+.white{
+    background-color:white !important;
+}
+
+.app-form-submit-left{
+    float:left;
+}
+
+.cursor-pointer{
+    cursor:pointer;
+}
+.tab-content{
+    background-color:white!important;
+}
+
+#newest{
+    background-color:white!important;
 }

@@ -15,41 +15,50 @@
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path+Model.LatestMovies.ElementAt(0).Id.ToString()+"Index.jpg")">
+            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path + Model.LatestMovies.ElementAt(0).Id.ToString() + "Index.jpg")">
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(0).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(0).ReleaseDate.ToShortDateString()</h3>
-                    <button class="btn btn-danger carousel-button">SHOW MORE</button>
+                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
+                        <input type="hidden" name="commentsPage" value="1"/>
+                        <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
+                    </form>
                     <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
                 </div>
                 <div class="item-content-transparent col-md-7">
-                    <i class="glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
+                    <i data-toggle="modal" data-target="#0" class="cursor-pointer glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="cursor-pointer watch-trailer-h1">TRAILER</h1>
                 </div>
             </div>
         </div>
         <div class="item">
-            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path+Model.LatestMovies.ElementAt(1).Id.ToString()+"Index.jpg")">
+            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path + Model.LatestMovies.ElementAt(1).Id.ToString() + "Index.jpg")">
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(1).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(1).ReleaseDate.ToShortDateString()</h3>
-                    <button class="btn btn-danger carousel-button">SHOW MORE</button>
+                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
+                        <input type="hidden" name="commentsPage" value="1" />
+                        <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
+                    </form>
                     <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
                 </div>
                 <div class="item-content-transparent col-md-7">
-                    <i class="glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
+                    <i data-toggle="modal" data-target="#1" class="cursor-pointer glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="cursor-pointer watch-trailer-h1">TRAILER</h1>
                 </div>
             </div>
         </div>
         <div class="item">
-            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path+Model.LatestMovies.ElementAt(2).Id.ToString()+"Index.jpg")">
+            <div class="item-container-left" style="background:linear-gradient(0deg,rgba(30,30,30,0.3),rgba(30,30,30,0.3)),url(@(path + Model.LatestMovies.ElementAt(2).Id.ToString() + "Index.jpg")">
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(2).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(2).ReleaseDate.ToShortDateString()</h3>
-                    <button class="btn btn-danger carousel-button">SHOW MORE</button>
+                    <form class="" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
+                        <input type="hidden" name="commentsPage" value="1" />
+                        <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
+                    </form>
                     <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
                 </div>
                 <div class="item-content-transparent col-md-7">
-                    <i class="glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
+                    <i data-toggle="modal" data-target="#2" class="cursor-pointer glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>
                 </div>
             </div>
         </div>
@@ -57,7 +66,7 @@
 </div>
 <br />
 <div id="collapse2" class="row">
-    <div class="hidden-md hidden-sm hidden-xs col-lg-8">
+    <div class="hidden-sm hidden-xs col-lg-8 col-md-8">
         <div class="btn-group btn-group-justified" role="group" aria-label="...">
             @foreach (var category in Model.Categories)
             {
@@ -72,7 +81,7 @@
         </div>
     </div>
 
-    <div class="col-lg-4">
+    <div class="col-lg-4 col-md-4">
         <form>
             <div class="input-group">
                 <input type="text" class="nav-search form-control" placeholder="Find your cinema">
@@ -99,7 +108,7 @@
                     <div class="col-sm-6 col-md-4">
                         <br />
                         <div class="thumbnail">
-                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id">
+                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id" asp-route-commentsPage="1">
                                 <img class="movie-card-img" src="@imgSrc" alt="...">
                                 <h4>@m.Title</h4>
                                 <p>@m.Category.CategoryName</p>
@@ -115,7 +124,7 @@
                     <div class="col-sm-6 col-md-4">
                         <br />
                         <div class="thumbnail">
-                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id">
+                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id" asp-route-commentsPage="1">
                                 <img class="movie-card-img" src="@imgSrc">
                                 <h4>@m.Title</h4>
                                 <p>@m.Category.CategoryName</p>
@@ -131,7 +140,7 @@
                     <div class="col-sm-6 col-md-4">
                         <br />
                         <div class="thumbnail">
-                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id">
+                            <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id" asp-route-commentsPage="1">
                                 <img class="movie-card-img" src="@imgSrc">
                                 <h4>@m.Title</h4>
                                 <p>@m.Category.CategoryName</p>
@@ -146,3 +155,21 @@
 </div>
 <br />
 <br />
+@{ 
+    for(int i = 0; i <= 2; i++)
+    {
+        <div id="@i"class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="gridSystemModalLabel">@Model.LatestMovies.ElementAt(i).Title</h4>
+                </div>
+                <div class="modal-body">
+                    <iframe height="500" src="@Model.LatestMovies.ElementAt(i).TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        </div>
+    }
+}

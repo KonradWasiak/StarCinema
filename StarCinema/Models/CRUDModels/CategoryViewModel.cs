@@ -16,5 +16,7 @@ namespace StarCinema.Models.CRUDModels
             this.Name = category.CategoryName;
         }
         public CategoryViewModel() { }
+
+
     }
 }

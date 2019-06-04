@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StarCinema.DataLayer.Abstract;
 using StarCinema.DomainModels;
+using StarCinema.Models;
 using StarCinema.Models.CRUDModels;
 
 namespace StarCinema.Controllers.CRUDControllers
@@ -20,9 +21,25 @@ namespace StarCinema.Controllers.CRUDControllers
             this._categoryRepo = categoryRepo; 
 
         }
-        public async Task<IActionResult> Categories()
+        public async Task<IActionResult> Categories(int id)
         {
-            var categoriesViewModel = await getAllCategories();
+            var allCategories = await this._categoryRepo.PaginatedCategories(id, 2);
+            var categoriesViewModelList = new List<CategoryViewModel>();
+
+            foreach (var c in allCategories)
+            {
+                categoriesViewModelList.Add(new CategoryViewModel(c));
+            }
+
+            int categoriesCount = await _categoryRepo.CategoriesCount();
+            int totalPages = categoriesCount % 2 > 0 ? categoriesCount / 2 + 1 : categoriesCount / 2;
+
+            var categoriesViewModel = new PaginatedCategoriesViewModel(categoriesViewModelList, new PagingInfo
+            {
+                ItemsPerPage = 2,
+                CurrentPage = id,
+                TotalPages = totalPages
+            });;
             return View(categoriesViewModel);
         }
 

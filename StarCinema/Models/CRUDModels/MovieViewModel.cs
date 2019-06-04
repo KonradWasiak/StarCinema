@@ -44,6 +44,8 @@ namespace StarCinema.Models.CRUDModels
         public CommentViewModel UserComment { get; set; }
         public RateViewModel UserRate { get; set; }
         public bool CanRate { get; set; }
+        public int TotalCommentsCount { get; set; }
+        public PagingInfo CommentsPagingInfo { get; set; }
 
         public MovieViewModel()
         {
@@ -52,6 +54,22 @@ namespace StarCinema.Models.CRUDModels
             this.Description = noInfo;
         }
 
+        public MovieViewModel(Movie movie, PagingInfo commentsPagingInfo) 
+        {
+            this.CommentsPagingInfo = commentsPagingInfo;
+            this.Id = movie.Id;
+            this.Title = movie.Title;
+            this.Directory = movie.Directory;
+            this.Description = movie.Description;
+            this.Category = movie.Category.CategoryName;
+            this.ReleaseDate = movie.ReleaseDate;
+            this.Comments = movie.Comments.ToList();
+            this.Rates = movie.Rates.ToList();
+            this.Shows = movie.Shows.ToList();
+            this.Is3D = movie.Is3D;
+            this.TrailerUrl = movie.TrailerUrl;
+            this.DurationTime = movie.DurationTime;
+        }
         public MovieViewModel(Movie movie) 
         {
             this.Id = movie.Id;
