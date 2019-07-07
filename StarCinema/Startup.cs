@@ -38,6 +38,7 @@ namespace StarCinema
             services.AddScoped<IRateRepository, RateRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
            
         }
 

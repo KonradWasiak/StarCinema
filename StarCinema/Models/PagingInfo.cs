@@ -8,7 +8,7 @@ namespace StarCinema.Models
     public class PagingInfo
     {
         public int CurrentPage { get; set; }
-        public int ItemsPerPage { get; set; }
+        public static int ItemsPerPage = 2;
         public int TotalPages { get; set; }
     }
 }

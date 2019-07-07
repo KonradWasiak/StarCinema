@@ -23,7 +23,7 @@ namespace StarCinema.Controllers.CRUDControllers
         }
         public async Task<IActionResult> Categories(int id)
         {
-            var allCategories = await this._categoryRepo.PaginatedCategories(id, 2);
+            var allCategories = await this._categoryRepo.PaginatedCategories(id, PagingInfo.ItemsPerPage);
             var categoriesViewModelList = new List<CategoryViewModel>();
 
             foreach (var c in allCategories)
@@ -32,11 +32,10 @@ namespace StarCinema.Controllers.CRUDControllers
             }
 
             int categoriesCount = await _categoryRepo.CategoriesCount();
-            int totalPages = categoriesCount % 2 > 0 ? categoriesCount / 2 + 1 : categoriesCount / 2;
+            int totalPages = categoriesCount % PagingInfo.ItemsPerPage > 0 ? categoriesCount / PagingInfo.ItemsPerPage + 1 : categoriesCount / PagingInfo.ItemsPerPage;
 
             var categoriesViewModel = new PaginatedCategoriesViewModel(categoriesViewModelList, new PagingInfo
             {
-                ItemsPerPage = 2,
                 CurrentPage = id,
                 TotalPages = totalPages
             });;
@@ -63,9 +62,9 @@ namespace StarCinema.Controllers.CRUDControllers
             {
                 this._categoryRepo
                     .AddCategory(new Category()
-                {
-                    CategoryName = category.Name
-                });
+                    {
+                        CategoryName = category.Name
+                    });
                 return View();
             }
             return View(category);

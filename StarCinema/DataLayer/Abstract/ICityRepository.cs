@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    interface ICityRepository
+    public interface ICityRepository
     {
+        Task<List<City>> PaginatedCities(int page, int itemsPerPage);
         Task AddCity(City city);
         Task<City> FindCity(string cityName);
         Task<List<City>> AllCities();
         Task RemoveCity(City city);
         Task EditCity(City city);
+        Task<int> CitiesCount();
     }
 }

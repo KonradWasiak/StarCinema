@@ -27,8 +27,16 @@ namespace StarCinema.DataLayer.Concrete
 
         public async Task<List<City>> AllCities()
         {
-            var cities = await this._context.Cities.ToListAsync();
+            var cities = await this._context.Cities
+                                   .Include(c => c.Cinemas)
+                                   .ToListAsync();
             return cities;
+        }
+
+        public async Task<int> CitiesCount()
+        {
+            return await this._context.Cities.CountAsync();
+
         }
 
         public async Task EditCity(City city)
@@ -39,14 +47,29 @@ namespace StarCinema.DataLayer.Concrete
                                         .FirstOrDefaultAsync(c => c.CityName == city.CityName);
         }
 
-        public Task<City> FindCity(string cityName)
+        public async Task<City> FindCity(string cityName)
         {
-            throw new NotImplementedException();
+            return await this._context
+                             .Cities
+                             .FirstOrDefaultAsync(c => c.CityName.Equals(cityName));
         }
 
-        public Task RemoveCity(City city)
+        public async Task<List<City>> PaginatedCities(int page, int itemsPerPage)
         {
-            throw new NotImplementedException();
+            return await this._context.Cities.Include(c => c.Cinemas)
+                                                .Skip((page - 1) * itemsPerPage)
+                                                .Take(itemsPerPage)
+                                                .ToListAsync();
+        }
+
+        public async Task RemoveCity(City city)
+        {
+            var cityToDelete = await this._context
+                                    .Cities
+                                    .FirstOrDefaultAsync(c => c.CityName.Equals(city.CityName));
+            this._context.Cities
+                         .Remove(cityToDelete);
+            await this._context.SaveChangesAsync();
         }
     }
 }
