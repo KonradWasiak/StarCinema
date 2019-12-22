@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.CRUDModels.PaginatedCitiesViewModel;
+﻿@model StarCinema.Models.PaginatedViewModel<StarCinema.Models.CRUDModels.CityViewModel>;
 @{
     ViewData["Title"] = "Cities";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -37,7 +37,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var c in Model.Cities)
+                    @foreach (var c in Model.Models)
                     {
                         i++;
                         <tr>

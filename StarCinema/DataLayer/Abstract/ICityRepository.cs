@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    public interface ICityRepository
+    public interface ICityRepository : IRepository
     {
         Task<List<City>> PaginatedCities(int page, int itemsPerPage);
         Task AddCity(City city);

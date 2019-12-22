@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,10 +7,19 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StarCinema.DataLayer.Abstract;
 using StarCinema.DataLayer.Concrete;
+using StarCinema.Models.CRUDModels.AddressModels;
+using StarCinema.Models.CRUDModels.CategoryModels;
+using StarCinema.Models.CRUDModels.CinemaHallModels;
+using StarCinema.Models.CRUDModels.CinemaModels;
+using StarCinema.Models.CRUDModels.CityModels;
+using StarCinema.Models.CRUDModels.CommentModels;
+using StarCinema.Models.CRUDModels.MovieModels;
+using StarCinema.Models.CRUDModels.SeatModels;
 
 namespace StarCinema
 {
@@ -32,13 +41,31 @@ namespace StarCinema
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.AllowAnyOrigin());
+            });
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<Models.StarCinemaContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("StarCinemaContextConnection")));
+            services.AddMemoryCache();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IRateRepository, RateRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<ICinemaRepository, CinemaRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<CinemaFactory, CinemaFactory>();
+            services.AddScoped<CinemaHallFactory, CinemaHallFactory>();
+            services.AddScoped<AddressFactory, AddressFactory>();
+            services.AddScoped<SeatFactory, SeatFactory>();
+            services.AddScoped<CategoryFactory, CategoryFactory>();
+            services.AddScoped<CityFactory, CityFactory>();
+            services.AddScoped<MovieFactory, MovieFactory>();
+            services.AddScoped<CommentFactory, CommentFactory>();
            
         }
 
@@ -57,7 +84,6 @@ namespace StarCinema
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
@@ -66,7 +92,9 @@ namespace StarCinema
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            });            
+            app.UseCookiePolicy();
+
         }
     }
 }

@@ -7,16 +7,19 @@ using StarCinema.DataLayer.Abstract;
 using StarCinema.DomainModels;
 using StarCinema.Models;
 using StarCinema.Models.CRUDModels;
+using StarCinema.Models.CRUDModels.CityModels;
 
 namespace StarCinema.Controllers.CRUDControllers
 {
     public class CityController : Controller
     {
         private readonly ICityRepository _repo;
+        private readonly CityFactory _cityFactory;
 
-        public CityController(ICityRepository cityRepo)
+        public CityController(ICityRepository cityRepo, CityFactory cityFactory)
         {
             this._repo = cityRepo;
+            this._cityFactory = cityFactory;
         }
 
         [HttpGet]
@@ -28,10 +31,8 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpPost]
         public async Task<IActionResult> AddCity(CityViewModel city)
         {
-            await this._repo.AddCity(new City
-            {
-                CityName = city.CityName
-            });
+            var cityToAdd = _cityFactory.GetCity(city);
+            await _repo.AddCity(cityToAdd);
             return View();
         }
 
@@ -39,32 +40,21 @@ namespace StarCinema.Controllers.CRUDControllers
         public async Task<IActionResult> Cities(int id)
         {
             if (id == 0) id = 1;
-            var cities = await this._repo.PaginatedCities(id, PagingInfo.ItemsPerPage);
+            var cities = await _repo.PaginatedCities(id, PagingInfo.ItemsPerPage);            
+            int citiesCount = await _repo.CitiesCount();
+
             var citiesViewModelList = new List<CityViewModel>();
-
-            foreach (var c in cities)
-            {
-                citiesViewModelList.Add(new CityViewModel(c));
-            }
-
-            int citiesCount = await this._repo.CitiesCount();
-            int totalPages = citiesCount % PagingInfo.ItemsPerPage > 0 ? citiesCount / PagingInfo.ItemsPerPage + 1 : citiesCount / PagingInfo.ItemsPerPage;
-
-            var paginatedCitiesViewModelList = new PaginatedCitiesViewModel(citiesViewModelList,
-                new PagingInfo
-                {
-                    CurrentPage = id,
-                    TotalPages = totalPages
-                }
-            );
+            cities.ForEach(x => citiesViewModelList.Add(new CityViewModel(x)));
+            
+            var paginatedCitiesViewModelList = new PaginatedViewModel<CityViewModel>(citiesViewModelList, id, citiesCount);
 
             return View(paginatedCitiesViewModelList);
         }
         [HttpPost]
         public async Task<IActionResult> RemoveCity(string cityName)
         {
-            var cityToRemove = await this._repo.FindCity(cityName);
-            await this._repo.RemoveCity(cityToRemove);
+            var cityToRemove = await _repo.FindCity(cityName);
+            await _repo.RemoveCity(cityToRemove);
             return RedirectToAction("Cities");
         }
     }

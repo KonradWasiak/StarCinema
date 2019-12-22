@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
         Task<StarCinemaUser> GetUser(string username);
     }

@@ -15,7 +15,7 @@ namespace StarCinema.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -184,6 +184,25 @@ namespace StarCinema.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("StarCinema.DomainModels.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BuildingNumber");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("PostalCode");
+
+                    b.Property<string>("Street");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("StarCinema.DomainModels.Booking", b =>
                 {
                     b.Property<int>("Id")
@@ -222,9 +241,13 @@ namespace StarCinema.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AddressId");
+
                     b.Property<int>("CityId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CityId");
 
@@ -431,6 +454,11 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Cinema", b =>
                 {
+                    b.HasOne("StarCinema.DomainModels.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("StarCinema.DomainModels.City", "City")
                         .WithMany("Cinemas")
                         .HasForeignKey("CityId")

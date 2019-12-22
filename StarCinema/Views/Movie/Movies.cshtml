@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.CRUDModels.IndexModels.PaginatedMoviesViewModel;
+﻿@model StarCinema.Models.PaginatedViewModel<StarCinema.Models.CRUDModels.MovieViewModel>;
 @{
     ViewData["Title"] = "Movies";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var c in Model.Movies)
+                    @foreach (var c in Model.Models)
                     {
                         i++;
                         var imgSrc = "/images/MoviesPosters/" + c.Id.ToString() + ".jpg";
@@ -71,7 +71,7 @@
                             <td>@c.Category</td>
                             <td>@c.ReleaseDate.ToShortDateString()</td>
                             <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button></td>
-                            <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
+                            <td><button type="button" onclick="GetComments(@c.Id, 1)" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
                             <td>
                                 <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
                                     <input type="hidden" name="movieId" value="@c.Id" />

@@ -30,7 +30,8 @@ body {
 }
 
 .app-form-table {
-    float: left;
+    float: right;
+    max-width:150px;
 }
 
 .app-form-h2 {
@@ -68,11 +69,16 @@ body {
 
 .app-form-table-submit {
     height: 35px;
-    min-width: 80px;
+    min-width: 100px;
     border: none;
     border-radius: 0;
-}
 
+}
+.actions-center{
+    margin:0;
+    left:0;
+    margin-right:25%;
+}
 footer {
     padding-top: 3%;
     padding-bottom: 3%;
@@ -390,6 +396,11 @@ thead a:hover{
 .td-center{
     text-align: center;
 }
+
+.td-right{
+    text-align:right;
+}
+
 .white{
     background-color:white !important;
 }

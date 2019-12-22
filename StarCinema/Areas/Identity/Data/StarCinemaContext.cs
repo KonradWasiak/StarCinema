@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using StarCinema.Areas.Identity.Data;
 using StarCinema.DomainModels;
+using StarCinema.Areas.Identity.Data;
 
 namespace StarCinema.Models
 {
@@ -23,6 +23,7 @@ namespace StarCinema.Models
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Show> Shows{ get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Address> Address { get; set; }
 
 
 

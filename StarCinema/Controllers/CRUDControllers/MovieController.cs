@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -12,7 +13,9 @@ using StarCinema.DataLayer.Abstract;
 using StarCinema.DomainModels;
 using StarCinema.Models;
 using StarCinema.Models.CRUDModels;
+using StarCinema.Models.CRUDModels.CommentModels;
 using StarCinema.Models.CRUDModels.IndexModels;
+using StarCinema.Models.CRUDModels.MovieModels;
 using StarCinema.Models.IndexModels;
 
 namespace StarCinema.Controllers.CRUDControllers
@@ -24,32 +27,35 @@ namespace StarCinema.Controllers.CRUDControllers
         private readonly ICategoryRepository _categoryRepo;
         private readonly IRateRepository _rateRepo;
         private readonly ICommentRepository _commentRepo;
+        private readonly MovieFactory _movieFactory;
+        private readonly CommentFactory _commentFactory;
 
 
-        public MovieController(IMovieRepository movieRepo, IUserRepository usrRepo, ICategoryRepository categoryRepo, IRateRepository rateRepo, ICommentRepository commentRepo)
+        public MovieController(IMovieRepository movieRepo, IUserRepository usrRepo, ICategoryRepository categoryRepo, 
+            IRateRepository rateRepo, ICommentRepository commentRepo, MovieFactory movieFactory, CommentFactory commentFactory)
         {
             this._movieRepo = movieRepo;
             this._usrRepo = usrRepo;
             this._categoryRepo = categoryRepo;
             this._rateRepo = rateRepo;
             this._commentRepo = commentRepo;
+            this._movieFactory = movieFactory;
+            this._commentFactory = commentFactory;
         }
         public async Task<IActionResult> Movies(int id)
         {
-            if (id == 0) id = 1;
-            var movies = await this._movieRepo.PaginatedMovies(id, PagingInfo.ItemsPerPage);
-            List<MovieViewModel> moviesViewModel = new List<MovieViewModel>();
-            foreach (var m in movies)
+            if (id == 0)
             {
-                moviesViewModel.Add(new MovieViewModel(m));
+                id = 1;
             }
+            var movies = await _movieRepo.PaginatedMovies(id, PagingInfo.ItemsPerPage);            
             int moviesCount = await this._movieRepo.MoviesCount();
-            int totalPages = moviesCount % 2 > 0 ? moviesCount / 2 + 1 : moviesCount / 2;
-            var paginatedMovies = new PaginatedMoviesViewModel(moviesViewModel, new PagingInfo
-            {
-                CurrentPage = id,
-                TotalPages = totalPages
-            });
+
+            List<MovieViewModel> moviesViewModel = new List<MovieViewModel>();
+
+            movies.ForEach(x => moviesViewModel.Add(new MovieViewModel(x)));
+
+            var paginatedMovies = new PaginatedViewModel<MovieViewModel>(moviesViewModel, id, moviesCount);
             return View(paginatedMovies);
         }
 
@@ -70,7 +76,7 @@ namespace StarCinema.Controllers.CRUDControllers
         {
             var movie = await this._movieRepo.FindMovie(id);
             var comments = await this._commentRepo.PaginatedComments(id, commentsPage, PagingInfo.ItemsPerPage);
-            int commentsPagesCount = movie.Comments.Count() % PagingInfo.ItemsPerPage > 0 ? movie.Comments.Count() / PagingInfo.ItemsPerPage + 1 : movie.Comments.Count() / PagingInfo.ItemsPerPage;
+            int commentsPagesCount = CalculatePagesCount(movie);
 
             var movieViewModel = new MovieViewModel(movie, new PagingInfo
             {
@@ -85,6 +91,8 @@ namespace StarCinema.Controllers.CRUDControllers
             return View(movieViewModel);
         }
 
+     
+
         public async Task<ActionResult> AddMovie()
         {
             var categories = await this._categoryRepo.AllCategories();
@@ -96,28 +104,16 @@ namespace StarCinema.Controllers.CRUDControllers
         {
             if (ModelState.IsValid)
             {
-                var movieCategory = await this._categoryRepo.FindCategory(movie.Category);
-                var movieToAdd = new Movie()
-                {
-                    Title = movie.Title,
-                    Directory = movie.Directory,
-                    Description = movie.Description,
-                    Category = movieCategory,
-                    ReleaseDate = movie.ReleaseDate,
-                    Is3D = movie.Is3D,
-                    TrailerUrl = movie.TrailerUrl,
-                    DurationTime = movie.DurationTime
+                var movieToAdd = await _movieFactory.GetMovie(movie);
 
-                };
-
-                this._movieRepo.AddMovie(movieToAdd);
+                _movieRepo.AddMovie(movieToAdd);
                 int id = movieToAdd.Id;
                 var filePoster = movie.PosterImage;
                 var fileBanner = movie.BannerImage;
 
                 await ImagesManager.UploadPoster(filePoster, id, true);
                 await ImagesManager.UploadBanner(fileBanner, id, true);
-                var categories = await this._categoryRepo.AllCategories();
+                var categories = await _categoryRepo.AllCategories();
                 return View(new MovieViewModel(categories));
             }
             return View(movie);
@@ -127,8 +123,8 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpPost]
         public async Task<ActionResult> RemoveMovie(int movieId)
         {
-            var movieToDelete = await this._movieRepo.FindMovie(movieId);
-            await this._movieRepo.RemoveMovie(movieToDelete);
+            var movieToDelete = await _movieRepo.FindMovie(movieId);
+            await _movieRepo.RemoveMovie(movieToDelete);
             await ImagesManager.DeleteImages(movieId);
             return View(movieToDelete);
         }
@@ -136,8 +132,8 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpGet]
         public async Task<ActionResult> EditMovie(int movieId)
         {
-            var movieToEdit = await this._movieRepo.FindMovie(movieId);
-            var categories = await this._categoryRepo.AllCategories();
+            var movieToEdit = await _movieRepo.FindMovie(movieId);
+            var categories = await _categoryRepo.AllCategories();
 
             return View(new MovieViewModel(categories, movieToEdit));
         }
@@ -145,18 +141,9 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpPost]
         public async Task<RedirectToActionResult> EditMovie(MovieViewModel movie)
         {
-            var movieCategory = await this._categoryRepo.FindCategory(movie.Category);
-            var movietoEdit = new Movie()
-            {
-                Title = movie.Title,
-                Directory = movie.Directory,
-                Description = movie.Description,
-                Category = movieCategory,
-                ReleaseDate = movie.ReleaseDate,
-                TrailerUrl = movie.TrailerUrl,
-                Is3D = movie.Is3D,
-                DurationTime = movie.DurationTime
-            };
+            var movieCategory = await _categoryRepo.FindCategory(movie.Category);
+            var movietoEdit = await _movieFactory.GetMovie(movie);
+
 
             await this._movieRepo.EditMovie(movie.Id, movietoEdit);
 
@@ -182,15 +169,26 @@ namespace StarCinema.Controllers.CRUDControllers
 
             var user = await this._usrRepo.GetUser(movie.UserComment.Username);
             int id = movie.Id;
-            Comment commentToAdd = new Comment
-            {
-                Content = movie.UserComment.Comment,
-                User = user,
-                AddedDate = movie.UserComment.AddedDate
-            };
+            var commentToAdd = await _commentFactory.GetComment(movie.UserComment);
 
             await this._movieRepo.AddComment(movie.Id, commentToAdd);
             return RedirectToAction("ShowMovie", new { id = movie.Id });
+        }
+
+        [HttpPost]
+        [EnableCors("AllowOrigin")]
+        public async Task<JsonResult> MovieComments([FromBody]MovieCommentsInputData inputData)
+        {
+            var movie = await _movieRepo.FindMovie(inputData.MovieId);
+            var comments = movie.Comments.Skip(inputData.Page - 1 * PagingInfo.ItemsPerPage)
+                .Take(PagingInfo.ItemsPerPage)
+                .ToList();
+
+            var commentsViewModel = new List<CommentViewModel>();
+
+            comments.ForEach(x => commentsViewModel.Add(new CommentViewModel(x)));
+
+            return Json(commentsViewModel);
         }
 
         [Authorize]
@@ -255,6 +253,10 @@ namespace StarCinema.Controllers.CRUDControllers
                 moviesViewModel.Add(new MovieViewModel(m));
             }
             return moviesViewModel;
+        }   
+        private static int CalculatePagesCount(Movie movie)
+        {
+            return movie.Comments.Count() % PagingInfo.ItemsPerPage > 0 ? movie.Comments.Count() / PagingInfo.ItemsPerPage + 1 : movie.Comments.Count() / PagingInfo.ItemsPerPage;
         }
     }
 

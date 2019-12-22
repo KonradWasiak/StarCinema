@@ -7,12 +7,13 @@ namespace StarCinema.Models.CRUDModels
 {
     public class PaginatedCitiesViewModel
     {
+
+        public IEnumerable<CityViewModel> Cities { get; set; }
+        public PagingInfo PagingInfo { get; set; }
         public PaginatedCitiesViewModel(IEnumerable<CityViewModel> cities, PagingInfo pagingInfo)
         {
             this.Cities = cities;
             this.PagingInfo = pagingInfo;
         }
-        public IEnumerable<CityViewModel> Cities { get; set; }
-        public PagingInfo PagingInfo { get; set; }
     }
 }

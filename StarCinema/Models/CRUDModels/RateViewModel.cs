@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarCinema.DomainModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,5 +14,10 @@ namespace StarCinema.Models.CRUDModels
         [Required]
         public int Rate { get; set; }
 
+        public RateViewModel(Rate rate)
+        {
+            this.UserName = rate.User.UserName;
+            this.Rate = rate.IfLike ? 1 : 0;
+        }
     }
 }

@@ -1,0 +1,40 @@
+﻿@model StarCinema.Models.CRUDModels.CinemaModels.AddCinemaViewModel
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/_CRUDLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+
+
+        <form class="form app-form" method="post" asp-action="AddHallsToCinema" asp-controller="Cinema">
+            <h2 class="app-form-h2"> <i class="glyphicon glyphicon-plus"></i> CREATE SEATS IN HALL</h2>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            @{ int counter = 1;}
+            @for (int i = 0; i < Model.CinemaHalls.Count; i++)
+            {
+                <h4 class="app-form-h4">Hall @counter</h4>
+
+                 <div class="form-group">
+                    <input class="app-form-input" value="" placeholder="Hall name" asp-for="@Model.CinemaHalls[i].Name" />
+                </div>                
+                <div class="form-group">
+                    <input class="app-form-input" value="" placeholder="Number of seats for this hall" asp-for="@Model.CinemaHalls[i].SeatsCount" />
+                </div>
+                counter++;
+            }
+
+
+            <button class="btn btn-danger app-form-submit" type="submit">ADD SEATS</button>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form asp-action="Categories" asp-controller="Category" asp-route-id="1" method="get">
+            <button type="submit" class="btn btn-info app-form-submit"> <i class="glyphicon glyphicon-arrow-left"></i> BACK TO LIST</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+C:\Users\Konrad\StarCinema\StarCinema.Domain\obj\Debug\netcoreapp3.0\StarCinemaDomain.AssemblyInfoInputs.cache
+C:\Users\Konrad\StarCinema\StarCinema.Domain\obj\Debug\netcoreapp3.0\StarCinemaDomain.AssemblyInfo.cs
+C:\Users\Konrad\StarCinema\StarCinema.Domain\bin\Debug\netcoreapp3.0\StarCinemaDomain.deps.json
+C:\Users\Konrad\StarCinema\StarCinema.Domain\bin\Debug\netcoreapp3.0\StarCinemaDomain.dll
+C:\Users\Konrad\StarCinema\StarCinema.Domain\bin\Debug\netcoreapp3.0\StarCinemaDomain.pdb
+C:\Users\Konrad\StarCinema\StarCinema.Domain\obj\Debug\netcoreapp3.0\StarCinemaDomain.dll
+C:\Users\Konrad\StarCinema\StarCinema.Domain\obj\Debug\netcoreapp3.0\StarCinemaDomain.pdb

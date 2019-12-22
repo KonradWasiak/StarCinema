@@ -1,4 +1,6 @@
 ﻿using StarCinema.DomainModels;
+using StarCinema.Models.CRUDModels.AddressModels;
+using StarCinema.Models.CRUDModels.CinemaModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +10,18 @@ namespace StarCinema.Models.CRUDModels
 {
     public class CityViewModel
     {
+        public int Id { get; set; }
         public string CityName { get; set; }
-        public List<Cinema> Cinemas { get; set; }
+        public AddressModels.AddressViewModel Address { get; set; }
+        public List<CinemaViewModel> Cinemas { get; set; }
 
         public CityViewModel(string cityName, List<Cinema> cinemas)
         {
             this.CityName = cityName;
-            this.Cinemas = cinemas;
+            if (this.Cinemas == null)
+            {
+                cinemas.ForEach(x => this.Cinemas.Add(new CinemaViewModel(x)));
+            }
         }
 
         public CityViewModel(string cityName)
@@ -25,8 +32,9 @@ namespace StarCinema.Models.CRUDModels
 
         public CityViewModel(City city)
         {
+            this.Id = city.Id;
             this.CityName = city.CityName;
-            this.Cinemas = city.Cinemas.ToList();
+            this.Cinemas = new List<CinemaViewModel>();
         }
         public CityViewModel()
         {

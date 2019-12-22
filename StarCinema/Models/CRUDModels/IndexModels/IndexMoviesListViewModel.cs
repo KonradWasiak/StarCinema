@@ -14,7 +14,7 @@ namespace StarCinema.Models.IndexModels
         public IEnumerable<Category> Categories { get; set; }
         public IndexMoviesListViewModel(IEnumerable<Movie> AllMoviesList, IEnumerable<Category> AllCategoriesList)
         {
-            this.LatestMovies = AllMoviesList.Where(m => (m.ReleaseDate > DateTime.Today.AddMonths(-1)) && (m.ReleaseDate < DateTime.Today))
+            this.LatestMovies = AllMoviesList.Where(m => (m.ReleaseDate > DateTime.Today.AddMonths(-12)) && (m.ReleaseDate < DateTime.Today))
                                              .ToList()
                                              .OrderByDescending(m => m.ReleaseDate)
                                              .Take(9);

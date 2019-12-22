@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    public interface IMovieRepository
+    public interface IMovieRepository : IRepository
     {
         void AddMovie(Movie movie);
 
         Task<Movie> RemoveMovie(Movie movie);
         Task<Movie> FindMovie(int id);
         Task<Movie> FindMovie(string movieTitile);
-        Task<IEnumerable<Movie>> AllMovies();
-        Task<IEnumerable<Movie>> PaginatedMovies(int page, int itemsPerPage);
-        Task<IEnumerable<Movie>> FindMoviesByReleaseDate(DateTime date);
+        Task<List<Movie>> AllMovies();
+        Task<List<Movie>> PaginatedMovies(int page, int itemsPerPage);
+        Task<List<Movie>> FindMoviesByReleaseDate(DateTime date);
         Task EditMovie(int movieId, Movie movie);
         Task<int> FindMovieId(Movie movie);
         Task<int> MoviesCount();

@@ -7,6 +7,7 @@ using StarCinema.DataLayer.Abstract;
 using StarCinema.DomainModels;
 using StarCinema.Models;
 using StarCinema.Models.CRUDModels;
+using StarCinema.Models.CRUDModels.CategoryModels;
 
 namespace StarCinema.Controllers.CRUDControllers
 {
@@ -14,39 +15,33 @@ namespace StarCinema.Controllers.CRUDControllers
     {
         private readonly IMovieRepository _movieRepo;
         private readonly ICategoryRepository _categoryRepo;
+        private readonly CategoryFactory _categoryFactory;
 
-        public CategoryController(IMovieRepository movieRepo, ICategoryRepository categoryRepo)
+        public CategoryController(IMovieRepository movieRepo, ICategoryRepository categoryRepo, CategoryFactory categoryFactory)
         {
             this._movieRepo = movieRepo; 
-            this._categoryRepo = categoryRepo; 
+            this._categoryRepo = categoryRepo;
+            this._categoryFactory = categoryFactory;
 
         }
         public async Task<IActionResult> Categories(int id)
         {
-            var allCategories = await this._categoryRepo.PaginatedCategories(id, PagingInfo.ItemsPerPage);
+            var categories = await _categoryRepo.PaginatedCategories(id, PagingInfo.ItemsPerPage);
+            var allCategoriesCount = await _categoryRepo.CategoriesCount();
             var categoriesViewModelList = new List<CategoryViewModel>();
+            
+            categories.ForEach(x => categoriesViewModelList.Add(new CategoryViewModel(x)));
 
-            foreach (var c in allCategories)
-            {
-                categoriesViewModelList.Add(new CategoryViewModel(c));
-            }
+            var categoriesViewModel = new PaginatedViewModel<CategoryViewModel>(categoriesViewModelList, id, allCategoriesCount);
 
-            int categoriesCount = await _categoryRepo.CategoriesCount();
-            int totalPages = categoriesCount % PagingInfo.ItemsPerPage > 0 ? categoriesCount / PagingInfo.ItemsPerPage + 1 : categoriesCount / PagingInfo.ItemsPerPage;
-
-            var categoriesViewModel = new PaginatedCategoriesViewModel(categoriesViewModelList, new PagingInfo
-            {
-                CurrentPage = id,
-                TotalPages = totalPages
-            });;
             return View(categoriesViewModel);
         }
 
         [HttpPost]
         public async Task<ActionResult> RemoveCategory(string categoryName)
         {
-            await this._categoryRepo.RemoveCategory(categoryName);
-            return View((object)categoryName);
+            var removedCategory = await _categoryRepo.RemoveCategory(categoryName);
+            return View(removedCategory.CategoryName);
         }
 
 
@@ -60,11 +55,8 @@ namespace StarCinema.Controllers.CRUDControllers
         {
             if (ModelState.IsValid)
             {
-                this._categoryRepo
-                    .AddCategory(new Category()
-                    {
-                        CategoryName = category.Name
-                    });
+                var categoryToAdd = _categoryFactory.GetCategory(category);
+                _categoryRepo.AddCategory(categoryToAdd);
                 return View();
             }
             return View(category);
@@ -84,12 +76,9 @@ namespace StarCinema.Controllers.CRUDControllers
 
         private async Task<List<CategoryViewModel>> getAllCategories()
         {
-            var allCategories = await this._categoryRepo.AllCategories();
+            var allCategories = await _categoryRepo.AllCategories();
             var categoriesViewModel = new List<CategoryViewModel>();
-            foreach (var c in allCategories)
-            {
-                categoriesViewModel.Add(new CategoryViewModel(c));
-            }
+            allCategories.ForEach(x => categoriesViewModel.Add(new CategoryViewModel(x)));
             return categoriesViewModel;
         }
 

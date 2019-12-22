@@ -32,14 +32,13 @@ namespace StarCinema.DataLayer.Abstract
             this.context.SaveChanges();
         }
 
-        public async Task<IEnumerable<Movie>> AllMovies()
+        public async Task<List<Movie>> AllMovies()
         {
-            IEnumerable<Movie> allMovies = await context.Movies.Include(m => m.Category)
+            return await context.Movies.Include(m => m.Category)
                                                                .Include(m => m.Comments)
                                                                .Include(m => m.Rates)
                                                                .Include(m => m.Shows)
                                                                .ToListAsync();
-            return allMovies;
         }
 
         public async Task EditMovie(int movieId, Movie updatedMovie)
@@ -84,7 +83,7 @@ namespace StarCinema.DataLayer.Abstract
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Movie>> FindMoviesByReleaseDate(DateTime date)
+        public Task<List<Movie>> FindMoviesByReleaseDate(DateTime date)
         {
             throw new NotImplementedException();
         }
@@ -94,9 +93,9 @@ namespace StarCinema.DataLayer.Abstract
             return await this.context.Movies.CountAsync();
         }
 
-        public async Task<IEnumerable<Movie>> PaginatedMovies(int page, int itemsPerPage)
+        public async Task<List<Movie>> PaginatedMovies(int page, int itemsPerPage)
         {
-            IEnumerable<Movie> movies = await context.Movies.Include(m => m.Category)
+            return await context.Movies.Include(m => m.Category)
                                                                .Include(m => m.Comments)
                                                                .Include(m => m.Rates)
                                                                .Include(m => m.Shows)
@@ -104,7 +103,6 @@ namespace StarCinema.DataLayer.Abstract
                                                                .Skip((page - 1) * itemsPerPage)
                                                                .Take(itemsPerPage)
                                                                .ToListAsync();
-            return movies;
         }
 
         public async Task<Movie> RemoveMovie(Movie movie)

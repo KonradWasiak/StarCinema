@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    interface IBookingRepository
+    interface IBookingRepository : IRepository
     {
     }
 }
