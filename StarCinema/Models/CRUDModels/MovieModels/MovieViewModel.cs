@@ -54,9 +54,9 @@ namespace StarCinema.Models.CRUDModels
             this.Description = noInfo;
         }
 
-        public MovieViewModel(Movie movie, PagingInfo commentsPagingInfo) 
+        public MovieViewModel(Movie movie, int commentsPage) 
         {
-            this.CommentsPagingInfo = commentsPagingInfo;
+            this.CommentsPagingInfo = new PagingInfo(movie.Comments.Count, commentsPage);
             this.Id = movie.Id;
             this.Title = movie.Title;
             this.Directory = movie.Directory;

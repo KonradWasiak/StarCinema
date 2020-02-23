@@ -73,7 +73,7 @@ using StarCinema.Models;
             WriteLiteral("\r\n<h2 class=\"app-form-h2\">Cities</h2>\r\n<div class=\"row\">\r\n    <div class=\"col-lg-4 col-lg-offset-4\">\r\n        ");
             EndContext();
             BeginContext(311, 213, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9a72823b5f5d4f4a96f9283d49f2e8d4", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "700218347d424f65a46831da2d459eb8", async() => {
                 BeginContext(373, 144, true);
                 WriteLiteral("\r\n            <button type=\"submit\" class=\"btn btn-success app-form-submit\"><i class=\"glyphicon glyphicon-plus\"></i> ADD CITY</button>\r\n        ");
                 EndContext();
@@ -115,7 +115,7 @@ using StarCinema.Models;
                             ");
             EndContext();
             BeginContext(826, 174, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "57d61ca6afe542dbbdc231386c803f12", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "064e7082ac2d4339a509aae772974afb", async() => {
                 BeginContext(884, 112, true);
                 WriteLiteral("\r\n                                <i class=\"glyphicon glyphicon-triangle-top\"></i>\r\n                            ");
                 EndContext();
@@ -139,7 +139,7 @@ using StarCinema.Models;
             WriteLiteral("\r\n                            Name\r\n                            ");
             EndContext();
             BeginContext(1064, 179, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a8d24c5db8c84349a720b9a8b1aeacfd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3e22029a611b4eaa9ced0e7dcbd84533", async() => {
                 BeginContext(1124, 115, true);
                 WriteLiteral("\r\n                                <i class=\"glyphicon glyphicon-triangle-bottom\"></i>\r\n                            ");
                 EndContext();
@@ -193,7 +193,7 @@ using StarCinema.Models;
             WriteLiteral("</td>\r\n                            <td class=\"td-center\">\r\n                                ");
             EndContext();
             BeginContext(1743, 353, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "75908404840943688780f45abbdc7d52", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6c5c787cd2d64aa68892eb13416b246e", async() => {
                 BeginContext(1795, 74, true);
                 WriteLiteral("\r\n                                    <input type=\"hidden\" name=\"cityName\"");
                 EndContext();
@@ -248,7 +248,7 @@ WriteAttributeValue("", 1877, c.CityName, 1877, 11, false);
             WriteLiteral("\r\n<div class=\"row\">\r\n    <div class=\"col-sm-12\">\r\n        <nav>\r\n            <ul class=\"pagination\">\r\n                <li class=\"page-item\">\r\n                    ");
             EndContext();
             BeginContext(2804, 181, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "56132e730f2642128bc7ffc13330b88f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "309c12a1ddad4d40881f39165adcb794", async() => {
                 BeginContext(2884, 97, true);
                 WriteLiteral("\r\n                        <i class=\"glyphicon glyphicon-fast-backward\"></i>\r\n                    ");
                 EndContext();
@@ -279,7 +279,7 @@ WriteAttributeValue("", 1877, c.CityName, 1877, 11, false);
             WriteLiteral("\r\n                </li>\r\n                <li class=\"page-item\">\r\n                    ");
             EndContext();
             BeginContext(3070, 136, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5bc82aa20c5449fabbb45f53571ea17a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c34cbc9cffa243eaa80c96ac2c7c26d2", async() => {
                 BeginContext(3158, 44, true);
                 WriteLiteral("<i class=\"glyphicon glyphicon-backward\"></i>");
                 EndContext();
@@ -328,7 +328,7 @@ WriteAttributeValue("", 1877, c.CityName, 1877, 11, false);
             WriteLiteral("                        <li class=\"page-item active\">");
             EndContext();
             BeginContext(3469, 87, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a08fd98fb7ba4cf692691e0def7fb54a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3cfc7bb2a116412abf2f64b19dc6a7bf", async() => {
                 BeginContext(3551, 1, false);
 #line 84 "C:\Users\Konrad\StarCinema\StarCinema\Views\City\Cities.cshtml"
                                                                                                                                  Write(j);
@@ -380,7 +380,7 @@ WriteAttributeValue("", 1877, c.CityName, 1877, 11, false);
             WriteLiteral("                        <li class=\"page-item\">");
             EndContext();
             BeginContext(3681, 87, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eab33470819248f2a3fbf3ef48e39e74", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "de68b56e7bf846d99c7803d42facac16", async() => {
                 BeginContext(3763, 1, false);
 #line 88 "C:\Users\Konrad\StarCinema\StarCinema\Views\City\Cities.cshtml"
                                                                                                                           Write(j);
@@ -431,7 +431,7 @@ WriteAttributeValue("", 1877, c.CityName, 1877, 11, false);
             WriteLiteral("                <li class=\"page-item\">\r\n                    ");
             EndContext();
             BeginContext(3877, 135, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "968b12b54f1542c0b8a977b02f010b3c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "77b565a48e374b1aa81eee94ff4295ff", async() => {
                 BeginContext(3965, 43, true);
                 WriteLiteral("<i class=\"glyphicon glyphicon-forward\"></i>");
                 EndContext();
@@ -469,7 +469,7 @@ WriteAttributeValue("", 1877, c.CityName, 1877, 11, false);
             WriteLiteral("\r\n                </li>\r\n                <li class=\"page-item\">\r\n                    ");
             EndContext();
             BeginContext(4097, 159, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4add1a851d5045bb856cae7266918d57", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9993306333e240dcb35e3b84d1121c32", async() => {
                 BeginContext(4204, 48, true);
                 WriteLiteral("<i class=\"glyphicon glyphicon-fast-forward\"></i>");
                 EndContext();

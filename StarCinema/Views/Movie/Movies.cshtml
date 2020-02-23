@@ -5,6 +5,8 @@
     int i = 0;
 }
 
+<partial name="_CommentsModalPartial" />
+
 <h2 class="app-form-h2">Movies</h2>
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
@@ -70,8 +72,8 @@
                             </td>
                             <td>@c.Category</td>
                             <td>@c.ReleaseDate.ToShortDateString()</td>
-                            <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button></td>
-                            <td><button type="button" onclick="GetComments(@c.Id, 1)" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
+                            <td><button type="button" class="app-form-table-submit btn btn-info" onclick="GetComments(@c.Id, 1, @("\"" + c.Title + "\""))" data-toggle="modal" data-target="#commentsModal"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button></td>
+                            <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
                             <td>
                                 <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
                                     <input type="hidden" name="movieId" value="@c.Id" />
@@ -134,3 +136,5 @@
         </nav>
     </div>
 </div>
+
+

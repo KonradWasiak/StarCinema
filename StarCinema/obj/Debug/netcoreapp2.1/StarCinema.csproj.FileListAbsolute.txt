@@ -302,3 +302,4 @@ C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.Views.p
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.dll
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.pdb
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.csproj.CopyComplete
+C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CommentsModalPartial.cshtml.g.cs

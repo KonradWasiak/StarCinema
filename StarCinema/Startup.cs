@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StarCinema.DataLayer.Abstract;
 using StarCinema.DataLayer.Concrete;
+using StarCinema.Models;
 using StarCinema.Models.CRUDModels.AddressModels;
 using StarCinema.Models.CRUDModels.CategoryModels;
 using StarCinema.Models.CRUDModels.CinemaHallModels;
@@ -52,6 +53,7 @@ namespace StarCinema
             options.UseSqlServer(Configuration.GetConnectionString("StarCinemaContextConnection")));
             services.AddMemoryCache();
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IRateRepository, RateRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
@@ -65,8 +67,7 @@ namespace StarCinema
             services.AddScoped<CategoryFactory, CategoryFactory>();
             services.AddScoped<CityFactory, CityFactory>();
             services.AddScoped<MovieFactory, MovieFactory>();
-            services.AddScoped<CommentFactory, CommentFactory>();
-           
+            services.AddScoped<CommentFactory, CommentFactory>();           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

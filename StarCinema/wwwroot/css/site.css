@@ -358,6 +358,7 @@ iframe {
 
 table {
     background-color: white;
+    text-align: center;
 }
 
 .well {
@@ -418,4 +419,9 @@ thead a:hover{
 
 #newest{
     background-color:white!important;
+}
+
+.modal-xl{
+    width: 90%;
+    margin-top:10%;
 }

@@ -9,6 +9,7 @@ namespace StarCinema.Models.CRUDModels
 {
     public class CommentViewModel
     {
+        public int Id { get; set; }
         [Required]
         public string Username { get; set; }
 
@@ -20,6 +21,7 @@ namespace StarCinema.Models.CRUDModels
 
         public CommentViewModel(Comment comment)
         {
+            this.Id = comment.Id;
             this.Username = comment.User.UserName;
             this.Comment = comment.Content;
             this.AddedDate = comment.AddedDate;
