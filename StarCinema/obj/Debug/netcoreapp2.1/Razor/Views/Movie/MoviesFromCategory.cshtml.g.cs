@@ -96,7 +96,7 @@ WriteAttributeValue("", 561, imgSrc, 561, 7, false);
             WriteLiteral(" alt=\"...\">\r\n        </div>\r\n        <div class=\"col-md-9\">\r\n            ");
             EndContext();
             BeginContext(642, 193, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bc0a72e70eb44d1eb09951338d4f5b84", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9963bc24aeb44c0c890cc8bb238daec5", async() => {
                 BeginContext(737, 63, true);
                 WriteLiteral("\r\n                <h2><i class=\"glyphicon glyphicon-film\"></i> ");
                 EndContext();
@@ -174,7 +174,7 @@ WriteAttributeValue("", 561, imgSrc, 561, 7, false);
             WriteLiteral("</h4>\r\n                ");
             EndContext();
             BeginContext(1117, 288, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7439f9b03b6845dba2f65e749bbc6c8f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "17da02f143e74365b5d65c5b5b618e76", async() => {
                 BeginContext(1182, 52, true);
                 WriteLiteral("\r\n                    <input type=\"hidden\" name=\"id\"");
                 EndContext();

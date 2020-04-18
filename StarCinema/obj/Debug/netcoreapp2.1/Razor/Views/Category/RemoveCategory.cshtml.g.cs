@@ -75,7 +75,7 @@ using StarCinema.Models;
             WriteLiteral("</h2>\r\n        ");
             EndContext();
             BeginContext(304, 245, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c9fddfe0f21a491a86f5ff72cb1f95ca", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "22de1636ddfd4cec9d85866f56c79c64", async() => {
                 BeginContext(390, 152, true);
                 WriteLiteral("\r\n            <button type=\"submit\" class=\"btn btn-info app-form-submit\"> <i class=\"glyphicon glyphicon-arrow-left\"></i> BACK TO LIST</button>\r\n        ");
                 EndContext();

@@ -37,9 +37,9 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
 
             if (this.Shows == null)
             {
-                this.Shows = new List<ShowViewModel>();
-                cinemaHall.Shows.ToList()
-                    .ForEach(x => this.Shows.Add(new ShowViewModel(x)));
+                //this.Shows = new List<ShowViewModel>();
+                //cinemaHall.Shows.ToList()
+                //    .ForEach(x => this.Shows.Add(new ShowViewModel(x)));
             }
         }
 

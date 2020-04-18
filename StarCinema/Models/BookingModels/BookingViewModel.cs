@@ -16,15 +16,15 @@ namespace StarCinema.Models.BookingModels
 
         public BookingViewModel(Booking booking)
         {
-            this.Id = booking.Id;
-            if(this.Show == null)
-            {
-                this.Show = new ShowViewModel(booking.Show);
-            }
-            if(this.User == null)
-            {
-                this.User = new UserViewModel(booking.User);
-            }
+            //this.Id = booking.Id;
+            //if(this.Show == null)
+            //{
+            //    this.Show = new ShowViewModel(booking.Show);
+            //}
+            //if(this.User == null)
+            //{
+            //    this.User = new UserViewModel(booking.User);
+            //}
         }
     }
 }

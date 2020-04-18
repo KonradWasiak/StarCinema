@@ -412,7 +412,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.RenameTable(
                 name: "Movies",
-                newName: "Movie");
+                newName: "AddEditMovie");
 
             migrationBuilder.RenameTable(
                 name: "Halls",
@@ -465,7 +465,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.RenameIndex(
                 name: "IX_Movies_CategoryId",
-                table: "Movie",
+                table: "AddEditMovie",
                 newName: "IX_Movie_CategoryId");
 
             migrationBuilder.RenameIndex(
@@ -521,7 +521,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Movie",
-                table: "Movie",
+                table: "AddEditMovie",
                 column: "Id");
 
             migrationBuilder.AddPrimaryKey(
@@ -590,7 +590,7 @@ namespace StarCinema.Migrations
                 name: "FK_Comment_Movie_MovieId",
                 table: "Comment",
                 column: "MovieId",
-                principalTable: "Movie",
+                principalTable: "AddEditMovie",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
@@ -604,7 +604,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Movie_Category_CategoryId",
-                table: "Movie",
+                table: "AddEditMovie",
                 column: "CategoryId",
                 principalTable: "Category",
                 principalColumn: "Id",
@@ -614,7 +614,7 @@ namespace StarCinema.Migrations
                 name: "FK_Rate_Movie_MovieId",
                 table: "Rate",
                 column: "MovieId",
-                principalTable: "Movie",
+                principalTable: "AddEditMovie",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
 
@@ -646,7 +646,7 @@ namespace StarCinema.Migrations
                 name: "FK_Show_Movie_MovieId",
                 table: "Show",
                 column: "MovieId",
-                principalTable: "Movie",
+                principalTable: "AddEditMovie",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

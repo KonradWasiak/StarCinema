@@ -29,24 +29,24 @@ namespace StarCinema.Controllers.CRUDControllers
             this._itemsPerPage = _config.GetValue<int>("ItemsPerPage");
 
         }
-        public async Task<IActionResult> Categories(int id)
+        public IActionResult Categories([FromQuery] CategoryListingRequest request)
         {
-            var categories = await _categoryRepo.PaginatedCategories(id, _itemsPerPage);
-            var allCategoriesCount = await _categoryRepo.CategoriesCount();
+            var categories = _categoryRepo.PaginatedCategories(request.Page, request.PageSize, request.OrderBy).ToList();
+            var allCategoriesCount =  _categoryRepo.CategoriesCount();
             var categoriesViewModelList = new List<CategoryViewModel>();
             
             categories.ForEach(x => categoriesViewModelList.Add(new CategoryViewModel(x)));
 
-            var categoriesViewModel = new PaginatedViewModel<CategoryViewModel>(categoriesViewModelList, id, allCategoriesCount);
+            var categoriesViewModel = new ListingViewModel<CategoryViewModel>(categoriesViewModelList, request.Page, allCategoriesCount, request.OrderBy);
 
             return View(categoriesViewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> RemoveCategory(string categoryName)
+        public IActionResult RemoveCategory(int categoryId)
         {
-            var removedCategory = await _categoryRepo.RemoveCategory(categoryName);
-            return View(removedCategory.CategoryName);
+            var removedCategory = _categoryRepo.RemoveCategory(categoryId);
+            return RedirectToAction("Categories");
         }
 
 
@@ -62,26 +62,14 @@ namespace StarCinema.Controllers.CRUDControllers
             {
                 var categoryToAdd = _categoryFactory.GetCategory(category);
                 _categoryRepo.AddCategory(categoryToAdd);
-                return View();
+                return RedirectToAction("Categories");
             }
             return View(category);
         }
 
-        public async Task<IActionResult> SortCategoriesByNameAsc()
+        private  IList<CategoryViewModel> getAllCategories()
         {
-            var categoriesViewModel = await getAllCategories();
-            return View("Categories", categoriesViewModel.OrderBy(c => c.Name));
-        }
-
-        public async Task<IActionResult> SortCategoriesByNameDesc()
-        {
-            var categoriesViewModel = await getAllCategories();
-            return View("Categories", categoriesViewModel.OrderByDescending(c => c.Name));
-        }
-
-        private async Task<List<CategoryViewModel>> getAllCategories()
-        {
-            var allCategories = await _categoryRepo.AllCategories();
+            var allCategories = _categoryRepo.AllCategories().ToList();
             var categoriesViewModel = new List<CategoryViewModel>();
             allCategories.ForEach(x => categoriesViewModel.Add(new CategoryViewModel(x)));
             return categoriesViewModel;

@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.PaginatedViewModel<StarCinema.Models.CRUDModels.CityViewModel>;
+﻿@model StarCinema.Models.ListingViewModel<StarCinema.Models.CRUDModels.CityViewModel>;
 @{
     ViewData["Title"] = "Cities";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -45,7 +45,7 @@
                             <td class="td-center">@c.CityName</td>
                             <td class="td-center">
                                 <form asp-action="RemoveCity" asp-controller="City">
-                                    <input type="hidden" name="cityName" value="@c.CityName" />
+                                    <input type="hidden" name="cityName" value="@c.Id" />
                                     <button type="submit" class="btn btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
                                 </form>
                             </td>

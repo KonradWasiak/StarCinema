@@ -9,26 +9,23 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
 {
     public class CinemaHallFactory
     {
-        private SeatFactory _seatFactory;
-
-        public CinemaHallFactory(SeatFactory seatFactory)
-        {
-            this._seatFactory = seatFactory;
-        }
-        public CinemaHall CreateCinemaHall(CinemaHallViewModel hall)
+        public CinemaHall CreateCinemaHall(AddCinemaHallRequest request)
         {
             var cinemaHall = new CinemaHall()
             {
                 Shows = new List<Show>(),
                 Cinema = null,
-                Id = hall.Id,
-                Name = hall.Name,
-                Seats = new List<Seat>(hall.SeatsCount)
+                Name = request.Name,
+                Seats = new List<Seat>(request.SeatsCount)
             };
 
-            for (int i = 0; i < hall.SeatsCount; i++)
+            for (int i = 0; i < request.SeatsCount; i++)
             {
-                cinemaHall.Seats.Add(_seatFactory.GetSeat(cinemaHall));
+                cinemaHall.Seats.Add(new Seat()
+                {
+                    Available = true,
+                    Hall = cinemaHall
+                });
             }
 
             return cinemaHall;

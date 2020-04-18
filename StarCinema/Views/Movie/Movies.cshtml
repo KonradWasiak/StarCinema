@@ -1,13 +1,11 @@
-﻿@model StarCinema.Models.PaginatedViewModel<StarCinema.Models.CRUDModels.MovieViewModel>;
+﻿@model StarCinema.Models.ListingViewModel<StarCinema.Models.CRUDModels.MovieModels.MovieListingViewModel>;
 @{
     ViewData["Title"] = "Movies";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
     int i = 0;
 }
 
-<partial name="_CommentsModalPartial" />
-
-<h2 class="app-form-h2">Movies</h2>
+<h2 class="app-form-h2">AddEditMovies</h2>
 <div class="row">
     <div class="col-lg-4 col-lg-offset-4">
         <form asp-action="AddMovie" asp-controller="Movie" method="get">
@@ -27,27 +25,28 @@
                         <td>#</td>
                         <td>Poster</td>
                         <td>
-                            <a asp-controller="Movie" asp-action="SortMoviesByTitleAsc">
+                            <a asp-controller="Movie" asp-action="Movies" asp-route-orderBy="TitleAsc">
                                 <i class="glyphicon glyphicon-triangle-top"></i>
                             </a>
                             Title
-                            <a asp-controller="Movie" asp-action="SortMoviesByTitleDesc">
+                            <a asp-controller="Movie" asp-action="Movies" asp-route-orderBy="TitleDesc">
                                 <i class="glyphicon glyphicon-triangle-bottom"></i>
                             </a>
                         <td>
-                            <a asp-controller="Movie" asp-action="SortMoviesByCategoryAsc">
+                            <a asp-controller="Movie" asp-action="Movies" asp-route-orderBy="CategoryAsc">
                                 <i class="glyphicon glyphicon-triangle-top"></i>
                             </a>
                             Category
-                            <a asp-controller="Movie" asp-action="SortMoviesByCategoryDesc">
+                            <a asp-controller="Movie" asp-action="Movies" asp-route-orderBy="CategoryDesc"> 
                                 <i class="glyphicon glyphicon-triangle-bottom"></i>
                             </a>
                         </td>
                         <td>
-                            <a asp-controller="Movie" asp-action="SortMoviesByDateAsc">
+                            <a asp-controller="Movie" asp-action="Movies" asp-route-orderBy="ReleaseDateAsc">
                                 <i class="glyphicon glyphicon-triangle-top"></i>
-                            </a>                            Release date
-                            <a asp-controller="Movie" asp-action="SortMoviesByDateDesc">
+                            </a>                            
+                            Release date
+                            <a asp-controller="Movie" asp-action="Movies" asp-route-orderBy="ReleaseDateDesc">
                                 <i class="glyphicon glyphicon-triangle-bottom"></i>
                             </a>
                         </td>
@@ -66,13 +65,18 @@
                             <td>@i</td>
                             <td><img class="img-table" src="@imgSrc" /></td>
                             <td>
-                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@c.Id">
+                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@c.Id">
                                     @c.Title
                                 </a>
                             </td>
                             <td>@c.Category</td>
                             <td>@c.ReleaseDate.ToShortDateString()</td>
-                            <td><button type="button" class="app-form-table-submit btn btn-info" onclick="GetComments(@c.Id, 1, @("\"" + c.Title + "\""))" data-toggle="modal" data-target="#commentsModal"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button></td>
+                            <td>
+                                <form class="app-form-table" asp-action="MovieComments" asp-controller="Comment">
+                                    <input type="hidden" name="movieId" value="@c.Id" />
+                                    <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button>
+                                </form>
+                            </td>
                             <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
                             <td>
                                 <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
@@ -107,30 +111,30 @@
         <nav>
             <ul class="pagination">
                 <li class="page-item">
-                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="1" class="page-link">
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy"  asp-route-page="1" class="page-link">
                         <i class="glyphicon glyphicon-fast-backward"></i>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy" asp-route-page="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
                 </li>
 
                 @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
                 {
                     if (j == Model.PagingInfo.CurrentPage)
                     {
-                        <li class="page-item active"><a asp-action="Movies" asp-controller="Movie" asp-route-id="@j" class="page-link">@j</a></li>
+                        <li class="page-item active"><a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy" asp-route-page="@j" class="page-link">@j</a></li>
                     }
                     else
                     {
-                        <li class="page-item"><a asp-action="Movies" asp-controller="Movie" asp-route-id="@j" class="page-link">@j</a></li>
+                        <li class="page-item"><a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy"  asp-route-page="@j" class="page-link">@j</a></li>
                     }
                 }
                 <li class="page-item">
-                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy" asp-route-page="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="Movies" asp-controller="Movie" asp-route-id="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy" asp-route-page="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
                 </li>
             </ul>
         </nav>

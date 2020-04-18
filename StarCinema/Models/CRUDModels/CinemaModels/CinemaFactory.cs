@@ -13,31 +13,29 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
     {
         private readonly ICityRepository _cityRepo;
         private readonly CinemaHallFactory _cinemaHallFactory;
-        private readonly AddressFactory _addressFactory;
 
-        public CinemaFactory(ICityRepository cityRepo, CinemaHallFactory cinemaHallFactory, AddressFactory addressFactory)
+        public CinemaFactory(ICityRepository cityRepo, CinemaHallFactory cinemaHallFactory)
         {
             _cityRepo = cityRepo;
             _cinemaHallFactory = cinemaHallFactory;
-            _addressFactory = addressFactory;
         }
 
-        public async Task<Cinema> GetCinema(AddCinemaViewModel cinemaViewModel)
+        public Cinema CreateCinema(AddCinemaRequest request)
         {
             var cinema = new Cinema();
             cinema.CinemaHalls = new List<CinemaHall>();
-            var city = await GetCity(cinemaViewModel.Address.City);
+            var city = _cityRepo.FindCity(request.CityId);
 
-            cinemaViewModel.CinemaHalls.ForEach(x => cinema.CinemaHalls.Add(_cinemaHallFactory.CreateCinemaHall(x)));
+            request.CinemaHalls.ForEach(x => cinema.CinemaHalls.Add(_cinemaHallFactory.CreateCinemaHall(x)));
             cinema.City = city;
-            cinema.Address = _addressFactory.GetAddress(cinemaViewModel.Address);
-
+            cinema.Address = new Address()
+            {
+                BuildingNumber = request.BuildingNumber,
+                City = city.CityName,
+                PostalCode = request.PostalCode,
+                Street = request.Street
+            };
             return cinema;
-        }
-
-        private async Task<City> GetCity(string cityName)
-        {
-            return await _cityRepo.FindCity(cityName);
         }
     }
 }

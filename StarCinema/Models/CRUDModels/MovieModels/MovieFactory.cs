@@ -15,20 +15,20 @@ namespace StarCinema.Models.CRUDModels.MovieModels
         {
             this._categoryRepo = categoryRepo;
         }
-        public async Task<Movie> GetMovie(MovieViewModel movie)
+        public Movie GetMovie(AddEditMovieRequest addEditMovie)
         {
-            var movieCategory = await this._categoryRepo.FindCategory(movie.Category);
+            var movieCategory = this._categoryRepo.FindCategory(addEditMovie.CategoryId);
 
             return new Movie()
             {
-                Title = movie.Title,
-                Directory = movie.Directory,
-                Description = movie.Description,
+                Title = addEditMovie.Title,
+                Directory = addEditMovie.Directory,
+                Description = addEditMovie.Description,
                 Category = movieCategory,
-                ReleaseDate = movie.ReleaseDate,
-                TrailerUrl = movie.TrailerUrl,
-                Is3D = movie.Is3D,
-                DurationTime = movie.DurationTime
+                ReleaseDate = addEditMovie.ReleaseDate,
+                TrailerUrl = addEditMovie.TrailerUrl,
+                Is3D = addEditMovie.Is3D,
+                DurationTime = addEditMovie.DurationTime
             };
         }
     }

@@ -22,9 +22,9 @@ namespace StarCinema.Controllers
             this._categoryRepo = categoryRepo;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            IndexMoviesListViewModel imlvm = new IndexMoviesListViewModel(await this._movieRepo.AllMovies(), await this._categoryRepo.AllCategories());
+            IndexMoviesListViewModel imlvm = new IndexMoviesListViewModel(_movieRepo.AllMovies(), this._categoryRepo.AllCategories());
             return View(imlvm);
         }
 

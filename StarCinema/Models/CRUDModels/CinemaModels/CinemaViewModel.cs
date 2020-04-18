@@ -11,7 +11,7 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
     public class CinemaViewModel
     {
         public int Id { get; set; }
-        public CityViewModel City { get; set; }
+        public int CityId{ get; set; }
         public List<CinemaHallViewModel> CinemaHalls { get; set; }
         public AddressViewModel Address { get; set; }
         public CinemaViewModel()
@@ -42,18 +42,7 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
 
         public CinemaViewModel(Cinema cinemaEntity)
         {
-            this.Id = cinemaEntity.Id;
-            this.Address = new AddressViewModel(cinemaEntity.Address);
-            if(this.City == null)
-            {
-                this.City = new CityViewModel(cinemaEntity.City);
-            }
-            if(this.CinemaHalls == null)
-            {
-                cinemaEntity.CinemaHalls.ToList()
-                    .ForEach(x => this.CinemaHalls.Add(new CinemaHallViewModel(x)));
 
-            }
         }
     }
 }

@@ -7,10 +7,10 @@ namespace StarCinema.Models.CRUDModels.IndexModels
 {
     public class PaginatedMoviesViewModel
     {
-        public IEnumerable<MovieViewModel> Movies { get; set; }
+        public IEnumerable<AddEditMovieRequest> Movies { get; set; }
         public PagingInfo PagingInfo { get; set; }
 
-        public PaginatedMoviesViewModel(IEnumerable<MovieViewModel> movies, PagingInfo pagingInfo)
+        public PaginatedMoviesViewModel(IEnumerable<AddEditMovieRequest> movies, PagingInfo pagingInfo)
         {
             Movies = movies;
             PagingInfo = pagingInfo;

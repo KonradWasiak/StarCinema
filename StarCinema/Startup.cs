@@ -62,7 +62,6 @@ namespace StarCinema
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<CinemaFactory, CinemaFactory>();
             services.AddScoped<CinemaHallFactory, CinemaHallFactory>();
-            services.AddScoped<AddressFactory, AddressFactory>();
             services.AddScoped<SeatFactory, SeatFactory>();
             services.AddScoped<CategoryFactory, CategoryFactory>();
             services.AddScoped<CityFactory, CityFactory>();

@@ -17,6 +17,7 @@ using StarCinema.Models.CRUDModels;
 using StarCinema.Models.CRUDModels.CommentModels;
 using StarCinema.Models.CRUDModels.IndexModels;
 using StarCinema.Models.CRUDModels.MovieModels;
+using StarCinema.Models.CRUDModels.RateModels;
 using StarCinema.Models.IndexModels;
 
 namespace StarCinema.Controllers.CRUDControllers
@@ -46,28 +47,24 @@ namespace StarCinema.Controllers.CRUDControllers
             this._config = configuration;
             this._itemsPerPage = _config.GetValue<int>("ItemsPerPage");
         }
-        public async Task<IActionResult> Movies(int id)
+        public IActionResult Movies(MovieListingRequest request)
         {
-            if (id == 0)
-            {
-                id = 1;
-            }
-            var movies = await _movieRepo.PaginatedMovies(id, _itemsPerPage);            
-            int moviesCount = await this._movieRepo.MoviesCount();
+            var movies = _movieRepo.PaginatedMovies(request.Page, request.PageSize, request.OrderBy).ToList();            
+            int moviesCount = this._movieRepo.MoviesCount();
 
-            List<MovieViewModel> moviesViewModel = new List<MovieViewModel>();
+            var moviesViewModel = new List<MovieListingViewModel>();
 
-            movies.ForEach(x => moviesViewModel.Add(new MovieViewModel(x)));
+            movies.ForEach(x => moviesViewModel.Add(new MovieListingViewModel(x)));
 
-            var paginatedMovies = new PaginatedViewModel<MovieViewModel>(moviesViewModel, id, moviesCount);
+            var paginatedMovies = new ListingViewModel<MovieListingViewModel>(moviesViewModel, request.Page, moviesCount, "TitleAsc");
             return View(paginatedMovies);
         }
 
         [HttpGet]
-        public async Task<IActionResult> MoviesFromCategory(string categoryName)
+        public IActionResult MoviesFromCategory(int categoryId)
         {
-            var movies = await this._categoryRepo.FindMoviesFromCategory(categoryName);
-
+            var movies = this._categoryRepo.FindMoviesFromCategory(categoryId);
+            var categoryName = _categoryRepo.FindCategory(categoryId).CategoryName;
             var moviesViewModel = new MoviesFromCategoryViewModel()
             {
                 CategoryName = categoryName,
@@ -76,15 +73,15 @@ namespace StarCinema.Controllers.CRUDControllers
 
             return View(moviesViewModel);
         }
-        public async Task<IActionResult> ShowMovie(int id, int commentsPage)
+        public IActionResult ShowMovie(ShowMovieRequest request)
         {
-            var movie = await this._movieRepo.FindMovie(id);
-            var comments = await this._commentRepo.PaginatedComments(id, commentsPage, _itemsPerPage);
+            var movie = this._movieRepo.FindMovie(request.MovieId);
+            var comments = this._commentRepo.PaginatedComments(request.MovieId, request.CommentPage, request.PageSize, "AddedDateDesc").ToList();
 
-            var movieViewModel = new MovieViewModel(movie, commentsPage);
-            movieViewModel.Comments = comments.ToList();
-            movieViewModel.CanRate = TempData["RateErrorData"] == null ? true : false;
-            movieViewModel.TotalCommentsCount = movie.Comments.Count();
+            var movieViewModel = new ShowMovieViewModel(movie, request.CommentPage, movie.Comments.Count());
+            comments.ForEach(x => movieViewModel.Comments.Add(new ShowMovieCommentViewModel(x)));
+            movieViewModel.CanUserRate = TempData["RateErrorData"] == null ? true : false;
+            movieViewModel.AddComentViewModel.MovieId = request.MovieId;
 
             TempData["RateErrorData"] = null;
             return View(movieViewModel);
@@ -92,168 +89,108 @@ namespace StarCinema.Controllers.CRUDControllers
 
      
 
-        public async Task<ActionResult> AddMovie()
+        public IActionResult AddMovie()
         {
-            var categories = await this._categoryRepo.AllCategories();
-            return View(new MovieViewModel(categories));
+            var categories = this._categoryRepo.AllCategories().ToList();
+            return View(new AddEditMovieViewModel(categories));
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddMovie(MovieViewModel movie)
+        public IActionResult AddMovie(AddEditMovieRequest request)
         {
             if (ModelState.IsValid)
             {
-                var movieToAdd = await _movieFactory.GetMovie(movie);
+                var movieToAdd = _movieFactory.GetMovie(request);
 
                 _movieRepo.AddMovie(movieToAdd);
                 int id = movieToAdd.Id;
-                var filePoster = movie.PosterImage;
-                var fileBanner = movie.BannerImage;
+                var filePoster = request.PosterImage;
+                var fileBanner = request.BannerImage;
 
-                await ImagesManager.UploadPoster(filePoster, id, true);
-                await ImagesManager.UploadBanner(fileBanner, id, true);
-                var categories = await _categoryRepo.AllCategories();
-                return View(new MovieViewModel(categories));
+                ImagesManager.UploadPoster(filePoster, id, true);
+                ImagesManager.UploadBanner(fileBanner, id, true);
+                return RedirectToAction("Movies");
             }
+
+            var categories = _categoryRepo.AllCategories().ToList();
+            var movie = new AddEditMovieViewModel(categories, request);
+
             return View(movie);
         }
 
 
         [HttpPost]
-        public async Task<ActionResult> RemoveMovie(int movieId)
+        public IActionResult RemoveMovie(int movieId)
         {
-            var movieToDelete = await _movieRepo.FindMovie(movieId);
-            await _movieRepo.RemoveMovie(movieToDelete);
-            await ImagesManager.DeleteImages(movieId);
+            var movieToDelete =  _movieRepo.FindMovie(movieId); 
+            _movieRepo.RemoveMovie(movieId);
+            ImagesManager.DeleteImages(movieId);
             return View(movieToDelete);
         }
 
         [HttpGet]
-        public async Task<ActionResult> EditMovie(int movieId)
+        public ActionResult EditMovie(int movieId)
         {
-            var movieToEdit = await _movieRepo.FindMovie(movieId);
-            var categories = await _categoryRepo.AllCategories();
+            var movie = _movieRepo.FindMovie(movieId);
+            var categories = _categoryRepo.AllCategories().ToList();
 
-            return View(new MovieViewModel(categories, movieToEdit));
+            return View(new AddEditMovieViewModel(categories, movie));
         }
 
         [HttpPost]
-        public async Task<RedirectToActionResult> EditMovie(MovieViewModel movie)
+        public  RedirectToActionResult EditMovie(AddEditMovieViewModel addEditMovie)
         {
-            var movieCategory = await _categoryRepo.FindCategory(movie.Category);
-            var movietoEdit = await _movieFactory.GetMovie(movie);
+            var movieCategory = _categoryRepo.FindCategory(addEditMovie.Request.CategoryId);
+            var movietoEdit = _movieFactory.GetMovie(addEditMovie.Request);
 
+            this._movieRepo.EditMovie(addEditMovie.Request.Id, movietoEdit);
 
-            await this._movieRepo.EditMovie(movie.Id, movietoEdit);
-
-            int id = movie.Id;
-            var filePoster = movie.PosterImage;
-            var fileBanner = movie.BannerImage;
+            int id = addEditMovie.Id;
+            var filePoster = addEditMovie.Request.PosterImage;
+            var fileBanner = addEditMovie.Request.BannerImage;
             if (filePoster != null)
-            {
-                await ImagesManager.UploadPoster(filePoster, id, false);
+            { 
+                ImagesManager.UploadPoster(filePoster, id, false);
             }
 
             if (fileBanner != null)
-            {
-                await ImagesManager.UploadBanner(fileBanner, id, false);
+            { 
+                ImagesManager.UploadBanner(fileBanner, id, false);
             }
             return RedirectToAction("Movies");
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<RedirectToActionResult> AddComment(MovieViewModel movie)
+        public RedirectToActionResult AddComment(AddComentRequest request)
         {
 
-            var user = await this._usrRepo.GetUser(movie.UserComment.Username);
-            int id = movie.Id;
-            var commentToAdd = await _commentFactory.GetComment(movie.UserComment);
-
-            await this._movieRepo.AddComment(movie.Id, commentToAdd);
-            return RedirectToAction("ShowMovie", new { id = movie.Id });
-        }
-
-        [HttpPost]
-        [EnableCors("AllowOrigin")]
-        public async Task<JsonResult> MovieComments([FromBody]MovieCommentsInputData inputData)
-        {
-            var movie = await _movieRepo.FindMovie(inputData.MovieId);
-            var comments = movie.Comments.Skip(inputData.Page - 1 * _itemsPerPage)
-                .Take(_itemsPerPage)
-                .ToList();
-
-            var commentsViewModel = new List<CommentViewModel>();
-
-            comments.ForEach(x => commentsViewModel.Add(new CommentViewModel(x)));
-
-            return Json(commentsViewModel);
+            var user = this._usrRepo.GetUser(request.User);
+            int id = request.MovieId;
+            var commentToAdd = _commentFactory.CreateComment(request);
+            
+            this._movieRepo.AddComment(request.MovieId, commentToAdd);
+            return RedirectToAction("ShowMovie", new ShowMovieRequest(){ MovieId = request.MovieId });
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<RedirectToActionResult> AddRate(MovieViewModel movie)
+        public RedirectToActionResult AddRate(AddRateRequest request)
         {
 
-            var user = await this._usrRepo.GetUser(movie.UserRate.UserName);
-            int id = movie.Id;
-
-            if (await this._rateRepo.UserRated(id, user.UserName))
+            var user = this._usrRepo.GetUser(request.UserId);
+            if (this._rateRepo.UserRated(request.MovieId, user.Id))
             {
-                TempData["RateErrorData"] = "You already have rated this movie";
+                TempData["RateErrorData"] = "You already have rated this addEditMovie";
             }
 
             Rate rateToAdd = new Rate()
             {
                 User = user,
-                IfLike = movie.UserRate.Rate > 0 ? true : false
-            };
-            await this._rateRepo.AddRate(movie.Id, rateToAdd);
-            return RedirectToAction("ShowMovie", new { id = movie.Id });
+                IfLike = request.ThumbUp
+            }; 
+            _rateRepo.AddRate(request.MovieId, rateToAdd);
+            return RedirectToAction("ShowMovie", new { id = request.MovieId });
         }
-        [HttpGet]
-        public async Task<IActionResult> SortMoviesByDateAsc()
-        {
-            var moviesViewModel = await getAllMovies();
-            return View("Movies", moviesViewModel.OrderBy(m => m.ReleaseDate));
-        }
-
-        public async Task<IActionResult> SortMoviesByDateDesc()
-        {
-            var moviesViewModel = await getAllMovies();
-            return View("Movies", moviesViewModel.OrderByDescending(m => m.ReleaseDate));
-        }
-        public async Task<IActionResult> SortMoviesByTitleAsc()
-        {
-            var moviesViewModel = await getAllMovies();
-            return View("Movies", moviesViewModel.OrderBy(m => m.Title));
-        }
-        public async Task<IActionResult> SortMoviesByTitleDesc()
-        {
-            var moviesViewModel = await getAllMovies();
-            return View("Movies", moviesViewModel.OrderByDescending(m => m.Title));
-        }
-        public async Task<IActionResult> SortMoviesByCategoryAsc()
-        {
-            var moviesViewModel = await getAllMovies();
-            return View("Movies", moviesViewModel.OrderBy(m => m.Category));
-        }
-        public async Task<IActionResult> SortMoviesByCategoryDesc()
-        {
-            var moviesViewModel = await getAllMovies();
-            return View("Movies", moviesViewModel.OrderByDescending(m => m.Category));
-        }
-        private async Task<IEnumerable<MovieViewModel>> getAllMovies()
-        {
-            var allMovies = await this._movieRepo.AllMovies();
-            List<MovieViewModel> moviesViewModel = new List<MovieViewModel>();
-            foreach (var m in allMovies)
-            {
-                moviesViewModel.Add(new MovieViewModel(m));
-            }
-            return moviesViewModel;
-        }   
-
     }
-
 }

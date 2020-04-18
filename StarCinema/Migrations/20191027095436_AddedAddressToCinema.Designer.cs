@@ -309,7 +309,7 @@ namespace StarCinema.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.Movie", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.AddEditMovie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -477,7 +477,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Comment", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.Movie")
+                    b.HasOne("StarCinema.DomainModels.AddEditMovie")
                         .WithMany("Comments")
                         .HasForeignKey("MovieId");
 
@@ -486,7 +486,7 @@ namespace StarCinema.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.Movie", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.AddEditMovie", b =>
                 {
                     b.HasOne("StarCinema.DomainModels.Category", "Category")
                         .WithMany("Movies")
@@ -496,7 +496,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Rate", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.Movie", "Movie")
+                    b.HasOne("StarCinema.DomainModels.AddEditMovie", "AddEditMovie")
                         .WithMany("Rates")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -520,7 +520,7 @@ namespace StarCinema.Migrations
                         .WithMany("Shows")
                         .HasForeignKey("HallId");
 
-                    b.HasOne("StarCinema.DomainModels.Movie", "Movie")
+                    b.HasOne("StarCinema.DomainModels.AddEditMovie", "AddEditMovie")
                         .WithMany("Shows")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);

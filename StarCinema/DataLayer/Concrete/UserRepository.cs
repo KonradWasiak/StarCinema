@@ -17,9 +17,9 @@ namespace StarCinema.DataLayer.Concrete
         {
             this.context = context;
         }
-        public async Task<StarCinemaUser> GetUser(string userName)
+        public StarCinemaUser GetUser(string username)
         {
-            var user = await this.context.Users.FirstOrDefaultAsync(u => u.UserName == userName);
+            var user = this.context.Users.FirstOrDefault(u => u.UserName == username);
             return user;
 
         }

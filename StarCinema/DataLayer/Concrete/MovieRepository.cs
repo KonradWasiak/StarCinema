@@ -19,11 +19,11 @@ namespace StarCinema.DataLayer.Abstract
             this.context = context;
         }
 
-        public async Task AddComment(int movieId, Comment comment)
+        public void AddComment(int movieId, Comment comment)
         {
-            var movieToUpdate = await FindMovie(movieId);
-            movieToUpdate.Comments.Add(comment);
-            await context.SaveChangesAsync();
+            var movieToUpdate =  FindMovie(movieId);
+            movieToUpdate.Comments.Add(comment); 
+            context.SaveChanges();
         }
 
         public void AddMovie(Movie movie)
@@ -32,18 +32,36 @@ namespace StarCinema.DataLayer.Abstract
             this.context.SaveChanges();
         }
 
-        public async Task<List<Movie>> AllMovies()
+        public IList<Movie> AllMovies(string orderBy)
         {
-            return await context.Movies.Include(m => m.Category)
-                                                               .Include(m => m.Comments)
-                                                               .Include(m => m.Rates)
-                                                               .Include(m => m.Shows)
-                                                               .ToListAsync();
+            var movies = context.Movies.Include(m => m.Category)
+                .Include(m => m.Comments)
+                .Include(m => m.Rates)
+                .Include(m => m.Shows)
+                .ToList();
+
+            switch (orderBy)
+            {
+                case "TitleAsc":
+                    return movies.OrderBy(x => x.Title).ToList();
+                case "TitleDesc":
+                    return movies.OrderByDescending(x => x.Title).ToList();
+                case "ReleaseDateAsc":
+                    return movies.OrderBy(x => x.ReleaseDate).ToList();
+                case "ReleaseDateDesc":
+                    return movies.OrderByDescending(x => x.ReleaseDate).ToList();
+                case "CategoryAsc":
+                    return movies.OrderBy(x => x.Category.CategoryName).ToList();
+                case "CategoryDesc":
+                    return movies.OrderByDescending(x => x.Category.CategoryName).ToList();
+                default:
+                    return movies.OrderBy(x => x.Title).ToList();
+            }
         }
 
-        public async Task EditMovie(int movieId, Movie updatedMovie)
+        public void EditMovie(int movieId, Movie updatedMovie)
         {
-            var movie = await FindMovie(movieId);
+            var movie = FindMovie(movieId);
             if (movie != null)
             {
                 movie.Title = updatedMovie.Title;
@@ -54,64 +72,59 @@ namespace StarCinema.DataLayer.Abstract
                 movie.Is3D = updatedMovie.Is3D;
                 movie.TrailerUrl = updatedMovie.TrailerUrl;
                 movie.DurationTime = updatedMovie.DurationTime;
-            }
-            await this.context.SaveChangesAsync();
+            } 
+            this.context.SaveChanges();
         }
 
-        public async Task<Movie> FindMovie(int id)
+        public Movie FindMovie(int id)
         {
-            var movie = await context.Movies.Include(m => m.Category)
+            var movie = context.Movies.Include(m => m.Category)
                                             .Include(m => m.Comments).ThenInclude(c => c.User)
                                             .Include(m => m.Rates)
                                             .Include(m => m.Shows)
-                                            .FirstOrDefaultAsync(m => m.Id == id);
+                                            .FirstOrDefault(m => m.Id == id);
             return movie;
         }
 
-        public async Task<Movie> FindMovie(string movieTitile)
+        public Movie FindMovie(string movieTitile)
         {
-            var movie = await context.Movies.Include(m => m.Category)
+            var movie = context.Movies.Include(m => m.Category)
                                                                .Include(m => m.Comments)
                                                                .Include(m => m.Rates)
                                                                .Include(m => m.Shows)
-                                                               .FirstOrDefaultAsync(m => m.Title == movieTitile);
+                                                               .FirstOrDefault(m => m.Title == movieTitile);
             return movie;
         }
 
-        public Task<int> FindMovieId(Movie movie)
+        public int FindMovieId(Movie movie)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Movie>> FindMoviesByReleaseDate(DateTime date)
+        public IList<Movie> FindMoviesByReleaseDate(DateTime date)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> MoviesCount()
+        public int MoviesCount()
         {
-            return await this.context.Movies.CountAsync();
+            return this.context.Movies.Count();
         }
 
-        public async Task<List<Movie>> PaginatedMovies(int page, int itemsPerPage)
+        public IList<Movie> PaginatedMovies(int page, int pageSize, string orderBy)
         {
-            return await context.Movies.Include(m => m.Category)
-                                                               .Include(m => m.Comments)
-                                                               .Include(m => m.Rates)
-                                                               .Include(m => m.Shows)
-                                                               .OrderByDescending(m => m.ReleaseDate)
-                                                               .Skip((page - 1) * itemsPerPage)
-                                                               .Take(itemsPerPage)
-                                                               .ToListAsync();
+            return AllMovies(orderBy).Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
-        public async Task<Movie> RemoveMovie(Movie movie)
+        public Movie RemoveMovie(int movieId)
         {
-            var movieToRemove = await FindMovie(movie.Id);
+            var movieToRemove = FindMovie(movieId);
             if (movieToRemove != null)
                 context.Movies.Remove(movieToRemove);
-
-            await context.SaveChangesAsync();
+            
+            context.SaveChanges();
 
             return movieToRemove;
         }

@@ -36,5 +36,7 @@
             commentCell.innerHTML = comment.comment;
             actionsCell.innerHTML = '<button type="submit" class="btn btn-xs btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>'
         }
+
+
     });
 }

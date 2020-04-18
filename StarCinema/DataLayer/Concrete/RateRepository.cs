@@ -18,36 +18,36 @@ namespace StarCinema.DataLayer.Concrete
             this.context = context;
         }
 
-        public async Task AddRate(int movieId, Rate rate)
+        public void AddRate(int movieId, Rate rate)
         {
-            var movie = await FindMovie(movieId);
-            if (!(await UserRated(movieId, rate.User.UserName)))
+            var movie = FindMovie(movieId);
+            if (!(UserRated(movieId, rate.User.UserName)))
             {
-                movie.Rates.Add(rate);
-                await context.SaveChangesAsync();
+                movie.Rates.Add(rate); 
+                context.SaveChangesAsync();
             }
         }
 
-        public async Task<bool> UserRated(int movieId, string userName)
+        public bool UserRated(int movieId, string userId)
         {
-            var movie = await FindMovie(movieId);
+            var movie = FindMovie(movieId);
             var rates = movie.Rates.ToList();
 
             foreach (var r in rates)
             {
-                if (r.User.UserName.Equals(userName))
+                if (r.User.Id.Equals(userId))
                     return true;
             }
             return false;
         }
 
-        private async Task<Movie> FindMovie(int id)
+        private Movie FindMovie(int id)
         {
-            return await context.Movies.Include(m => m.Category)
+            return context.Movies.Include(m => m.Category)
                                                               .Include(m => m.Comments)
                                                               .Include(m => m.Rates)
                                                               .Include(m => m.Shows)
-                                                              .FirstOrDefaultAsync(m => m.Id == id);
+                                                              .FirstOrDefault(m => m.Id == id);
         }
 
     }

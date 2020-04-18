@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.CRUDModels.MovieViewModel
+﻿@model StarCinema.Models.CRUDModels.MovieModels.AddEditMovieViewModel;
 @{
     ViewData["Title"] = "EditMovie";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -9,57 +9,57 @@
 
 
         <form class="form app-form" method="post" asp-action="EditMovie" asp-controller="Movie" enctype="multipart/form-data">
-            <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+            <input type="hidden" asp-for="@Model.Request.Id" value="@Model.Id" />
             <h2 class="app-form-h2">
-                <i class="glyphicon glyphicon-edit"></i> Edit Movie @Model.Title
+                <i class="glyphicon glyphicon-edit"></i> Edit AddEditMovie @Model.Title
             </h2>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
-                <input class="app-form-input" placeholder="@Model.Title" asp-for="@Model.Title" />
+                <input class="app-form-input" value="@Model.Title" placeholder="@Model.Title" asp-for="@Model.Request.Title" />
             </div>
             <div class="form-group">
-                <select class="app-form-select" value="@Model.Category" asp-for="@Model.Category" asp-items="@Model.AllCategories"></select>
+                <select class="app-form-select" value="@Model.Category" asp-for="@Model.Request.CategoryId" asp-items="@Model.Categories"></select>
             </div>
             <div class="form-group">
-                <input class="app-form-input" placeholder="@Model.Directory" asp-for="@Model.Directory" />
+                <input class="app-form-input" value="@Model.Directory" placeholder="@Model.Directory" asp-for="@Model.Request.Directory" />
             </div>
             <div class="form-group">
                 <h4 class="app-form-h4">Release date</h4>
-                <input asp-for="@Model.ReleaseDate" class="form-control" value="@Model.ReleaseDate.ToString("yyyy-MM-ddTmm:ss")" />
+                <input asp-for="@Model.Request.ReleaseDate" class="form-control" value="@Model.ReleaseDate.ToString("yyyy-MM-ddTmm:ss")" />
             </div>
             <div class="form-group">
-                <textarea class="app-form-input wide" placeholder="@Model.Description" asp-for="@Model.Description"></textarea>
+                <textarea class="app-form-input wide" placeholder="@Model.Description" asp-for="@Model.Request.Description">@Model.Description</textarea>
             </div>
             <div class="form-group">
                 <h4 class="app-form-h4">Is 3D?</h4>
-                <input asp-for="@Model.Is3D" class="form-control" value="true" />
+                <input asp-for="@Model.Request.Is3D" class="form-control" value="@Model.Is3D" />
                 <input type="hidden" value="false" name="IncludeSalesTax" />
             </div>
             <div class="form-group">
                 <h4 class="app-form-h4">Duration time</h4>
-                <input asp-for="@Model.DurationTime" class="app-form-input" value="@Model.DurationTime" />
+                <input asp-for="@Model.Request.DurationTime" class="app-form-input" value="@Model.DurationTime" />
             </div>
             <div class="form-group">
                 <h4 class="app-form-h4">Url to trailer</h4>
                 <iframe height="300" src="@Model.TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <input asp-for="@Model.TrailerUrl" class="app-form-input" value="@Model.TrailerUrl" />
+                <input asp-for="@Model.Request.TrailerUrl" class="app-form-input" value="@Model.TrailerUrl" />
             </div>
             <div class="form-group">
-                <h4 class="app-form-h4">Movie poster</h4>
+                <h4 class="app-form-h4">AddEditMovie poster</h4>
                 @{
                     var imgPosterSrc = "../images/MoviesPosters/" + Model.Id + ".jpg";
                 }
                 <img class="movie-card-img" src="@imgPosterSrc" />
-                <input class="form-control-file" asp-for="@Model.PosterImage" />
+                <input class="form-control-file" asp-for="@Model.Request.PosterImage" />
             </div>
             <div class="form-group">
-                <h4 class="app-form-h4">Movie banner</h4>
+                <h4 class="app-form-h4">AddEditMovie banner</h4>
                 @{
                     var imgBannerSrc = "../images/MoviesPosters/" + Model.Id + "Index" + ".jpg";
                 }
                 <img class="movie-card-img" src="@imgBannerSrc" />
 
-                <input class="form-control-file" asp-for="@Model.BannerImage" />
+                <input class="form-control-file" asp-for="@Model.Request.BannerImage" />
             </div>
 
             <button class="btn btn-danger app-form-submit" type="submit"><i class="glyphicon glyphicon-ok"></i>SAVE MOVIE</button>

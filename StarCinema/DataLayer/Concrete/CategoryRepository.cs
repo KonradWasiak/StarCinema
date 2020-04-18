@@ -22,47 +22,59 @@ namespace StarCinema.DataLayer.Concrete
             context.Categories.Add(category);
             context.SaveChanges();
         }
-        public async Task<List<Category>> AllCategories()
+        public IList<Category> AllCategories(string orderBy = "")
         {
-            return await context.Categories.Include(m => m.Movies).ToListAsync();
+            switch (orderBy)
+            {
+                case "NameAsc":
+                    return context.Categories.Include(m => m.Movies)
+                        .OrderBy(x => x.CategoryName)
+                        .ToList();
+                case "NameDesc":
+                    return context.Categories.Include(m => m.Movies)
+                        .OrderByDescending(x => x.CategoryName)
+                        .ToList();
+                default:
+                    return context.Categories.Include(m => m.Movies)
+                        .OrderBy(x => x.CategoryName)
+                        .ToList();
+            }
         }
 
-        public async Task<int> CategoriesCount()
+        public int CategoriesCount()
         {
-            return await this.context.Categories.CountAsync();
+            return this.context.Categories.Count();
         }
 
-        public async Task<Category> FindCategory(string categoryName)
+        public Category FindCategory(int categoryId)
         {
-            var category = await context.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
+            var category = context.Categories.FirstOrDefault(c => c.Id == categoryId);
             return category;
         }
-        public async Task<List<Movie>> FindMoviesFromCategory(string category)
+        public IList<Movie> FindMoviesFromCategory(int categoryId)
         {
-            var cat = await FindCategory(category);
-            return await context.Movies.Include(m => m.Comments)
-                                                               .Include(m => m.Rates)
-                                                               .Include(m => m.Shows)
-                                                               .Where(m => m.Category.CategoryName == category)
-                                                               .ToListAsync();
+            return context.Movies.Include(m => m.Comments)
+                .Include(m => m.Rates)
+                .Include(m => m.Shows)
+                .Where(m => m.Category.Id == categoryId)
+                .ToList();
         }
 
-        public async Task<List<Category>> PaginatedCategories(int page, int itemsPerPage)
+        public IList<Category> PaginatedCategories(int page, int itemsPerPage, string orderBy)
         {
-            return await this.context.Categories.Include(c => c.Movies)
-                                                .Skip((page - 1) * itemsPerPage)
-                                                .Take(itemsPerPage)
-                                                .ToListAsync();
-                                                
+            var sortedCategories = AllCategories(orderBy);
+            return sortedCategories.Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToList();
         }
 
-        public async Task<Category> RemoveCategory(string category)
+        public Category RemoveCategory(int categoryId)
         {
-            var categoryToRemove = await FindCategory(category);
+            var categoryToRemove = FindCategory(categoryId);
             if (categoryToRemove != null)
                 context.Categories.Remove(categoryToRemove);
 
-            await context.SaveChangesAsync();
+            context.SaveChanges();
 
             return categoryToRemove;
         }

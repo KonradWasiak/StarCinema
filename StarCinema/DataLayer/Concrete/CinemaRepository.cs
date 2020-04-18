@@ -23,38 +23,64 @@ namespace StarCinema.DataLayer.Concrete
             this.context.SaveChanges();
         }
 
-        public async Task<List<Cinema>> AllCinemas()
+        public IList<Cinema> AllCinemas(string orderBy)
         {
-            return await context.Cinemas.ToListAsync();
+            switch (orderBy)
+            {
+                case "CityAsc":
+                    return context.Cinemas.Include(x => x.Address)
+                        .Include(x => x.City)
+                        .Include(x => x.CinemaHalls)
+                        .OrderBy(x => x.City.CityName)
+                        .ToList();
+                case "CityDesc":
+                    return context.Cinemas.Include(x => x.Address)
+                        .Include(x => x.City)
+                        .Include(x => x.CinemaHalls)
+                        .OrderByDescending(x => x.City.CityName)
+                        .ToList();
+                default:
+                    return context.Cinemas.Include(x => x.Address)
+                        .Include(x => x.City)
+                        .Include(x => x.CinemaHalls)
+                        .OrderBy(x => x.City.CityName)
+                        .ToList();
+            }
         }
 
-        public Task<int> CinemasCount()
-        {
-            return context.Cinemas.CountAsync();
-        }
-        public async Task<List<Cinema>> FindMoviesFromCity(string cityName)
-        {
-            var city = await context.Cities.Where(x => x.CityName == cityName).FirstOrDefaultAsync();
-            return await context.Cinemas.Where(x => x.City == city).ToListAsync();
+        public Cinema FindCinema(int cinemaId)
+        { 
+            return context.Cinemas.Where(x => x.Id == cinemaId)
+                .Include(x => x.Address)
+                .Include(x => x.CinemaHalls)
+                .FirstOrDefault();
         }
 
-        public async Task<List<Cinema>> PaginatedCinemas(int page, int itemsPerPage)
+        public int CinemasCount()
         {
-            return await context.Cinemas.Include(c => c.City)
-                .Include(c => c.CinemaHalls)
-                .Include(c => c.Address)
-                .Skip((page - 1) * itemsPerPage)
-                .Take(itemsPerPage)
-                .ToListAsync();
+            return context.Cinemas.Count();
+        }
+        public IList<Cinema> FindCinemasFromCity(int cityId)
+        {
+            return context.Cinemas.Where(x => x.City.Id == cityId).ToList();
         }
 
-        public async Task<Cinema> RemoveCinema(Cinema cinema)
+        public IList<Cinema> PaginatedCinemas(int page, int pageSize, string orderBy)
         {
-            var cinemaToRemove = context.Cinemas.Where(x => x.Id == cinema.Id).FirstOrDefault();
+            var allCinemas = AllCinemas(orderBy);
+
+            return allCinemas.Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        public Cinema RemoveCinema(int cinemaId)
+        {
+            var cinemaToRemove = context.Cinemas.Where(x => x.Id == cinemaId).FirstOrDefault();
             if (cinemaToRemove != null)
                 context.Cinemas.Remove(cinemaToRemove);
-
-            await context.SaveChangesAsync();
+            
+            context.SaveChanges();
 
             return cinemaToRemove;
         }

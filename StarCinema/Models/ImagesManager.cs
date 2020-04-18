@@ -9,15 +9,15 @@ namespace StarCinema.Models.CRUDModels
 {
     public static class ImagesManager
     {
-        public static async Task UploadPoster(IFormFile file, int id, bool createOrTruncate)
+        public static void UploadPoster(IFormFile file, int id, bool createOrTruncate)
         {
-            await UploadImage(file, id, createOrTruncate, true);
+             UploadImage(file, id, createOrTruncate, true);
         }
-        public static async Task UploadBanner(IFormFile file, int id, bool createOrTruncate)
+        public static void UploadBanner(IFormFile file, int id, bool createOrTruncate)
         {
-            await UploadImage(file, id, createOrTruncate, false);
+             UploadImage(file, id, createOrTruncate, false);
         }
-        public static async Task DeleteImages(int id)
+        public static void DeleteImages(int id)
         {
             var posterFileName = id.ToString() + ".jpg";
             var bannerFileName = id.ToString() + "Index" + ".jpg";
@@ -34,7 +34,7 @@ namespace StarCinema.Models.CRUDModels
             File.Delete(pathBanner);
             File.Delete(pathPoster);
         }
-        private static async Task UploadImage(IFormFile file, int id, bool createOrTruncate, bool posterOrBanner)
+        private static void UploadImage(IFormFile file, int id, bool createOrTruncate, bool posterOrBanner)
         {
             var mode = createOrTruncate ? FileMode.Create : FileMode.Truncate;
             var fileName = posterOrBanner ? id.ToString() + ".jpg" : id.ToString() + "Index" + ".jpg";
@@ -46,7 +46,7 @@ namespace StarCinema.Models.CRUDModels
 
                 using (var stream = new FileStream(path, mode))
                 {
-                    await file.CopyToAsync(stream);
+                     file.CopyTo(stream);
                 }
             }
         }

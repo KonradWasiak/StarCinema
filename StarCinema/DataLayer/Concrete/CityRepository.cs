@@ -18,58 +18,57 @@ namespace StarCinema.DataLayer.Concrete
             this._context = context;
         }
 
-        public async Task AddCity(City city)
+        public void AddCity(City city)
         {
-            await this._context.Cities.AddAsync(city);
-            await this._context.SaveChangesAsync();
+            this._context.Cities.AddAsync(city);
+            this._context.SaveChanges();
 
         }
 
-        public async Task<List<City>> AllCities()
+        public IList<City> AllCities()
         {
-            var cities = await this._context.Cities
+            var cities = this._context.Cities
                                    .Include(c => c.Cinemas)
-                                   .ToListAsync();
+                                   .ToList();
             return cities;
         }
 
-        public async Task<int> CitiesCount()
+        public int CitiesCount()
         {
-            return await this._context.Cities.CountAsync();
+            return this._context.Cities.Count();
 
         }
 
-        public async Task EditCity(City city)
+        public void EditCity(City city)
         {
-            var cityToEdit = await this._context.Cities
+            var cityToEdit = this._context.Cities
                                         .Include(c => c.Cinemas)
                                         .ThenInclude(ci => ci.CinemaHalls)
-                                        .FirstOrDefaultAsync(c => c.CityName == city.CityName);
+                                        .FirstOrDefault(c => c.CityName == city.CityName);
         }
 
-        public async Task<City> FindCity(string cityName)
+        public City FindCity(int cityId)
         {
-            return await this._context
+            return this._context
                              .Cities
-                             .FirstOrDefaultAsync(c => c.CityName.Equals(cityName));
+                             .FirstOrDefault(c => c.Id == cityId);
         }
 
-        public async Task<List<City>> PaginatedCities(int page, int itemsPerPage)
+        public IList<City> PaginatedCities(int page, int itemsPerPage)
         {
-            return await this._context.Cities.Include(c => c.Cinemas)
+            return this._context.Cities.Include(c => c.Cinemas)
                                                 .Skip((page - 1) * itemsPerPage)
                                                 .Take(itemsPerPage)
-                                                .ToListAsync();
+                                                .ToList();
         }
 
-        public async Task RemoveCity(City city)
+        public void RemoveCity(int cityId)
         {
-            var cityToDelete = await this._context
-                                    .Cities
-                                    .FirstOrDefaultAsync(c => c.CityName.Equals(city.CityName));
+            var cityToDelete = FindCity(cityId);
             this._context.Cities
                          .Remove(cityToDelete);
-            await this._context.SaveChangesAsync();
+
+            this._context.SaveChanges();
         }
     }
 }

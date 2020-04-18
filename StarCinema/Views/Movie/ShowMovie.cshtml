@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.CRUDModels.MovieViewModel
+﻿@model StarCinema.Models.CRUDModels.MovieModels.ShowMovieViewModel
 @using Microsoft.AspNetCore.Identity
 @using StarCinema.Areas.Identity.Data
 @inject SignInManager<StarCinemaUser> SignInManager
@@ -19,9 +19,9 @@
     </div>
 </div>
 <hr />
-<div class="row movie-trailer">
+<div class="row addEditMovie-trailer">
     <div class="col-sm-12">
-        <iframe height="500" src="@Model.TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe height="500" src="https://www.youtube.com/embed/@Model.TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 </div>
 <hr />
@@ -41,7 +41,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <table class="table movie-panel-table">
+                <table class="table addEditMovie-panel-table">
                     <tbody>
                         <tr>
                             <td class="td-solid"><i class="glyphicon glyphicon-th"></i> Genre:</td>
@@ -76,10 +76,10 @@
         </div>
         <br />
     </div>
-    <div class="col-md-4 col-md-offset-1 movie-panel-right">
+    <div class="col-md-4 col-md-offset-1 addEditMovie-panel-right">
 
-        <img class="img-thumbnail movie" src="@imgSrc" />
-        @if (!Model.CanRate)
+        <img class="img-thumbnail addEditMovie" src="@imgSrc" />
+        @if (!Model.CanUserRate)
         {
 
             <p id="rate-error" class="text-danger">You have already voted</p>
@@ -99,7 +99,7 @@
                             <i class="glyphicon glyphicon-thumbs-up"></i>
                         </button>
                     </form>
-                    <p class="movie-rate">@Model.Rates.Count(r => r.IfLike == true)</p>
+                    <p class="movie-rate">@Model.ThumbsUpCount</p>
                 </div>
                 <div class="rates rates-right">
                     <form method="post" asp-action="AddRate" asp-controller="Movie">
@@ -110,7 +110,7 @@
                             <i class="glyphicon glyphicon-thumbs-down"></i>
                         </button>
                     </form>
-                    <p class="movie-rate">@Model.Rates.Count(r => r.IfLike == false)</p>
+                    <p class="movie-rate">@Model.ThumbsDownCount</p>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
                     foreach (var c in Model.Comments.OrderByDescending(c => c.AddedDate))
                     {
                         <div class="well well-sm">
-                            <h4>@c.User.UserName</h4>
+                            <h4>@c.User</h4>
                             <h6>@c.AddedDate</h6>
                             <br />
                             <p>@c.Content</p>
@@ -143,7 +143,7 @@
             </div>
             <div id="addComment" class="tab-pane fade">
                 <br />
-                @Html.Partial("_AddCommentPartial")
+                @Html.Partial("_AddCommentPartial", Model.AddComentViewModel)
 
             </div>
         </div>
@@ -164,30 +164,30 @@
         <nav>
             <ul class="pagination">
                 <li class="page-item">
-                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="1" class="page-link">
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.Id" asp-route-commentPage="1" class="page-link">
                         <i class="glyphicon glyphicon-fast-backward"></i>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@prevPage"  class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.Id" asp-route-commentPage="@prevPage"  class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
                 </li>
 
                 @for (int j = startPage; j <= Model.CommentsPagingInfo.TotalPages; j++)
                 {
                     if (j == Model.CommentsPagingInfo.CurrentPage)
                     {
-                        <li class="page-item active"><a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@j" class="page-link">@j</a></li>
+                        <li class="page-item active"><a asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.Id" asp-route-commentPage="@j" class="page-link">@j</a></li>
                     }
                     else
                     {
-                        <li class="page-item"><a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@j" class="page-link">@j</a></li>
+                        <li class="page-item"><a asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.Id" asp-route-commentPage="@j" class="page-link">@j</a></li>
                     }
                 }
                 <li class="page-item">
-                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.Id" asp-route-commentPage="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.Id" asp-route-commentsPage="@Model.CommentsPagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                    <a asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.Id" asp-route-commentPage="@Model.CommentsPagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
                 </li>
             </ul>
         </nav>

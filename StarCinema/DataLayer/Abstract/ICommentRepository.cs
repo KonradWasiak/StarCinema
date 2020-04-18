@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    public interface ICommentRepository : IRepository
+    public interface ICommentRepository
     {
-        Task<IEnumerable<Comment>> PaginatedComments(int movieId, int page, int itemsPerPage);
+        IList<Comment> PaginatedComments(int movieId, int page, int itemsPerPage, string orderBy = "");
+        int CommentsCount(int movieId);
+        void RemoveComment(int movieId, int commentId);
     }
 }

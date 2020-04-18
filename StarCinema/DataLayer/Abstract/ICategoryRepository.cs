@@ -9,14 +9,14 @@ namespace StarCinema.DataLayer.Abstract
     /// <summary>
     /// Interface of category repository - it is an abstract intermediate layer between the database and the controllers
     /// </summary>
-    public interface ICategoryRepository : IRepository
+    public interface ICategoryRepository
     {
         void AddCategory(Category category);
-        Task<Category> RemoveCategory(string category);
-        Task<List<Category>> AllCategories();
-        Task<Category> FindCategory(string categoryName);
-        Task<List<Movie>> FindMoviesFromCategory(string Category);
-        Task<int> CategoriesCount();
-        Task<List<Category>> PaginatedCategories(int page, int itemsPerPage);
+        Category RemoveCategory(int categoryId);
+        IList<Category> AllCategories(string orderBy = "");
+        Category FindCategory(int categoryId);
+        IList<Movie> FindMoviesFromCategory(int categoryId);
+        int CategoriesCount();
+        IList<Category> PaginatedCategories(int page, int itemsPerPage, string orderBy);
     }
 }

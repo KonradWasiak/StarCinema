@@ -9,11 +9,13 @@ namespace StarCinema.Models.CRUDModels
 {
     public class CategoryViewModel
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Category name is required")]
         public string Name { get; set; }
         public CategoryViewModel(Category category)
         {
-            this.Name = category.CategoryName;
+            Name = category.CategoryName;
+            Id = category.Id;
         }
         public CategoryViewModel() { }
 

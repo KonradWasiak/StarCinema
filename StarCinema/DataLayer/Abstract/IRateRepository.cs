@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    public interface IRateRepository : IRepository
+    public interface IRateRepository
     {
-        Task<bool> UserRated(int movieId, string userName);
-        Task AddRate(int movieId, Rate rate);
+        bool UserRated(int movieId, string userId);
+        void AddRate(int movieId, Rate rate);
 
     }
 }

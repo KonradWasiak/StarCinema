@@ -12,62 +12,47 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StarCinema.Models.CRUDModels.CinemaModels
 {
-    public class AddCinemaViewModel : CinemaViewModel
+    public class AddCinemaViewModel
     {
+        public int CinemaId { get; set; }
+        public int CityId { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
+        public string BuildingNumber { get; set; }
+        public int CinemaHallsCount { get; set; }
+        public List<AddCinemaHallRequest> CinemaHalls { get; set; }
         public List<SelectListItem> AllCities { get; set; }
-        public int HallsCount { get; set; }
+        public AddCinemaRequest Request { get; set; }
         public AddCinemaViewModel(List<City> citites)
         {
             AllCities = new List<SelectListItem>();
             citites.ForEach(c => AllCities.Add(GetCitySelectListItem(c)));
         }
-        public AddCinemaViewModel(Cinema cinema) : base(cinema)
-        {
-            this.AllCities = new List<SelectListItem>();
-        }
 
         public AddCinemaViewModel()
         {
+            
         }
+        public AddCinemaViewModel(Cinema cinema, List<City> citites) : this(citites)
+        {
+            Request = new AddCinemaRequest();
+            CinemaHalls = new List<AddCinemaHallRequest>();
+            CinemaId = cinema.Id;
+            CityId = cinema.CityId;
+            Street = cinema.Address.Street;
+            PostalCode = cinema.Address.PostalCode;
+            BuildingNumber = cinema.Address.BuildingNumber;
+            CinemaHallsCount = cinema.CinemaHalls.Count;
+            cinema.CinemaHalls.ToList().ForEach(x => CinemaHalls.Add(new AddCinemaHallRequest(x)));
+        }
+
         private SelectListItem GetCitySelectListItem(City city)
         {
             return new SelectListItem()
             {
                 Text = city.CityName,
-                Value = city.CityName
+                Value = city.Id.ToString()
             };
-        }
-
-        public async Task CreateCinemaHalls(ICityRepository repo)
-        {
-            var city = await repo.FindCity(this.Address.City);
-            this.City = new CityViewModel(city);
-            for (int i = 0; i < HallsCount; i++)
-            {
-                CinemaHalls.Add(new CinemaHallViewModel() 
-                { 
-                    Cinema = this as CinemaViewModel,
-                    Shows = new List<ShowViewModel>()
-                });
-            }
-        }
-
-        public void CreateSeatsInHalls()
-        {
-            this.CinemaHalls.ForEach(x => x.Seats = CreateEmptySeats(x, x.SeatsCount));
-        }
-
-        private List<SeatViewModel> CreateEmptySeats(CinemaHallViewModel hall, int count)
-        {
-            var seats = new List<SeatViewModel>();
-            for (int i = 0; i < count; i++) {
-                seats.Add(new SeatViewModel()
-                {
-                    Available = true,
-                    Hall = hall
-                });
-            }
-            return seats;
         }
     }
 }

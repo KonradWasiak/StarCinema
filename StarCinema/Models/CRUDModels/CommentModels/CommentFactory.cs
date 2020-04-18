@@ -16,16 +16,15 @@ namespace StarCinema.Models.CRUDModels.CommentModels
             _usrRepo = usrRepo;
         }
 
-        public async Task<Comment> GetComment(CommentViewModel comment)
+        public Comment CreateComment(AddComentRequest request)
         {
-            var user = await this._usrRepo.GetUser(comment.Username);
+            var user = this._usrRepo.GetUser(request.User);
             return new Comment
             {
-                Content = comment.Comment,
+                Content = request.Comment,
                 User = user,
-                AddedDate = comment.AddedDate
+                AddedDate = DateTime.Now
             };
-
         }
     }
 }

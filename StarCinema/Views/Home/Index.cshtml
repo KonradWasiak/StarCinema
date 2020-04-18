@@ -35,7 +35,7 @@
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(1).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(1).ReleaseDate.ToShortDateString()</h3>
-                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
+                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
                         <input type="hidden" name="commentsPage" value="1" />
                         <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
                     </form>
@@ -73,7 +73,7 @@
 
                 <div class="btn-group" role="group">
                     <form method="get" asp-controller="Movie" asp-action="MoviesFromCategory">
-                        <input type="hidden" name="categoryName" value="@category.CategoryName" />
+                        <input type="hidden" name="categoryId" value="@category.Id" />
                         <button type="submit" class="btn-category btn btn-default">@category.CategoryName</button>
                     </form>
                 </div>
@@ -116,7 +116,7 @@
                         <div class="col-sm-6 col-md-4">
                             <br />
                             <div class="thumbnail">
-                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id" asp-route-commentsPage="1">
+                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@m.Id" asp-route-commentsPage="1">
                                     <img class="movie-card-img" src="@imgSrc" alt="...">
                                     <h4>@m.Title</h4>
                                     <p>@m.Category.CategoryName</p>
@@ -145,7 +145,7 @@
                         <div class="col-sm-6 col-md-4">
                             <br />
                             <div class="thumbnail">
-                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id" asp-route-commentsPage="1">
+                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@m.Id" asp-route-commentsPage="1">
                                     <img class="movie-card-img" src="@imgSrc" alt="...">
                                     <h4>@m.Title</h4>
                                     <p>@m.Category.CategoryName</p>
@@ -174,7 +174,7 @@
                         <div class="col-sm-6 col-md-4">
                             <br />
                             <div class="thumbnail">
-                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@m.Id" asp-route-commentsPage="1">
+                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@m.Id" asp-route-commentsPage="1">
                                     <img class="movie-card-img" src="@imgSrc" alt="...">
                                     <h4>@m.Title</h4>
                                     <p>@m.Category.CategoryName</p>
@@ -205,7 +205,7 @@
                         <h4 class="modal-title" id="gridSystemModalLabel">@Model.LatestMovies.ElementAt(i).Title</h4>
                     </div>
                     <div class="modal-body">
-                        <iframe height="500" src="@Model.LatestMovies.ElementAt(i).TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <iframe height="500" src="https://www.youtube.com/embed/@Model.LatestMovies.ElementAt(i).TrailerUrl" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>

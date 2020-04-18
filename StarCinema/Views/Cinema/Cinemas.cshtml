@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.PaginatedViewModel<StarCinema.Models.CRUDModels.CinemaModels.CinemaViewModel>;
+﻿@model StarCinema.Models.ListingViewModel<StarCinema.Models.CRUDModels.CinemaModels.CinemaViewModel>;
 @{
     ViewData["Title"] = "Cities";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -25,11 +25,11 @@
                     <tr>
                         <td>#</td>
                         <td>
-                            <a asp-controller="Cinema" asp-action="SortCinemasByCityAsc">
+                            <a asp-controller="Cinema" asp-route-orderBy="CityAsc" asp-action="Cinemas">
                                 <i class="glyphicon glyphicon-triangle-top"></i>
                             </a>
                             Name
-                            <a asp-controller="Cinema" asp-action="SortCinemasByCityDesc">
+                            <a asp-controller="Cinema" asp-route-orderBy="CityDesc" asp-action="Cinemas">
                                 <i class="glyphicon glyphicon-triangle-bottom"></i>
                             </a>
                         </td>
@@ -48,11 +48,11 @@
                             <td class="td-center">
                                 <div class="actions-center">
                                     <form class="app-form-table" asp-action="RemoveCinema" asp-controller="Cinema">
-                                        <input type="hidden" name="cityName" value="@c.Id" />
+                                        <input type="hidden" name="cinemaId" value="@c.Id" />
                                         <button type="submit" class="btn btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
                                     </form>
-                                    <form class="app-form-table" asp-action="EditCinema" asp-controller="Cinema">
-                                        <input type="hidden" name="cityName" value="@c.Id" />
+                                    <form class="app-form-table" asp-action="EditCinema" asp-controller="Cinema" method="get">
+                                        <input type="hidden" name="cinemaId" value="@c.Id" />
                                         <button type="submit" class="btn btn-warning app-form-table-submit"><i class="glyphicon glyphicon-edit"></i> EDIT</button>
                                     </form>
                                 </div>
@@ -77,30 +77,30 @@
         <nav>
             <ul class="pagination">
                 <li class="page-item">
-                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-id="1" class="page-link">
+                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-orderBy="@Model.OrderBy" asp-route-page="1" class="page-link">
                         <i class="glyphicon glyphicon-fast-backward"></i>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-id="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-orderBy="@Model.OrderBy" asp-route-page="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
                 </li>
 
                 @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
                 {
                     if (j == Model.PagingInfo.CurrentPage)
                     {
-                        <li class="page-item active"><a asp-action="Cinemas" asp-controller="Cinema" asp-route-id="@j" class="page-link">@j</a></li>
+                        <li class="page-item active"><a asp-action="Cinemas" asp-controller="Cinema" asp-route-orderBy="@Model.OrderBy" asp-route-page="@j" class="page-link">@j</a></li>
                     }
                     else
                     {
-                        <li class="page-item"><a asp-action="Cinemas" asp-controller="Cinema" asp-route-id="@j" class="page-link">@j</a></li>
+                        <li class="page-item"><a asp-action="Cinemas" asp-controller="Cinema" asp-route-orderBy="@Model.OrderBy" asp-route-page="@j" class="page-link">@j</a></li>
                     }
                 }
                 <li class="page-item">
-                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-id="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-orderBy="@Model.OrderBy" asp-route-page="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-id="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                    <a asp-action="Cinemas" asp-controller="Cinema" asp-route-orderBy="@Model.OrderBy" asp-route-page="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
                 </li>
             </ul>
         </nav>

@@ -33,33 +33,47 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCity(CityViewModel city)
+        public IActionResult AddCity(CityViewModel city)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("AddCity", city);
+            }
             var cityToAdd = _cityFactory.GetCity(city);
-            await _repo.AddCity(cityToAdd);
-            return View();
+            _repo.AddCity(cityToAdd);
+            return RedirectToAction("Cities");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Cities(int id)
+        public IActionResult Cities(int id)
         {
             if (id == 0) id = 1;
-            var cities = await _repo.PaginatedCities(id, _itemsPerPage);            
-            int citiesCount = await _repo.CitiesCount();
+            var cities = _repo.PaginatedCities(id, _itemsPerPage).ToList();            
+            int citiesCount = _repo.CitiesCount();
 
             var citiesViewModelList = new List<CityViewModel>();
             cities.ForEach(x => citiesViewModelList.Add(new CityViewModel(x)));
             
-            var paginatedCitiesViewModelList = new PaginatedViewModel<CityViewModel>(citiesViewModelList, id, citiesCount);
+            var paginatedCitiesViewModelList = new ListingViewModel<CityViewModel>(citiesViewModelList, id, citiesCount, "");
 
             return View(paginatedCitiesViewModelList);
         }
         [HttpPost]
-        public async Task<IActionResult> RemoveCity(string cityName)
+        public IActionResult RemoveCity(int cityId)
         {
-            var cityToRemove = await _repo.FindCity(cityName);
-            await _repo.RemoveCity(cityToRemove);
+            _repo.RemoveCity(cityId);
             return RedirectToAction("Cities");
         }
+        //public async Task<IActionResult> SortCitiesByDateAsc()
+        //{
+        //    var moviesViewModel = await getAllMovies();
+        //    return View("Movies", moviesViewModel.OrderBy(m => m.ReleaseDate));
+        //}
+
+        //public async Task<IActionResult> SortMoviesByDateDesc()
+        //{
+        //    var moviesViewModel = await getAllMovies();
+        //    return View("Movies", moviesViewModel.OrderByDescending(m => m.ReleaseDate));
+        //}
     }
 }

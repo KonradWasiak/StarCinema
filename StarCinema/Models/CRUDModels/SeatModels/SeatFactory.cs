@@ -8,7 +8,7 @@ namespace StarCinema.Models.CRUDModels.SeatModels
 {
     public class SeatFactory
     {
-        public Seat GetSeat(CinemaHall hall)
+        public Seat CreateSeat(CinemaHall hall)
         {
             return new Seat()
             {

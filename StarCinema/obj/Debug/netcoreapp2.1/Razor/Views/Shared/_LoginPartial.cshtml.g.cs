@@ -81,7 +81,7 @@ using StarCinema.Areas.Identity.Data;
             WriteLiteral("    ");
             EndContext();
             BeginContext(226, 423, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1bc91abcad704a9fa87862b555936803", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "21ca118afd274f65a2ca3ede0f2f6f79", async() => {
                 BeginContext(391, 251, true);
                 WriteLiteral("\r\n        <ul class=\"nav navbar-nav navbar-right\">\r\n            <li>\r\n                <button type=\"submit\" class=\"btn btn-link navbar-btn navbar-link\"><i class=\"glyphicon glyphicon-log-out\"></i> Logout</button>\r\n            </li>\r\n        </ul>\r\n    ");
                 EndContext();
@@ -134,7 +134,7 @@ else
             WriteLiteral("    <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>");
             EndContext();
             BeginContext(721, 105, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a5f251671ef64c87be00e706df70d311", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a6ba91ef48b54bd6a0c47b659a6da379", async() => {
                 BeginContext(773, 49, true);
                 WriteLiteral("<i class=\"glyphicon glyphicon-plus\"></i> Register");
                 EndContext();
@@ -158,7 +158,7 @@ else
             WriteLiteral("</li>\r\n        <li>");
             EndContext();
             BeginContext(845, 98, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b19dc659812b4cd28c44c3516ded464e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0ec8f94a7a704fbcb1fe8bdeff6ddf3f", async() => {
                 BeginContext(894, 45, true);
                 WriteLiteral("<i class=\"glyphicon glyphicon-user\"></i>Login");
                 EndContext();

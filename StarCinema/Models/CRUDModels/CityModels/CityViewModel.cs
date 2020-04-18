@@ -3,6 +3,7 @@ using StarCinema.Models.CRUDModels.AddressModels;
 using StarCinema.Models.CRUDModels.CinemaModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,8 +12,9 @@ namespace StarCinema.Models.CRUDModels
     public class CityViewModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "City name is required")]
         public string CityName { get; set; }
-        public AddressModels.AddressViewModel Address { get; set; }
+        public AddressViewModel Address { get; set; }
         public List<CinemaViewModel> Cinemas { get; set; }
 
         public CityViewModel(string cityName, List<Cinema> cinemas)

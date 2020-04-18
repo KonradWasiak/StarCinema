@@ -35,7 +35,7 @@ namespace StarCinema.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Movie",
+                name: "AddEditMovie",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -93,7 +93,7 @@ namespace StarCinema.Migrations
                     table.ForeignKey(
                         name: "FK_Comment_Movie_MovieId",
                         column: x => x.MovieId,
-                        principalTable: "Movie",
+                        principalTable: "AddEditMovie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -120,7 +120,7 @@ namespace StarCinema.Migrations
                     table.ForeignKey(
                         name: "FK_Rate_Movie_MovieId",
                         column: x => x.MovieId,
-                        principalTable: "Movie",
+                        principalTable: "AddEditMovie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -193,7 +193,7 @@ namespace StarCinema.Migrations
                     table.ForeignKey(
                         name: "FK_Show_Movie_MovieId",
                         column: x => x.MovieId,
-                        principalTable: "Movie",
+                        principalTable: "AddEditMovie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -256,7 +256,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movie_CategoryId",
-                table: "Movie",
+                table: "AddEditMovie",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
@@ -306,7 +306,7 @@ namespace StarCinema.Migrations
                 name: "CinemaHall");
 
             migrationBuilder.DropTable(
-                name: "Movie");
+                name: "AddEditMovie");
 
             migrationBuilder.DropTable(
                 name: "Cinema");

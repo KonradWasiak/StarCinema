@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.CRUDModels.CinemaModels.AddCinemaViewModel
+﻿@model StarCinema.Models.CRUDModels.CinemaModels.AddCinemaRequest
 @{
     ViewData["Title"] = "AddCategory";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -8,7 +8,14 @@
     <div class="col-md-4 col-md-offset-4">
 
 
-        <form class="form app-form" method="post" asp-action="AddHallsToCinema" asp-controller="Cinema">
+        <form class="form app-form" method="post" asp-action="AddCinema" asp-controller="Cinema">
+            <input type="hidden" asp-for="PostalCode" value="@Model.PostalCode"/>
+            <input type="hidden" asp-for="BuildingNumber" value="@Model.BuildingNumber"/>
+            <input type="hidden" asp-for="CityId" value="@Model.CityId"/>
+            <input type="hidden" asp-for="Street" value="@Model.Street"/>
+            <input type="hidden" asp-for="CinemaHallsCount" value="@Model.CinemaHallsCount"/>
+
+
             <h2 class="app-form-h2"> <i class="glyphicon glyphicon-plus"></i> CREATE SEATS IN HALL</h2>
             <div asp-validation-summary="All" class="text-danger"></div>
             @{ int counter = 1;}
@@ -16,11 +23,11 @@
             {
                 <h4 class="app-form-h4">Hall @counter</h4>
 
-                 <div class="form-group">
-                    <input class="app-form-input" value="" placeholder="Hall name" asp-for="@Model.CinemaHalls[i].Name" />
-                </div>                
                 <div class="form-group">
-                    <input class="app-form-input" value="" placeholder="Number of seats for this hall" asp-for="@Model.CinemaHalls[i].SeatsCount" />
+                    <input class="app-form-input" value="" placeholder="Hall name" asp-for="@Model.CinemaHalls[i].Name"/>
+                </div>
+                <div class="form-group">
+                    <input class="app-form-input" value="" placeholder="Number of seats for this hall" asp-for="@Model.CinemaHalls[i].SeatsCount"/>
                 </div>
                 counter++;
             }
@@ -33,7 +40,7 @@
 <br />
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
-        <form asp-action="Categories" asp-controller="Category" asp-route-id="1" method="get">
+        <form asp-action="Cinemas" asp-controller="Cinema" method="get">
             <button type="submit" class="btn btn-info app-form-submit"> <i class="glyphicon glyphicon-arrow-left"></i> BACK TO LIST</button>
         </form>
     </div>
