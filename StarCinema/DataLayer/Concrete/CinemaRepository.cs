@@ -53,6 +53,7 @@ namespace StarCinema.DataLayer.Concrete
             return context.Cinemas.Where(x => x.Id == cinemaId)
                 .Include(x => x.Address)
                 .Include(x => x.CinemaHalls)
+                .ThenInclude(x => x.Seats)
                 .FirstOrDefault();
         }
 

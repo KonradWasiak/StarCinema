@@ -192,5 +192,14 @@ namespace StarCinema.Controllers.CRUDControllers
             _rateRepo.AddRate(request.MovieId, rateToAdd);
             return RedirectToAction("ShowMovie", new { id = request.MovieId });
         }
+
+        [HttpGet]
+        public IActionResult SearchMovies(string movieTitle)
+        {
+            var movies = _movieRepo.SearchMovies(movieTitle);
+            var moviesSearchList = new List<SearchMoviesViewModel>();
+            movies.ToList().ForEach(x => moviesSearchList.Add(new SearchMoviesViewModel(x)));
+            return View(moviesSearchList);
+        }
     }
 }

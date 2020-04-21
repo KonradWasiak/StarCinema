@@ -81,3 +81,4 @@ C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.csproj.
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.csprojAssemblyReference.cache
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Comment\MovieComments.cshtml.g.cs
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Cinema\EditCinema.cshtml.g.cs
+C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Movie\SearchMovies.cshtml.g.cs

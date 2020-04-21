@@ -129,6 +129,12 @@ namespace StarCinema.DataLayer.Abstract
             return movieToRemove;
         }
 
-
+        public IList<Movie> SearchMovies(string title)
+        {
+            return context.Movies.Where(x => x.Title.Contains(title))
+                .Include(x => x.Comments)
+                .Include(x => x.Category)
+                .ToList();
+        }
     }
 }

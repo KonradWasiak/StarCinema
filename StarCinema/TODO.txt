@@ -1,5 +1,0 @@
-﻿	1. Wyekstraktorwać interfejsy z fabryk
-	2. Fabryki wstrzykiwać do fabryk w razie potrzeby
-	3. Wstrzykiwać repo do repo w razie potrzeby
-	4. Dodać wszelkie możliwe walidacje - po stronie kontrolera i po stronie repo
-	5. W ViewModelach najpierw sprawdzac czy argument nie jest null w ctor

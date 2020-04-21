@@ -26,7 +26,7 @@
                 <p>@movie.Description</p>
                 <h4><i class="glyphicon glyphicon-comment"></i> Comments: @movie.Comments.Count</h4>
                 <form method="get" asp-action="ShowMovie" asp-controller="Movie">
-                    <input type="hidden" name="id" value="@movie.Id" />
+                    <input type="hidden" name="movieId" value="@movie.Id" />
                     <button class="btn btn-warning btn-big"> <i class="glyphicon glyphicon-zoom-in"></i> SHOW MORE</button>
                 </form>
                 <br />

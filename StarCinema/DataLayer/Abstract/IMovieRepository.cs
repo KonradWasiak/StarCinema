@@ -10,7 +10,7 @@ namespace StarCinema.DataLayer.Abstract
     public interface IMovieRepository
     {
         void AddMovie(Movie movie);
-
+        IList<Movie> SearchMovies(string title);
         Movie RemoveMovie(int movieId);
         Movie FindMovie(int movieId);
         Movie FindMovie(string movieTitile);
