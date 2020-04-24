@@ -74,12 +74,12 @@ using StarCinema.Models;
             WriteLiteral("\n<div class=\"row\">\n    <div class=\"col-md-4 col-md-offset-4\">\n        ");
             EndContext();
             BeginContext(210, 520, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c45baecffc374def874848f905daab94", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3422d830597643eaa2da2b816b7733bc", async() => {
                 BeginContext(295, 105, true);
                 WriteLiteral("\n            <h2 class=\"app-form-h2\"> <i class=\"glyphicon glyphicon-plus\"></i> Add city</h2>\n            ");
                 EndContext();
                 BeginContext(400, 60, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f4ec6aacabf346f4bf35216f90b758ae", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("div", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a0bb1326398a41208b3c9a89493bbe2b", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.ValidationSummaryTagHelper>();
@@ -103,7 +103,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_ValidationSummaryTagHelper.ValidationSumma
                 WriteLiteral("\n            <div class=\"form-group\">\n                ");
                 EndContext();
                 BeginContext(514, 90, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "76fb462d5f8241a3a532fa98965e3a73", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "bcf493a1725b4254834eaba6f4ae57cf", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -154,7 +154,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
             WriteLiteral("\n    </div>\n</div>\n<br />\n<div class=\"row\">\n    <div class=\"col-md-4 col-md-offset-4\">\n        ");
             EndContext();
             BeginContext(825, 235, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cd94760eecd74fc6b5cf95ea46e47cc2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f9f5e3d4ffb84a508cfe674491f6437d", async() => {
                 BeginContext(903, 150, true);
                 WriteLiteral("\n            <button type=\"submit\" class=\"btn btn-info app-form-submit\"> <i class=\"glyphicon glyphicon-arrow-left\"></i> BACK TO LIST</button>\n        ");
                 EndContext();

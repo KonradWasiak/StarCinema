@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace StarCinema.Models.CRUDModels.CinemaModels
 {
-    public class AddCinemaViewModel
+    public class AddEditCinemaViewModel
     {
         public int CinemaId { get; set; }
         public int CityId { get; set; }
@@ -20,30 +20,34 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
         public string PostalCode { get; set; }
         public string BuildingNumber { get; set; }
         public int CinemaHallsCount { get; set; }
-        public List<AddCinemaHallRequest> CinemaHalls { get; set; }
+        public List<AddEditCinemaHallRequest> CinemaHalls { get; set; }
         public List<SelectListItem> AllCities { get; set; }
-        public AddCinemaRequest Request { get; set; }
-        public AddCinemaViewModel(List<City> citites)
+        public AddEditCinemaRequest Request { get; set; }
+        public AddEditCinemaViewModel(List<City> citites)
         {
-            AllCities = new List<SelectListItem>();
             citites.ForEach(c => AllCities.Add(GetCitySelectListItem(c)));
+            AllCities.Where(x => x.Value == CityId.ToString()).FirstOrDefault().Selected = true;
         }
 
-        public AddCinemaViewModel()
+        public AddEditCinemaViewModel()
         {
             
         }
-        public AddCinemaViewModel(Cinema cinema, List<City> citites) : this(citites)
+        public AddEditCinemaViewModel(Cinema cinema, List<City> citites)
         {
-            Request = new AddCinemaRequest();
-            CinemaHalls = new List<AddCinemaHallRequest>();
+            Request = new AddEditCinemaRequest();
+            CinemaHalls = new List<AddEditCinemaHallRequest>();
             CinemaId = cinema.Id;
             CityId = cinema.CityId;
             Street = cinema.Address.Street;
             PostalCode = cinema.Address.PostalCode;
             BuildingNumber = cinema.Address.BuildingNumber;
             CinemaHallsCount = cinema.CinemaHalls.Count;
-            cinema.CinemaHalls.ToList().ForEach(x => CinemaHalls.Add(new AddCinemaHallRequest(x)));
+            cinema.CinemaHalls.ToList().ForEach(x => CinemaHalls.Add(new AddEditCinemaHallRequest(x)));
+
+            AllCities = new List<SelectListItem>();
+            citites.ForEach(c => AllCities.Add(GetCitySelectListItem(c)));
+            AllCities.Where(x => x.Value == CityId.ToString()).FirstOrDefault().Selected = true;
         }
 
         private SelectListItem GetCitySelectListItem(City city)

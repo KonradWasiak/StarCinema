@@ -9,7 +9,7 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
 {
     public class CinemaHallFactory
     {
-        public CinemaHall CreateCinemaHall(AddCinemaHallRequest request)
+        public CinemaHall CreateCinemaHall(AddEditCinemaHallRequest request)
         {
             var cinemaHall = new CinemaHall()
             {

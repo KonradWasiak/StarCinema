@@ -25,6 +25,7 @@
             <h4><i class="glyphicon glyphicon-calendar"></i> Release: @movie.ReleaseDate.ToShortDateString()</h4>
             <p>@movie.Description</p>
             <h4><i class="glyphicon glyphicon-comment"></i> Comments: @movie.CommentsCount</h4>
+            <br/>
             <form method="get" asp-action="ShowMovie" asp-controller="Movie">
                 <input type="hidden" name="movieId" value="@movie.MovieId" />
                 <button class="btn btn-warning btn-big"> <i class="glyphicon glyphicon-zoom-in"></i> SHOW MORE</button>

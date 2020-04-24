@@ -85,12 +85,12 @@ using StarCinema.Areas.Identity.Data;
             WriteLiteral("    <div class=\"row\">\n        <div class=\"col-md-6 col-md-offset-3\">\n            ");
             EndContext();
             BeginContext(365, 851, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c003fa7831c84236b072dc1fe5b4be76", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b6002d6d33fe488aaded100483bd066f", async() => {
                 BeginContext(449, 143, true);
                 WriteLiteral("\n                <h2><i class=\"glyphicon glyphicon-comment\"></i> Add Comment</h2>\n                <div class=\"form-group\">\n                    ");
                 EndContext();
                 BeginContext(592, 81, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "362d480a01b842e38d00265104bfccd4", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "235fbcc993884ae1bc14a50897b5ef27", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -124,7 +124,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 WriteLiteral("\n                    ");
                 EndContext();
                 BeginContext(694, 79, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "6c3bc2beeede416393a0df1d65d292ee", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "3fe229ff91e74d158fbce441d869c786", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -158,7 +158,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 WriteLiteral("\n                    ");
                 EndContext();
                 BeginContext(794, 112, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("textarea", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2496fe4559e74cfeaa505aeb13f20e25", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("textarea", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d9eb33cc48f34f548d1c85bda3fef08c", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_TextAreaTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.TextAreaTagHelper>();
@@ -225,7 +225,7 @@ else
             WriteLiteral("    <div class=\"row\">\n        <h2 class=\"comments-h2\">You must be logged in to add comments</h2>\n        <br />\n        <div class=\"col-md-6 col-md-offset-3\">\n            ");
             EndContext();
             BeginContext(1439, 229, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "173c250ad07d48ad92237a1bcf75669f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "370ad4962dcf4a9eba898db1a26ed0cd", async() => {
                 BeginContext(1504, 157, true);
                 WriteLiteral("\n                <button type=\"submit\" class=\"btn btn-success app-form-submit btn-big\"> <i class=\"glyphicon glyphicon-user\"></i> LOG IN</button>\n            ");
                 EndContext();

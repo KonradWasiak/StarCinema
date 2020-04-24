@@ -1,4 +1,4 @@
-﻿@model StarCinema.Models.CRUDModels.CinemaModels.AddCinemaViewModel
+﻿@model StarCinema.Models.CRUDModels.CinemaModels.AddEditCinemaViewModel
 @{
     ViewData["Title"] = "Edit cinema";
     Layout = "~/Views/Shared/_CRUDLayout.cshtml";
@@ -6,39 +6,40 @@
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
-        <form class="form app-form" method="post" asp-action="EditCinema" asp-controller="Cinema" asp->
-            <h2 class="app-form-h2"> <i class="glyphicon glyphicon-plus"></i> ADD CINEMA</h2>
+        <form class="form app-form" method="post" asp-action="EditCinema" asp-controller="Cinema">
+            <input type="hidden" asp-for="@Model.Request.CinemaId" value="@Model.CinemaId"/>
+            <h2 class="app-form-h2"> <i class="glyphicon glyphicon-plus"></i> EDIT CINEMA</h2>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <select class="app-form-select" asp-for="Request.CityId" asp-items="@Model.AllCities"></select>
             </div>
             <div class="form-group">
-                <input class="app-form-input" value="" placeholder="Street" asp-for="Request.Street" />
+                <input class="app-form-input" value="@Model.Street" placeholder="Street" asp-for="Request.Street"/>
             </div>
             <div class="form-group">
-                <input class="app-form-input" value="" placeholder="Postal code" asp-for="Request.PostalCode" />
+                <input class="app-form-input" value="@Model.PostalCode" placeholder="Postal code" asp-for="Request.PostalCode"/>
             </div>
             <div class="form-group">
-                <input class="app-form-input" value="" placeholder="Building number" asp-for="Request.BuildingNumber" />
+                <input class="app-form-input" value="@Model.BuildingNumber" placeholder="Building number" asp-for="Request.BuildingNumber"/>
             </div>
             <div class="form-group">
                 <h4 class="app-form-h4">Halls count:</h4>
-                <input type="range" min="1" max="10" value="3" asp-for="Request.CinemaHallsCount" class="slider" id="cinemaHallsCountSlider">
+                <input type="number" min="1" max="10" value="3" asp-for="Request.CinemaHallsCount" class="app-form-input" id="cinemaHallsCountSlider">
                 <h4 id="showCinemaHallsCount" class="app-form-h4"></h4>
             </div>
             <div id="inputSeatsCount" class="form-group">
                 <h4 id="hallName" class="app-form-h4"></h4>
             </div>
             @{ int counter = 1;}
-            @for (int i = 0; i < Model.Request.CinemaHallsCount; i++)
+            @for (int i = 0; i < Model.CinemaHallsCount; i++)
             {
                 <h4 class="app-form-h4">Hall @counter</h4>
 
                 <div class="form-group">
-                    <input class="app-form-input" value="" placeholder="Hall name" asp-for="@Model.CinemaHalls[i].Name" />
+                    <input class="app-form-input" value="@Model.CinemaHalls[i].Name" placeholder="Hall name" asp-for="@Model.Request.CinemaHalls[i].Name"/>
                 </div>
                 <div class="form-group">
-                    <input class="app-form-input" value="" placeholder="Number of seats for this hall" asp-for="@Model.CinemaHalls[i].SeatsCount" />
+                    <input type="number" class="app-form-input" value="@Model.CinemaHalls[i].SeatsCount" placeholder="Number of seats for this hall" asp-for="@Model.Request.CinemaHalls[i].SeatsCount"/>
                 </div>
                 counter++;
             }

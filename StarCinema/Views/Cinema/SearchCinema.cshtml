@@ -1,0 +1,41 @@
+﻿@model List<StarCinema.Models.CRUDModels.CinemaModels.SearchCinemaViewModel>
+
+@{
+    ViewData["Title"] = "Search cinema";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@foreach (var cinema in Model)
+{
+    <div class="row list-movie-panel">
+        <div class="col-md-9">
+            <a class="movie-card-a" asp-action="" asp-controller="" asp-route-id="@cinema.Id">
+                <h2><i class="glyphicon glyphicon-film"></i> @cinema.City, @cinema.Street, @cinema.BuildingNumber</h2>
+            </a>
+            <h4>
+                <i class="glyphicon glyphicon-th"></i> Halls number: @cinema.CinemaHallsCount
+            </h4>
+        </div>        
+        <div class="col-md-3">
+            <br/>
+            <form method="get" asp-action="" asp-controller="">
+                <input type="hidden" name="movieId" value="@cinema.Id"/>
+                <button class="btn btn-warning btn-big"> <i class="glyphicon glyphicon-zoom-in"></i> SHOW MORE</button>
+            </form>
+            <br/>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    var lon = cinema.Coordinates.Lon;
+                    var lat = cinema.Coordinates.Lat;
+                }
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d10189.797406534197!2d@(lon)!3d@(lat)!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1spl!2spl!4v1587634211817!5m2!1spl!2spl" width="600" height="450" frameborder="0" style="border: 0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <br />
+}
+

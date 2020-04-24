@@ -6,16 +6,16 @@ using StarCinema.DomainModels;
 
 namespace StarCinema.Models.CRUDModels.CinemaHallModels
 {
-    public class AddCinemaHallRequest
+    public class AddEditCinemaHallRequest
     {
         public string Name { get; set; }
         public int SeatsCount { get; set; }
 
-        public AddCinemaHallRequest()
+        public AddEditCinemaHallRequest()
         {
             
         }
-        public AddCinemaHallRequest(CinemaHall cinemaHall)
+        public AddEditCinemaHallRequest(CinemaHall cinemaHall)
         {
             Name = cinemaHall.Name;
             SeatsCount = cinemaHall.Seats.Count();

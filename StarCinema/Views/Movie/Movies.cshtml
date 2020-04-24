@@ -51,7 +51,7 @@
                             </a>
                         </td>
                         <td>Comments</td>
-                        <td>Shows</td>
+                        <td>ShowListings</td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -77,7 +77,12 @@
                                     <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button>
                                 </form>
                             </td>
-                            <td><button type="button" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button></td>
+                            <td>
+                                <form class="app-form-table" asp-action="Shows" asp-controller="Show" method="get">
+                                    <input type="hidden" name="movieId" value="@c.Id" />
+                                    <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button>
+                                </form>
+                            </td>
                             <td>
                                 <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
                                     <input type="hidden" name="movieId" value="@c.Id" />
@@ -111,7 +116,7 @@
         <nav>
             <ul class="pagination">
                 <li class="page-item">
-                    <a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy"  asp-route-page="1" class="page-link">
+                    <a asp-action="Movies" asp-controller="Movie" asp-route-orderBy="@Model.OrderBy" asp-route-page="1" class="page-link">
                         <i class="glyphicon glyphicon-fast-backward"></i>
                     </a>
                 </li>

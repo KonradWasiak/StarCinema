@@ -82,13 +82,13 @@
     </div>
 
     <div class="col-lg-4 col-md-4">
-        <form>
+        <form asp-action="SearchCinema" asp-controller="Cinema" method="get">
             <div class="input-group">
-                <input type="text" class="nav-search form-control" placeholder="Find your cinema">
+                <input name="city" type="text" asp- class="nav-search form-control" placeholder="Find your cinema">
                 <span class="input-group-btn">
-                    <button class="btn-search btn btn-danger" type="button">SEARCH</button>
+                    <button class="btn-search btn btn-danger" type="submit">SEARCH</button>
                 </span>
-            </div><!-- /input-group -->
+            </div>
         </form>
     </div>
 </div>

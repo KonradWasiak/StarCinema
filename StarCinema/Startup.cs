@@ -21,8 +21,9 @@ using StarCinema.Models.CRUDModels.CityModels;
 using StarCinema.Models.CRUDModels.CommentModels;
 using StarCinema.Models.CRUDModels.MovieModels;
 using StarCinema.Models.CRUDModels.SeatModels;
+    using StarCinema.Models.CRUDModels.ShowModels;
 
-namespace StarCinema
+    namespace StarCinema
 {
     public class Startup
     {
@@ -66,7 +67,11 @@ namespace StarCinema
             services.AddScoped<CategoryFactory, CategoryFactory>();
             services.AddScoped<CityFactory, CityFactory>();
             services.AddScoped<MovieFactory, MovieFactory>();
-            services.AddScoped<CommentFactory, CommentFactory>();           
+            services.AddScoped<CommentFactory, CommentFactory>();
+            services.AddScoped<ShowFactory, ShowFactory>();
+            services.AddScoped<IGeolocationService, GeolocationService>();
+            services.AddScoped<ICinemaHallRepository, CinemaHallRepository>();
+            services.AddScoped<IShowRepository, ShowRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

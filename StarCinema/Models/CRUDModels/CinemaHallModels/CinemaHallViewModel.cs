@@ -16,7 +16,7 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
         public string Name { get; set; }
         public CinemaViewModel Cinema { get; set; }
         public List<SeatViewModel> Seats { get; set; }
-        public List<ShowViewModel> Shows { get; set; }
+        public List<ShowListingRowViewModel> Shows { get; set; }
 
         public CinemaHallViewModel(CinemaHall cinemaHall)
         {
@@ -37,9 +37,9 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
 
             if (this.Shows == null)
             {
-                //this.Shows = new List<ShowViewModel>();
+                //this.Shows = new List<ShowListingViewModel>();
                 //cinemaHall.Shows.ToList()
-                //    .ForEach(x => this.Shows.Add(new ShowViewModel(x)));
+                //    .ForEach(x => this.Shows.Add(new ShowListingViewModel(x)));
             }
         }
 

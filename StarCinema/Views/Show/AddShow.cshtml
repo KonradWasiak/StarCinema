@@ -1,0 +1,31 @@
+﻿@model StarCinema.Models.CRUDModels.ShowModels.AddEditShowViewModel
+@{
+    ViewData["Title"] = "AddCity";
+    Layout = "~/Views/Shared/_CRUDLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form class="form app-form" method="post" asp-action="AddShow" asp-controller="Show">
+            <input type="hidden" asp-for="@Model.Request.MovieId" value="@Model.MovieId"/>
+            <h2 class="app-form-h2"> <i class="glyphicon glyphicon-plus"></i> Add city</h2>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <input class="app-form-input" placeholder="City name" asp-for="@Model.Request.Date" value=""/>
+            </div>
+            <div class="form-group">
+                <select class="app-form-select" asp-for="@Model.Request.HallId" asp-items="@Model.Halls"></select>
+            </div>
+            <button class="btn btn-danger app-form-submit" type="submit">ADD SHOW</button>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <form asp-action="Shows" asp-controller="Show" method="get">
+            <input type="hidden" name="movieId" value="@Model.MovieId"/>
+            <button type="submit" class="btn btn-info app-form-submit"> <i class="glyphicon glyphicon-arrow-left"></i> BACK TO LIST</button>
+        </form>
+    </div>
+</div>

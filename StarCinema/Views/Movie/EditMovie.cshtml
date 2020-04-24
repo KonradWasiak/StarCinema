@@ -18,7 +18,7 @@
                 <input class="app-form-input" value="@Model.Title" placeholder="@Model.Title" asp-for="@Model.Request.Title" />
             </div>
             <div class="form-group">
-                <select class="app-form-select" value="@Model.Category" asp-for="@Model.Request.CategoryId" asp-items="@Model.Categories"></select>
+                <select class="app-form-select" asp-for="@Model.Request.CategoryId" asp-items="@Model.Categories"></select>
             </div>
             <div class="form-group">
                 <input class="app-form-input" value="@Model.Directory" placeholder="@Model.Directory" asp-for="@Model.Request.Directory" />

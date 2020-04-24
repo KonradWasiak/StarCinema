@@ -15,7 +15,7 @@ namespace StarCinema.Models.CRUDModels.MovieModels
         {
             this._categoryRepo = categoryRepo;
         }
-        public Movie GetMovie(AddEditMovieRequest addEditMovie)
+        public Movie CreateMovie(AddEditMovieRequest addEditMovie)
         {
             var movieCategory = this._categoryRepo.FindCategory(addEditMovie.CategoryId);
 

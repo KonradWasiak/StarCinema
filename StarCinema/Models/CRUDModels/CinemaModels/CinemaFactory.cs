@@ -20,7 +20,7 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
             _cinemaHallFactory = cinemaHallFactory;
         }
 
-        public Cinema CreateCinema(AddCinemaRequest request)
+        public Cinema CreateCinema(AddEditCinemaRequest request)
         {
             var cinema = new Cinema();
             cinema.CinemaHalls = new List<CinemaHall>();

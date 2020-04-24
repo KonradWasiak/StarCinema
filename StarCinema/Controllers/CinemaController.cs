@@ -18,14 +18,17 @@ namespace StarCinema.Controllers
         private readonly ICityRepository _cityRepo;
         private readonly CinemaFactory _cinemaFactory;
         private readonly IConfiguration _config;
+        private readonly IGeolocationService _geolocationService;
         private int _itemsPerPage;
-        public CinemaController(ICinemaRepository cinemaRepo, ICityRepository cityRepo, CinemaFactory cinemaFactory, IConfiguration configuration)
+        public CinemaController(ICinemaRepository cinemaRepo, ICityRepository cityRepo, 
+            CinemaFactory cinemaFactory, IConfiguration configuration, IGeolocationService geolocationService)
         {
             this._cinemaRepo = cinemaRepo;
             this._cityRepo = cityRepo;
             this._cinemaFactory = cinemaFactory;
             this._config = configuration;
             this._itemsPerPage = _config.GetValue<int>("ItemsPerPage");
+            _geolocationService = geolocationService;
         }
 
         public IActionResult Cinemas([FromQuery] CinemaListingRequest request)
@@ -41,22 +44,38 @@ namespace StarCinema.Controllers
             return View(cinemasViewModel);
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> SearchCinema(string city)
+        {
+            var cinemas = _cinemaRepo.SearchCinema(city).ToList();
+            var cinemasViewModel = new List<SearchCinemaViewModel>();
+            cinemas.ForEach(x => cinemasViewModel.Add(new SearchCinemaViewModel(x)));
+
+            foreach (var cinema in cinemasViewModel)
+            {
+                cinema.Coordinates = await _geolocationService.GetCoordinates(cinema.City, cinema.Street, cinema.BuildingNumber);
+            }
+
+            return View(cinemasViewModel);
+        }
+
         [HttpGet]
         public IActionResult AddCinema()
         {
             var cities = _cityRepo.AllCities().ToList();
-            return View(new AddCinemaViewModel(cities));
+            return View(new AddEditCinemaViewModel(cities));
         }
 
         [HttpPost]
-        public IActionResult AddHallsToCinema(AddCinemaRequest request)
+        public IActionResult AddHallsToCinema(AddEditCinemaRequest request)
         {            
             request.CreateCinemaHalls();
             return View("AddHallsToCinema", request);
         }
 
         [HttpPost]
-        public IActionResult AddCinema(AddCinemaRequest request)
+        public IActionResult AddCinema(AddEditCinemaRequest request)
         {
             var cinema = _cinemaFactory.CreateCinema(request);
 
@@ -78,15 +97,17 @@ namespace StarCinema.Controllers
         {
             var cinema = _cinemaRepo.FindCinema(cinemaId);
             var cities = _cityRepo.AllCities().ToList();
-            var editCinemaViewModel = new AddCinemaViewModel(cinema, cities);
+            var editCinemaViewModel = new AddEditCinemaViewModel(cinema, cities);
             return View(editCinemaViewModel);
         }
 
 
         [HttpPost]
-        public IActionResult EditCinema(AddCinemaViewModel editCinemaViewModel)
+        public IActionResult EditCinema(AddEditCinemaViewModel editEditCinemaViewModel)
         {
-            return View();
+            var editedCinema = _cinemaFactory.CreateCinema(editEditCinemaViewModel.Request);
+            _cinemaRepo.EditCinema(editEditCinemaViewModel.Request.CinemaId, editedCinema);
+            return RedirectToAction("Cinemas");
         }
     }
 }

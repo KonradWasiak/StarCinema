@@ -172,7 +172,7 @@ namespace StarCinema.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Show",
+                name: "ShowListing",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -213,7 +213,7 @@ namespace StarCinema.Migrations
                     table.ForeignKey(
                         name: "FK_Booking_Show_ShowId",
                         column: x => x.ShowId,
-                        principalTable: "Show",
+                        principalTable: "ShowListing",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -276,12 +276,12 @@ namespace StarCinema.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Show_HallId",
-                table: "Show",
+                table: "ShowListing",
                 column: "HallId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Show_MovieId",
-                table: "Show",
+                table: "ShowListing",
                 column: "MovieId");
         }
 
@@ -300,7 +300,7 @@ namespace StarCinema.Migrations
                 name: "Seat");
 
             migrationBuilder.DropTable(
-                name: "Show");
+                name: "ShowListing");
 
             migrationBuilder.DropTable(
                 name: "CinemaHall");

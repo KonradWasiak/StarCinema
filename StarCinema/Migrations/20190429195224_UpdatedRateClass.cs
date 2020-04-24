@@ -400,7 +400,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.RenameTable(
                 name: "Shows",
-                newName: "Show");
+                newName: "ShowListing");
 
             migrationBuilder.RenameTable(
                 name: "Seats",
@@ -440,12 +440,12 @@ namespace StarCinema.Migrations
 
             migrationBuilder.RenameIndex(
                 name: "IX_Shows_MovieId",
-                table: "Show",
+                table: "ShowListing",
                 newName: "IX_Show_MovieId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_Shows_HallId",
-                table: "Show",
+                table: "ShowListing",
                 newName: "IX_Show_HallId");
 
             migrationBuilder.RenameIndex(
@@ -506,7 +506,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Show",
-                table: "Show",
+                table: "ShowListing",
                 column: "Id");
 
             migrationBuilder.AddPrimaryKey(
@@ -558,7 +558,7 @@ namespace StarCinema.Migrations
                 name: "FK_Booking_Show_ShowId",
                 table: "Booking",
                 column: "ShowId",
-                principalTable: "Show",
+                principalTable: "ShowListing",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -636,7 +636,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Show_CinemaHall_HallId",
-                table: "Show",
+                table: "ShowListing",
                 column: "HallId",
                 principalTable: "CinemaHall",
                 principalColumn: "Id",
@@ -644,7 +644,7 @@ namespace StarCinema.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Show_Movie_MovieId",
-                table: "Show",
+                table: "ShowListing",
                 column: "MovieId",
                 principalTable: "AddEditMovie",
                 principalColumn: "Id",

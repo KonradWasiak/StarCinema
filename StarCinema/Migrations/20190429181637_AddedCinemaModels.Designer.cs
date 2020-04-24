@@ -347,7 +347,7 @@ namespace StarCinema.Migrations
                     b.ToTable("Seat");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.Show", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.ShowListing", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -365,7 +365,7 @@ namespace StarCinema.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("Show");
+                    b.ToTable("ShowListing");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -415,7 +415,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Booking", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.Show", "Show")
+                    b.HasOne("StarCinema.DomainModels.ShowListing", "ShowListing")
                         .WithMany("Bookings")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -479,7 +479,7 @@ namespace StarCinema.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.Show", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.ShowListing", b =>
                 {
                     b.HasOne("StarCinema.DomainModels.CinemaHall", "Hall")
                         .WithMany("Shows")

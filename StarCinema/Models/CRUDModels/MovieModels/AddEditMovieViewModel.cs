@@ -28,7 +28,7 @@ namespace StarCinema.Models.CRUDModels.MovieModels
             Title = movie.Title;
             Directory = movie.Directory;
             Description = movie.Description;
-            Category = movie.Category.CategoryName;
+            Category = movie.Category.Id.ToString();
             DurationTime = movie.DurationTime;
             TrailerUrl = movie.TrailerUrl;
             Is3D = movie.Is3D;
@@ -69,7 +69,8 @@ namespace StarCinema.Models.CRUDModels.MovieModels
             return new SelectListItem()
             {
                 Text = category.CategoryName,
-                Value = category.Id.ToString()
+                Value = category.Id.ToString(),
+                Selected = Category == category.Id.ToString()
             };
         }
     }

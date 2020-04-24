@@ -75,6 +75,27 @@ namespace StarCinema.DataLayer.Concrete
                 .ToList();
         }
 
+        public IList<Cinema> SearchCinema(string city)
+        {
+            return context.Cinemas.Where(x => x.City.CityName.Contains(city))
+                .Include(x => x.Address)
+                .Include(x => x.City)
+                .Include(x => x.CinemaHalls)
+                .ToList();
+        }
+
+        public void EditCinema(int cinemaId, Cinema cinema)
+        {
+            var cinemaToEdit = FindCinema(cinemaId);
+            if (cinemaToEdit != null)
+            {
+                cinemaToEdit.Address = cinema.Address;
+                cinemaToEdit.CinemaHalls = cinema.CinemaHalls;
+                cinemaToEdit.City = cinema.City;
+                context.SaveChanges();
+            }
+        }
+
         public Cinema RemoveCinema(int cinemaId)
         {
             var cinemaToRemove = context.Cinemas.Where(x => x.Id == cinemaId).FirstOrDefault();

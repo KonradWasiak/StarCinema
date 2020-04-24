@@ -62,6 +62,11 @@ namespace StarCinema.DataLayer.Abstract
         public void EditMovie(int movieId, Movie updatedMovie)
         {
             var movie = FindMovie(movieId);
+            if (String.IsNullOrEmpty(updatedMovie.Description))
+            {
+                updatedMovie.Description = movie.Description;
+            }
+
             if (movie != null)
             {
                 movie.Title = updatedMovie.Title;

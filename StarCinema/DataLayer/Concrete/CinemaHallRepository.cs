@@ -26,6 +26,8 @@ namespace StarCinema.DataLayer.Concrete
         public IList<CinemaHall> AllCinemaHalls()
         {
             return context.Halls
+                .Include(x => x.Cinema)
+                .ThenInclude(x => x.Address)
                 .Include(x => x.Shows)
                 .Include(x => x.Seats)
                 .ToList();
@@ -35,6 +37,7 @@ namespace StarCinema.DataLayer.Concrete
         {
             return context.Halls.Count();
         }
+
 
         public IList<CinemaHall> FindCinemaHallsFromCinema(Cinema cinema)
         {
@@ -68,6 +71,11 @@ namespace StarCinema.DataLayer.Concrete
                             .Skip((page - 1) * itemsPerPage)
                             .Take(itemsPerPage)
                             .ToList();
+        }
+
+        public CinemaHall FindCinemaHall(int cinemaHallId)
+        {
+            return context.Halls.Where(x => x.Id == cinemaHallId).FirstOrDefault();
         }
 
         public CinemaHall RemoveCinemaHall(CinemaHall hall)

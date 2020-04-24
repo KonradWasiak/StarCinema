@@ -18,5 +18,6 @@ namespace StarCinema.DataLayer.Abstract
         int CinemaHallsCount();
         IList<CinemaHall> PaginatedCinemaHalls(Cinema cinema, int page, int itemsPerPage);
         IList<CinemaHall> PaginatedCinemaHalls(int page, int itemsPerPage);
+        CinemaHall FindCinemaHall(int cinemaHallId);
     }
 }

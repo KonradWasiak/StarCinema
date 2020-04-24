@@ -100,7 +100,7 @@ namespace StarCinema.Controllers.CRUDControllers
         {
             if (ModelState.IsValid)
             {
-                var movieToAdd = _movieFactory.GetMovie(request);
+                var movieToAdd = _movieFactory.CreateMovie(request);
 
                 _movieRepo.AddMovie(movieToAdd);
                 int id = movieToAdd.Id;
@@ -140,8 +140,7 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpPost]
         public  RedirectToActionResult EditMovie(AddEditMovieViewModel addEditMovie)
         {
-            var movieCategory = _categoryRepo.FindCategory(addEditMovie.Request.CategoryId);
-            var movietoEdit = _movieFactory.GetMovie(addEditMovie.Request);
+            var movietoEdit = _movieFactory.CreateMovie(addEditMovie.Request);
 
             this._movieRepo.EditMovie(addEditMovie.Request.Id, movietoEdit);
 
