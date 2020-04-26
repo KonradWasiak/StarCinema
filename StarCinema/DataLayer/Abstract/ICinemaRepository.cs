@@ -17,6 +17,7 @@ namespace StarCinema.DataLayer.Abstract
         int CinemasCount();
         IList<Cinema> PaginatedCinemas(int page, int itemsPerPage, string orderBy);
         IList<Cinema> SearchCinema(string city);
+        IList<Cinema> FindCinemaWithMovieShows(int movieId)
         void EditCinema(int cinemaId, Cinema cinema);
     }
 }

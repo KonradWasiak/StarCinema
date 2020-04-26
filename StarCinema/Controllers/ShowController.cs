@@ -50,7 +50,7 @@ namespace StarCinema.Controllers
             var show = _showFactory.CreateShow(addEditShowViewModel.Request);
             var movieDuration = _movieRepository.FindMovie(addEditShowViewModel.Request.MovieId).DurationTime;
             bool isDateCorrect = !_showRepository.GetShowsBetweenDates(addEditShowViewModel.Request.Date,
-                addEditShowViewModel.Request.Date.AddMinutes(movieDuration)).ToList().Any();
+                addEditShowViewModel.Request.Date.AddMinutes(movieDuration), addEditShowViewModel.Request.HallId).ToList().Any();
 
             if (!isDateCorrect)
             {

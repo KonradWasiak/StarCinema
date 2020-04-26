@@ -106,5 +106,14 @@ namespace StarCinema.DataLayer.Concrete
 
             return cinemaToRemove;
         }
+
+        public IList<Cinema> FindCinemaWithMovieShows(int movieId)
+        {
+            return context.Shows.Where(x => x.MovieId == movieId)
+                .Include(x => x.Hall)
+                .ThenInclude(x => x.Cinema)
+                .ThenInclude(x => x.Address)
+
+        }
     }
 }

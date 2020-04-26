@@ -8,7 +8,7 @@ namespace StarCinema.DataLayer.Abstract
 {
     public interface IShowRepository
     {
-        IList<Show> GetShowsBetweenDates(DateTime from, DateTime to);
+        IList<Show> GetShowsBetweenDates(DateTime from, DateTime to, int cinemaHallId);
         IList<Show> GetMovieShows(int movieId, string orderBy);
         Show GetShow(int showId);
         void AddShow(Show show);

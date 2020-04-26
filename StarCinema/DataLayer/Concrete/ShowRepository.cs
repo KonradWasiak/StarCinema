@@ -19,9 +19,12 @@ namespace StarCinema.DataLayer.Concrete
             _context = context;
         }
 
-        public IList<Show> GetShowsBetweenDates(DateTime from, DateTime to)
+        public IList<Show> GetShowsBetweenDates(DateTime from, DateTime to, int cinemaHallId)
         {
+            var allShows = _context.Shows.Where(x => x.Hall.Id == cinemaHallId).ToList();
+
             return _context.Shows.Where(x => (x.Date >= from && x.Date <= to))
+                .Where(x => x.Hall.Id == cinemaHallId)
                 .Include(x => x.Movie)
                 .Include(x => x.Bookings)
                 .Include(x => x.Hall)

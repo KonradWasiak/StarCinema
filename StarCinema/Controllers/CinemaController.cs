@@ -61,6 +61,12 @@ namespace StarCinema.Controllers
         }
 
         [HttpGet]
+        public IActionResult ChooseCinemaForBooking(int movieId)
+        {
+            var cinemasWithMovie = _cinemaRepo.AllCinemas
+        }
+
+        [HttpGet]
         public IActionResult AddCinema()
         {
             var cities = _cityRepo.AllCities().ToList();
