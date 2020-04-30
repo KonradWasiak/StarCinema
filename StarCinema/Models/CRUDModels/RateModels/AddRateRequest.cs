@@ -9,7 +9,7 @@ namespace StarCinema.Models.CRUDModels.RateModels
     public class AddRateRequest
     {
         [Required]
-        public string UserId { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public bool ThumbUp { get; set; }

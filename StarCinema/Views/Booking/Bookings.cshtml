@@ -1,0 +1,115 @@
+﻿@model StarCinema.Models.ListingViewModel<StarCinema.Models.CRUDModels.BookingModels.BookingListingRowViewModel>
+
+@{
+    ViewData["Title"] = "Movie bookings";
+    Layout = "~/Views/Shared/_CRUDLayout.cshtml";
+    int i = 0;
+}
+
+<h2 class="app-form-h2">Comments</h2>
+<div class="row">
+    <div class="col-lg-4 col-lg-offset-4">
+        <form asp-action="Movies" asp-controller="Movie" method="get">
+            <input type="hidden" name="movieId" value="@Model.Models.FirstOrDefault().MovieId"/>
+            <button type="submit" class="btn btn-info app-form-submit"><i class="glyphicon glyphicon-arrow-left"></i> BACK TO MOVIE LISTING</button>
+        </form>
+    </div>
+</div>
+<br />
+<div class="row">
+    @if (Model.Models.Any())
+    {
+        <div class="col-lg-12">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>
+                                <a asp-controller="Booking" asp-action="Bookings" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="AddedDateAsc">
+                                    <i class="glyphicon glyphicon-triangle-top"></i>
+                                </a>
+                                User
+                                <a asp-controller="Booking" asp-action="Bookings" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="AddedDateDesc">
+                                    <i class="glyphicon glyphicon-triangle-bottom"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a asp-controller="Booking" asp-action="Bookings" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="UserAsc">
+                                    <i class="glyphicon glyphicon-triangle-top"></i>
+                                </a>
+                                Movie
+                                <a asp-controller="Booking" asp-action="Bookings" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="UserDesc">
+                                    <i class="glyphicon glyphicon-triangle-bottom"></i>
+                                </a>
+                            </td>
+                            <td>Date</td>
+                            <td>Cinema Hall</td>
+                            <td>Code</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in Model.Models)
+                        {
+                            i++;
+                            <tr>
+                                <td class="td-center">@i</td>
+                                <td class="td-center">@c.Username</td>
+                                <td class="td-center">@c.MovieTitle</td>
+                                <td class="td-center">@c.Date</td>
+                                <td class="td-center">@c.CinemaHall</td>
+                                <td class="td-center">@c.Code</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2>No results found</h2>
+    }
+</div>
+
+@{
+    int nextPage = Model.PagingInfo.CurrentPage == Model.PagingInfo.TotalPages ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage + 1;
+    int prevPage = Model.PagingInfo.CurrentPage == 1 ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage - 1;
+    int startPage = Model.PagingInfo.CurrentPage >= 10 ? Model.PagingInfo.CurrentPage : 1;
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item">
+                    <a asp-action="Bookings" asp-controller="Booking" asp-route-page="1" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="@Model.OrderBy" class="page-link">
+                        <i class="glyphicon glyphicon-fast-backward"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Bookings" asp-controller="Booking" asp-route-page="@prevPage" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                </li>
+                @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
+                {
+                    if (j == Model.PagingInfo.CurrentPage)
+                    {
+                        <li class="page-item active"><a asp-action="Bookings" asp-controller="Booking" asp-route-page="@j" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-orderBy="@Model.OrderBy" class="page-link">@j</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a asp-action="Bookings" asp-controller="Booking" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-page="@j" asp-route-orderBy="@Model.OrderBy" class="page-link">@j</a></li>
+                    }
+                }
+                <li class="page-item">
+                    <a asp-action="Bookings" asp-controller="Booking" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-page="@nextPage" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                </li>
+                <li class="page-item">
+                    <a asp-action="Bookings" asp-controller="Booking" asp-route-movieId="@Model.Models.FirstOrDefault().MovieId" asp-route-page="@Model.PagingInfo.TotalPages" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<br />

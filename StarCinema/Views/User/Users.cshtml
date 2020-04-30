@@ -1,0 +1,109 @@
+﻿@using StarCinema.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@model StarCinema.Models.ListingViewModel<StarCinema.Models.CRUDModels.UserModels.UserListingRowViewModel>;
+@inject SignInManager<StarCinemaUser> SignInManager
+@inject UserManager<StarCinemaUser> UserManager
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_CRUDLayout.cshtml";
+    int i = 0;
+}
+
+<h2 class="app-form-h2">Users</h2>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>
+                            <a asp-controller="User" asp-action="Users" asp-route-orderBy="UserAsc">
+                                <i class="glyphicon glyphicon-triangle-top"></i>
+                            </a>
+                            Username
+                            <a asp-controller="User" asp-action="Users" asp-route-orderBy="UserDesc">
+                                <i class="glyphicon glyphicon-triangle-bottom"></i>
+                            </a>
+                        </td>
+                        <td>Email address</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model.Models)
+                    {
+                        i++;
+                        <tr>
+                            <td class="td-center">@i</td>
+                            <td class="td-center">@c.Username</td>
+                            <td class="td-center">@c.Email</td>
+                            <td class="td-center">
+                                <form asp-action="EditUserRole" asp-controller="User" method="get">
+                                    <input type="hidden" name="username" value="@c.Username" />
+
+                                    @if (SignInManager.IsSignedIn(User) && User.Identity.Name != c.Username)
+                                    {
+                                        @if (c.IsAdmin)
+                                        {
+                                            <input type="hidden" name="isAdmin" value="false"/>
+                                            <button type="submit" class="btn btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> REFUSE ADMIN RIGHTS</button>
+                                        }
+                                        else
+                                        {
+                                            <input type="hidden" name="isAdmin" value="true"/>
+                                            <button type="submit" class="btn btn-success app-form-table-submit"><i class="glyphicon glyphicon-ok"></i> PROVIDE ADMIN RIGHTS</button>
+                                        }
+                                    }
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                @{
+                    int nextPage = Model.PagingInfo.CurrentPage == Model.PagingInfo.TotalPages ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage + 1;
+                    int prevPage = Model.PagingInfo.CurrentPage == 1 ? Model.PagingInfo.CurrentPage : Model.PagingInfo.CurrentPage - 1;
+                    int startPage = Model.PagingInfo.CurrentPage >= 10 ? Model.PagingInfo.CurrentPage : 1;
+                }
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <nav>
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a asp-action="Users" asp-controller="User" asp-route-page="1" asp-route-orderBy="@Model.OrderBy" class="page-link">
+                                        <i class="glyphicon glyphicon-fast-backward"></i>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a asp-action="Users" asp-controller="User" asp-route-page="@prevPage" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                                </li>
+
+                                @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
+                                {
+                                    if (j == Model.PagingInfo.CurrentPage)
+                                    {
+                                        <li class="page-item active"><a asp-action="Users" asp-controller="User" asp-route-page="@j" asp-route-orderBy="@Model.OrderBy" class="page-link">@j</a></li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item"><a asp-action="Users" asp-controller="User" asp-route-page="@j" asp-route-orderBy="@Model.OrderBy" class="page-link">@j</a></li>
+                                    }
+                                }
+                                <li class="page-item">
+                                    <a asp-action="Users" asp-controller="User" asp-route-page="@nextPage" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                                </li>
+                                <li class="page-item">
+                                    <a asp-action="Users" asp-controller="User" asp-route-page="@Model.PagingInfo.TotalPages" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>

@@ -15,5 +15,6 @@ namespace StarCinema.DataLayer.Abstract
         void DeleteShow(int showId);
         IList<Show> GetPaginatedShows(int movieId, string orderBy, int page, int pageSize);
         int GetMovieShowsCount(int movieId);
+        IList<Show> GetShowsForMovieAndCinemaBetweenDates(DateTime from, DateTime to, int cinemaId, int movieId);
     }
 }

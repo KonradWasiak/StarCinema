@@ -14,15 +14,15 @@ namespace StarCinema.Models.IndexModels
         public IEnumerable<Category> Categories { get; set; }
         public IndexMoviesListViewModel(IEnumerable<Movie> AllMoviesList, IEnumerable<Category> AllCategoriesList)
         {
-            this.LatestMovies = AllMoviesList/*Where(m => (m.ReleaseDate > DateTime.Today.AddMonths(-12)) && (m.ReleaseDate < DateTime.Today))*/
+            this.LatestMovies = AllMoviesList.OrderByDescending(m => m.ReleaseDate)
                                              .ToList()
-                                             .OrderByDescending(m => m.ReleaseDate)
                                              .Take(9);
 
-            this.ComingSoonMovies = AllMoviesList/*.Where(m => m.ReleaseDate > DateTime.Today).ToList().OrderBy(m => m.ReleaseDate).Take(9)*/;
+            this.ComingSoonMovies = AllMoviesList.Where(m => m.ReleaseDate > DateTime.Today).OrderBy(m => m.ReleaseDate).Take(9).ToList();
 
-            this.MostPopularMovies = AllMoviesList.ToList()
-                                                  .OrderByDescending(m => m.Rates.Count)
+            this.MostPopularMovies = AllMoviesList.OrderByDescending(m => m.Comments.Count)
+                                                  .ThenBy(m => m.Rates.Count)
+                                                  .ToList()
                                                   .Take(9);
 
             this.Categories = AllCategoriesList.ToList()

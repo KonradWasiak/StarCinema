@@ -11,17 +11,42 @@ namespace StarCinema.DataLayer.Concrete
 {
     public class UserRepository : IUserRepository
     {
-        private readonly StarCinemaContext context;
+        private readonly StarCinemaContext _context;
 
         public UserRepository(StarCinemaContext context)
         {
-            this.context = context;
+            _context = context;
         }
+
         public StarCinemaUser GetUser(string username)
         {
-            var user = this.context.Users.FirstOrDefault(u => u.UserName == username);
+            var user = this._context.Users.FirstOrDefault(u => u.UserName == username);
             return user;
 
+        }
+
+        public IList<StarCinemaUser> GetPaginatedUsers(int page, int pageSize, string orderBy)
+        {
+            var allUsers = _context.Users.ToList();
+            switch (orderBy)
+            {
+                case "UserAsc":
+                    allUsers = allUsers.OrderBy(x => x.UserName).ToList();
+                    break;
+                case "UserDesc":
+                    allUsers = allUsers.OrderByDescending(x => x.UserName).ToList();
+                    break;
+                default:
+                    allUsers = allUsers.OrderBy(x => x.UserName).ToList();
+                    break;
+            }
+
+            return allUsers.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+        public int GetUsersCount()
+        {
+            return _context.Users.Count();
         }
     }
 }

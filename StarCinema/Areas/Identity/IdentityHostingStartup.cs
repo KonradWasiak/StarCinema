@@ -19,8 +19,11 @@ namespace StarCinema.Areas.Identity
                 services.AddDbContext<StarCinemaContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("StarCinemaContextConnection")));
-
-                services.AddDefaultIdentity<StarCinemaUser>()
+                
+                services.AddIdentity<StarCinemaUser, IdentityRole>()
+                    .AddRoles<IdentityRole>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders()
                     .AddEntityFrameworkStores<StarCinemaContext>();
             });
         }

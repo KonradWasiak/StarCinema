@@ -7,43 +7,47 @@
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <form class="form app-form" method="post" asp-action="EditCinema" asp-controller="Cinema">
-            <input type="hidden" asp-for="@Model.Request.CinemaId" value="@Model.CinemaId"/>
+            <input type="hidden" asp-for="@Model.Request.CinemaId" value="@Model.CinemaId" />
             <h2 class="app-form-h2"> <i class="glyphicon glyphicon-plus"></i> EDIT CINEMA</h2>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
+                <h4 class="app-form-h4">City</h4>
                 <select class="app-form-select" asp-for="Request.CityId" asp-items="@Model.AllCities"></select>
             </div>
             <div class="form-group">
-                <input class="app-form-input" value="@Model.Street" placeholder="Street" asp-for="Request.Street"/>
+                <h4 class="app-form-h4">Street</h4>
+                <input class="app-form-input" value="@Model.Street" placeholder="Street" asp-for="Request.Street" />
             </div>
             <div class="form-group">
-                <input class="app-form-input" value="@Model.PostalCode" placeholder="Postal code" asp-for="Request.PostalCode"/>
+                <h4 class="app-form-h4">Postal code</h4>
+                <input class="app-form-input" value="@Model.PostalCode" placeholder="Postal code" asp-for="Request.PostalCode" />
             </div>
             <div class="form-group">
-                <input class="app-form-input" value="@Model.BuildingNumber" placeholder="Building number" asp-for="Request.BuildingNumber"/>
-            </div>
-            <div class="form-group">
-                <h4 class="app-form-h4">Halls count:</h4>
-                <input type="number" min="1" max="10" value="3" asp-for="Request.CinemaHallsCount" class="app-form-input" id="cinemaHallsCountSlider">
-                <h4 id="showCinemaHallsCount" class="app-form-h4"></h4>
-            </div>
-            <div id="inputSeatsCount" class="form-group">
-                <h4 id="hallName" class="app-form-h4"></h4>
+                <h4 class="app-form-h4">Building number</h4>
+                <input class="app-form-input" value="@Model.BuildingNumber" placeholder="Building number" asp-for="Request.BuildingNumber" />
             </div>
             @{ int counter = 1;}
             @for (int i = 0; i < Model.CinemaHallsCount; i++)
             {
-                <h4 class="app-form-h4">Hall @counter</h4>
+                <h4 class="app-form-h4">Hall @counter name</h4>
 
                 <div class="form-group">
-                    <input class="app-form-input" value="@Model.CinemaHalls[i].Name" placeholder="Hall name" asp-for="@Model.Request.CinemaHalls[i].Name"/>
-                </div>
-                <div class="form-group">
-                    <input type="number" class="app-form-input" value="@Model.CinemaHalls[i].SeatsCount" placeholder="Number of seats for this hall" asp-for="@Model.Request.CinemaHalls[i].SeatsCount"/>
+                    <input type="hidden" asp-for="@Model.Request.CinemaHalls[i].CinemaHallId" value="@Model.CinemaHalls[i].CinemaHallId" />
+                    <input class="app-form-input" value="@Model.CinemaHalls[i].Name" placeholder="Hall name" asp-for="@Model.Request.CinemaHalls[i].Name" />
                 </div>
                 counter++;
             }
-            <button class="btn btn-danger app-form-submit" type="submit">ADD CINEMA</button>
+            <button class="btn btn-danger app-form-submit" type="submit">SAVE</button>
+        </form>
+        <br/>
+        <form class="form app-form" method="get" asp-action="AddHallsToExistingCinema" asp-controller="Cinema">
+            <h4 class="app-form-h4">Add new halls</h4>
+
+            <input type="hidden" name="cinemaId" value="@Model.CinemaId" />
+            <div class="form-group">
+                <input class="app-form-input" placeholder="New halls count" type="number" name="hallsCount" />
+            </div>
+            <button class="btn btn-success app-form-submit" type="submit">ADD NEW HALLS</button>
         </form>
     </div>
 </div>
@@ -55,3 +59,4 @@
         </form>
     </div>
 </div>
+<br/>

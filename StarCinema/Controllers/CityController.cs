@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using StarCinema.DataLayer.Abstract;
@@ -27,12 +28,14 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddCity()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddCity(CityViewModel city)
         {
             if (!ModelState.IsValid)
@@ -45,35 +48,26 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpGet]
-        public IActionResult Cities(int id)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Cities(CityListingRequest request)
         {
-            if (id == 0) id = 1;
-            var cities = _repo.PaginatedCities(id, _itemsPerPage).ToList();            
+            var cities = _repo.PaginatedCities(request.Page, request.PageSize, request.OrderBy).ToList();            
             int citiesCount = _repo.CitiesCount();
 
             var citiesViewModelList = new List<CityViewModel>();
             cities.ForEach(x => citiesViewModelList.Add(new CityViewModel(x)));
             
-            var paginatedCitiesViewModelList = new ListingViewModel<CityViewModel>(citiesViewModelList, id, citiesCount, "");
+            var paginatedCitiesViewModelList = new ListingViewModel<CityViewModel>(citiesViewModelList, request.Page, citiesCount, request.OrderBy);
 
             return View(paginatedCitiesViewModelList);
         }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveCity(int cityId)
         {
             _repo.RemoveCity(cityId);
             return RedirectToAction("Cities");
         }
-        //public async Task<IActionResult> SortCitiesByDateAsc()
-        //{
-        //    var moviesViewModel = await getAllMovies();
-        //    return View("Movies", moviesViewModel.OrderBy(m => m.ReleaseDate));
-        //}
-
-        //public async Task<IActionResult> SortMoviesByDateDesc()
-        //{
-        //    var moviesViewModel = await getAllMovies();
-        //    return View("Movies", moviesViewModel.OrderByDescending(m => m.ReleaseDate));
-        //}
     }
 }

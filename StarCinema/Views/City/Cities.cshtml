@@ -25,11 +25,11 @@
                     <tr>
                         <td>#</td>
                         <td>
-                            <a asp-controller="City" asp-action="SortCitiesByNameAsc">
+                            <a asp-controller="City" asp-action="Cities" asp-route-orderBy="CityNameAsc">
                                 <i class="glyphicon glyphicon-triangle-top"></i>
                             </a>
                             Name
-                            <a asp-controller="City" asp-action="SortCititesByNameDesc">
+                            <a asp-controller="City" asp-action="Cities" asp-route-orderBy="CityNameDesc">
                                 <i class="glyphicon glyphicon-triangle-bottom"></i>
                             </a>
                         </td>
@@ -45,12 +45,9 @@
                             <td class="td-center">@c.CityName</td>
                             <td class="td-center">
                                 <form asp-action="RemoveCity" asp-controller="City">
-                                    <input type="hidden" name="cityName" value="@c.Id" />
+                                    <input type="hidden" name="cityId" value="@c.Id" />
                                     <button type="submit" class="btn btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
-                                </form>                      <form asp-action="RemoveCity" asp-controller="City">
-                                    <input type="hidden" name="cityName" value="@c.Id" />
-                                    <button type="submit" class="btn btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
-                                </form>
+                                </form>                      
                             </td>
                         </tr>
                     }
@@ -72,30 +69,30 @@
         <nav>
             <ul class="pagination">
                 <li class="page-item">
-                    <a asp-action="Cities" asp-controller="City" asp-route-id="1" class="page-link">
+                    <a asp-action="Cities" asp-controller="City" asp-route-page="1" asp-route-orderBy="@Model.OrderBy" class="page-link">
                         <i class="glyphicon glyphicon-fast-backward"></i>
                     </a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="Cities" asp-controller="City" asp-route-id="@prevPage" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
+                    <a asp-action="Cities" asp-controller="City" asp-route-page="@prevPage" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-backward"></i></a>
                 </li>
 
                 @for (int j = startPage; j <= Model.PagingInfo.TotalPages; j++)
                 {
                     if (j == Model.PagingInfo.CurrentPage)
                     {
-                        <li class="page-item active"><a asp-action="Cities" asp-controller="City" asp-route-id="@j" class="page-link">@j</a></li>
+                        <li class="page-item active"><a asp-action="Cities" asp-controller="City" asp-route-orderBy="@Model.OrderBy" asp-route-page="@j" class="page-link">@j</a></li>
                     }
                     else
                     {
-                        <li class="page-item"><a asp-action="Cities" asp-controller="City" asp-route-id="@j" class="page-link">@j</a></li>
+                        <li class="page-item"><a asp-action="Cities" asp-controller="City" asp-route-orderBy="@Model.OrderBy" asp-route-page="@j" class="page-link">@j</a></li>
                     }
                 }
                 <li class="page-item">
-                    <a asp-action="Cities" asp-controller="City" asp-route-id="@nextPage" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
+                    <a asp-action="Cities" asp-controller="City" asp-route-page="@nextPage" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-forward"></i></a>
                 </li>
                 <li class="page-item">
-                    <a asp-action="Cities" asp-controller="City" asp-route-id="@Model.PagingInfo.TotalPages" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
+                    <a asp-action="Cities" asp-controller="City" asp-route-page="@Model.PagingInfo.TotalPages" asp-route-orderBy="@Model.OrderBy" class="page-link"><i class="glyphicon glyphicon-fast-forward"></i></a>
                 </li>
             </ul>
         </nav>

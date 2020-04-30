@@ -25,11 +25,24 @@ namespace StarCinema.DataLayer.Concrete
 
         }
 
-        public IList<City> AllCities()
+        public IList<City> AllCities(string orderBy)
         {
             var cities = this._context.Cities
-                                   .Include(c => c.Cinemas)
-                                   .ToList();
+                .Include(c => c.Cinemas)
+                .ToList();
+            switch (orderBy)
+            {
+                case "CityNameAsc":
+                    cities = cities.OrderBy(x => x.CityName).ToList();
+                    break;
+                case "CityNameDesc":
+                    cities = cities.OrderByDescending(x => x.CityName).ToList();
+                    break;
+                default:
+                    cities = cities.OrderBy(x => x.CityName).ToList();
+                    break;
+            }
+
             return cities;
         }
 
@@ -54,12 +67,11 @@ namespace StarCinema.DataLayer.Concrete
                              .FirstOrDefault(c => c.Id == cityId);
         }
 
-        public IList<City> PaginatedCities(int page, int itemsPerPage)
+        public IList<City> PaginatedCities(int page, int pageSize, string orderBy)
         {
-            return this._context.Cities.Include(c => c.Cinemas)
-                                                .Skip((page - 1) * itemsPerPage)
-                                                .Take(itemsPerPage)
-                                                .ToList();
+            var citiest = AllCities(orderBy);
+
+            return citiest.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public void RemoveCity(int cityId)

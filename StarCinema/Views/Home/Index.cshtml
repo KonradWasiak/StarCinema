@@ -19,11 +19,14 @@
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(0).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(0).ReleaseDate.ToShortDateString()</h3>
-                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
-                        <input type="hidden" name="commentsPage" value="1" />
+                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-commentsPage="1" method="get">
+                        <input type="hidden" name="movieId" value="@Model.LatestMovies.ElementAt(0).Id" />
                         <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
                     </form>
-                    <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
+                    <form asp-action="ChooseCinemaForBooking" asp-controller="Cinema" method="get">
+                        <input type="hidden" name="movieId" value="@Model.LatestMovies.ElementAt(0).Id" />
+                        <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
+                    </form>
                 </div>
                 <div class="item-content-transparent col-md-7">
                     <i data-toggle="modal" data-target="#0" class="cursor-pointer glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="cursor-pointer watch-trailer-h1">TRAILER</h1>
@@ -35,11 +38,14 @@
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(1).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(1).ReleaseDate.ToShortDateString()</h3>
-                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
-                        <input type="hidden" name="commentsPage" value="1" />
+                    <form asp-action="ShowMovie" asp-controller="Movie" asp-route-commentsPage="1" method="get">
+                        <input type="hidden" name="movieId" value="@Model.LatestMovies.ElementAt(1).Id" />
                         <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
                     </form>
-                    <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
+                    <form asp-action="ChooseCinemaForBooking" asp-controller="Cinema" method="get">
+                        <input type="hidden" name="movieId" value="@Model.LatestMovies.ElementAt(1).Id" />
+                        <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
+                    </form>
                 </div>
                 <div class="item-content-transparent col-md-7">
                     <i data-toggle="modal" data-target="#1" class="cursor-pointer glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="cursor-pointer watch-trailer-h1">TRAILER</h1>
@@ -51,11 +57,14 @@
                 <div class="item-content col-md-5">
                     <h2 class="carousel-h2">@Model.LatestMovies.ElementAt(2).Title</h2>
                     <h3 class="carousel-h3">Release: @Model.LatestMovies.ElementAt(2).ReleaseDate.ToShortDateString()</h3>
-                    <form class="" asp-action="ShowMovie" asp-controller="Movie" asp-route-id="@Model.LatestMovies.ElementAt(0).Id" asp-route-commentsPage="1" method="get">
-                        <input type="hidden" name="commentsPage" value="1" />
+                    <form class="" asp-action="ShowMovie" asp-controller="Movie" asp-route-commentsPage="1" method="get">
+                        <input type="hidden" name="movieId" value="@Model.LatestMovies.ElementAt(2).Id" />
                         <button type="submit" class="app-form-submit-left btn btn-danger carousel-button">SHOW MORE</button>
                     </form>
-                    <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
+                    <form asp-action="ChooseCinemaForBooking" asp-controller="Cinema" method="get">
+                        <input type="hidden" name="movieId" value="@Model.LatestMovies.ElementAt(2).Id" />
+                        <button class="btn btn-warning carousel-button">BOOK A TICKET</button>
+                    </form>
                 </div>
                 <div class="item-content-transparent col-md-7">
                     <i data-toggle="modal" data-target="#2" class="cursor-pointer glyphicon glyphicon-play-circle carousel-icon"></i><h1 class="watch-trailer-h1">TRAILER</h1>

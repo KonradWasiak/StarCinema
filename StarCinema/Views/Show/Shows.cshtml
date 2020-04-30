@@ -36,6 +36,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                @if (!Model.Models.Any())
+                {
+                    <h2>No results found</h2>
+                }
                     @foreach (var c in Model.Models)
                     {
                         i++;

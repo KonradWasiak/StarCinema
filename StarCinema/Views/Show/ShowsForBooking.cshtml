@@ -1,17 +1,55 @@
-﻿@model StarCinema.Models.CRUDModels.ShowModels.ShowsForBookingListingViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using StarCinema.Areas.Identity.Data
+@model StarCinema.Models.CRUDModels.ShowModels.ShowsForBookingListingViewModel
 @{
     ViewData["Title"] = "ShowsForMovie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@inject SignInManager<StarCinemaUser> SignInManager
+@inject UserManager<StarCinemaUser> UserManager
 
 <h2>Available shows for movie: @Model.MovieTitle</h2>
-
-@for (var day = DateTime.Today; day <= Model.EndDate; day = day.AddDays(1))
+<br />
+@for (var day = DateTime.Today; day <= DateTime.Today.AddDays(14); day = day.AddDays(1))
 {
     <div class="row list-movie-panel">
+        <div class="col-md-3">
+            <h4><i class="glyphicon glyphicon-calendar"></i>@day.Date.DayOfWeek.ToString().Substring(0, 3) @day.Date.ToShortDateString(), @day.Date.ToShortTimeString()</h4>
+        </div>
         <div class="col-md-9">
-        
-            <br />
+            @if (SignInManager.IsSignedIn(User))
+            {
+                var shows = Model.Shows.Where(x => x.Date.Date == day);
+                @if (!shows.Any())
+                {
+                    <h4>No shows on this day</h4>
+                }
+                @foreach (var show in shows)
+                {
+
+        <form class="app-form-booking" method="get" asp-action="CreateBooking" asp-controller="Booking">
+            <input type="hidden" name="showId" value="@show.ShowId" />
+            <input type="hidden" name="username" value="@User.Identity.Name" />
+            @if (show.isAvailable)
+            {
+                <button onclick="return confirm('Are you sure you want to book a seat for this show?')" class="btn btn-success btn-booking">@show.Date.ToShortTimeString()</button>
+            }
+            else
+            {
+                <button disabled class="btn btn-danger btn-booking">@show.Date.ToShortTimeString()</button>
+
+            }
+        </form>
+                }
+            }
+            else
+            {
+                @foreach (var show in Model.Shows.Where(x => x.Date.Date == day))
+                {
+                    <button disabled class="btn btn-success btn-booking">@show.Date.ToShortTimeString()</button>
+                }
+            }
         </div>
     </div>
+    <br />
 }

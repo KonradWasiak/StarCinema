@@ -1,10 +1,5 @@
 ﻿using StarCinema.DomainModels;
-using StarCinema.Models.BookingModels;
-using StarCinema.Models.CRUDModels.CinemaHallModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StarCinema.Models.CRUDModels.ShowModel
 {

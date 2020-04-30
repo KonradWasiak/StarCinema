@@ -11,6 +11,11 @@
     </div>
 </div>
 
+@if (!Model.Any())
+{
+    <h2>No results found</h2>
+}
+
 @foreach (var movie in Model)
 {
     var imgSrc = "../../images/MoviesPosters/" + movie.MovieId + ".jpg";

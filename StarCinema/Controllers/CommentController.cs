@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarCinema.DataLayer.Abstract;
 using StarCinema.Models;
@@ -28,7 +29,9 @@ namespace StarCinema.Controllers
             return View(commentsViewModel);
         }
 
-        public IActionResult RemoveComment(RemoveCommentRequest request)
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult RemoveComment([FromQuery] RemoveCommentRequest request)
         {
             _commentRepository.RemoveComment(request.MovieId, request.CommentId);
             return RedirectToAction("MovieComments", new CommentsListingRequest(){MovieId = request.MovieId});

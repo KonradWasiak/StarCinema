@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using StarCinema.DataLayer.Abstract;
@@ -29,6 +30,9 @@ namespace StarCinema.Controllers.CRUDControllers
             this._itemsPerPage = _config.GetValue<int>("ItemsPerPage");
 
         }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult Categories([FromQuery] CategoryListingRequest request)
         {
             var categories = _categoryRepo.PaginatedCategories(request.Page, request.PageSize, request.OrderBy).ToList();
@@ -43,19 +47,21 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveCategory(int categoryId)
         {
             var removedCategory = _categoryRepo.RemoveCategory(categoryId);
             return RedirectToAction("Categories");
         }
 
-
+        [Authorize(Roles = "Admin")]
         public ActionResult AddCategory()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult AddCategory(CategoryViewModel category)
         {
             if (ModelState.IsValid)

@@ -8,6 +8,7 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
 {
     public class AddEditCinemaHallRequest
     {
+        public int CinemaHallId { get; set; }
         public string Name { get; set; }
         public int SeatsCount { get; set; }
 
@@ -19,6 +20,7 @@ namespace StarCinema.Models.CRUDModels.CinemaHallModels
         {
             Name = cinemaHall.Name;
             SeatsCount = cinemaHall.Seats.Count();
+            CinemaHallId = cinemaHall.Id;
         }
     }
 }

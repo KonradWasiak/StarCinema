@@ -9,5 +9,7 @@ namespace StarCinema.DataLayer.Abstract
     public interface IUserRepository 
     {
         StarCinemaUser GetUser(string username);
+        IList<StarCinemaUser> GetPaginatedUsers(int page, int pageSize, string orderBy);
+        int GetUsersCount();
     }
 }

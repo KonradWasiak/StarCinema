@@ -85,5 +85,22 @@ namespace StarCinema.DataLayer.Concrete
         {
             return _context.Shows.Where(x => x.Movie.Id == movieId).ToList().Count();
         }
+
+        public IList<Show> GetShowsForMovieAndCinemaBetweenDates(DateTime from, DateTime to, int cinemaId, int movieId)
+        {
+            var allShows = _context.Shows.Where(x => (x.Date >= from && x.Date <= to))
+                .Include(x => x.Movie)
+                .Include(x => x.Bookings)
+                .Include(x => x.Hall)
+                .ThenInclude(x => x.Cinema)
+                .ThenInclude(x => x.CinemaHalls)
+                .ThenInclude(x => x.Seats)
+                .ToList();
+
+            var filteredShows = allShows.Where(x => x.Hall.Cinema.Id == cinemaId)
+                .Where(x => x.Movie.Id == movieId)
+                .ToList();
+            return filteredShows;
+        }
     }
 }

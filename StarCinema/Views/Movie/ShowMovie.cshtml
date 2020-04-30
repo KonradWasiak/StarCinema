@@ -14,9 +14,6 @@
     <div class="col-sm-5">
         <h2><i class="glyphicon glyphicon-film"></i> @Model.Title</h2>
     </div>
-    <div class="col-sm-3 col-sm-offset-4">
-        <button class="btn btn-warning app-form-submit"> <i class="glyphicon glyphicon-tag"></i> BOOK A TICKET</button>
-    </div>
 </div>
 <hr />
 <div class="row addEditMovie-trailer">
@@ -71,7 +68,10 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-danger app-form-submit btn-big"> <i class="glyphicon glyphicon-tag"></i> BOOK A TICKET</button>
+                <form method="get" asp-action="ChooseCinemaForBooking" asp-controller="Cinema">
+                    <input type="hidden" name="movieId" value="@Model.Id"/>
+                    <button class="btn btn-danger app-form-submit btn-big"> <i class="glyphicon glyphicon-tag"></i> BOOK A TICKET</button>
+                </form>
             </div>
         </div>
         <br />
@@ -81,9 +81,7 @@
         <img class="img-thumbnail addEditMovie" src="@imgSrc" />
         @if (!Model.CanUserRate)
         {
-
             <p id="rate-error" class="text-danger">You have already voted</p>
-
         }
         <div class="row">
 
@@ -91,13 +89,21 @@
 
                 <div class="rates">
                     <form method="post" asp-action="AddRate" asp-controller="Movie">
-                        <input type="hidden" asp-for="@Model.UserRate.Rate" value="1" />
-                        <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
-                        <input type="hidden" asp-for="@Model.UserRate.UserName" value="@User.Identity.Name" />
-
-                        <button id="up" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom">
-                            <i class="glyphicon glyphicon-thumbs-up"></i>
-                        </button>
+                        <input type="hidden" name="movieId" value="@Model.Id" />
+                        <input type="hidden" name="thumbUp" value="true" />
+                        <input type="hidden" name="username" value="@User.Identity.Name" />
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <button id="up" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom">
+                                <i class="glyphicon glyphicon-thumbs-up"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button disabled id="up" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom" title="You must be logged in to vote">
+                                <i class="glyphicon glyphicon-thumbs-up"></i>
+                            </button>
+                        }
                     </form>
                     <p class="movie-rate">@Model.ThumbsUpCount</p>
                 </div>
@@ -106,9 +112,18 @@
                         <input type="hidden" asp-for="@Model.UserRate.Rate" value="0" />
                         <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
                         <input type="hidden" asp-for="@Model.UserRate.UserName" value="@User.Identity.Name" />
-                        <button id="down" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom">
-                            <i class="glyphicon glyphicon-thumbs-down"></i>
-                        </button>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <button id="down" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom">
+                                <i class="glyphicon glyphicon-thumbs-down"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button disabled id="down" class="rate-movie" type="submit" data-toggle="tooltip" data-placement="bottom" title="You must be logged in to vote">
+                                <i class="glyphicon glyphicon-thumbs-down"></i>
+                            </button>
+                        }
                     </form>
                     <p class="movie-rate">@Model.ThumbsDownCount</p>
                 </div>
@@ -137,7 +152,6 @@
                             <br />
                             <p>@c.Content</p>
                         </div>
-
                     }
                 }
             </div>

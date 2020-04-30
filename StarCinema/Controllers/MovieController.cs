@@ -47,6 +47,8 @@ namespace StarCinema.Controllers.CRUDControllers
             this._config = configuration;
             this._itemsPerPage = _config.GetValue<int>("ItemsPerPage");
         }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Movies(MovieListingRequest request)
         {
             var movies = _movieRepo.PaginatedMovies(request.Page, request.PageSize, request.OrderBy).ToList();            
@@ -73,6 +75,7 @@ namespace StarCinema.Controllers.CRUDControllers
 
             return View(moviesViewModel);
         }
+
         public IActionResult ShowMovie(ShowMovieRequest request)
         {
             var movie = this._movieRepo.FindMovie(request.MovieId);
@@ -87,8 +90,8 @@ namespace StarCinema.Controllers.CRUDControllers
             return View(movieViewModel);
         }
 
-     
-
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddMovie()
         {
             var categories = this._categoryRepo.AllCategories().ToList();
@@ -96,6 +99,7 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddMovie(AddEditMovieRequest request)
         {
             if (ModelState.IsValid)
@@ -120,6 +124,7 @@ namespace StarCinema.Controllers.CRUDControllers
 
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveMovie(int movieId)
         {
             var movieToDelete =  _movieRepo.FindMovie(movieId); 
@@ -129,6 +134,7 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditMovie(int movieId)
         {
             var movie = _movieRepo.FindMovie(movieId);
@@ -138,7 +144,8 @@ namespace StarCinema.Controllers.CRUDControllers
         }
 
         [HttpPost]
-        public  RedirectToActionResult EditMovie(AddEditMovieViewModel addEditMovie)
+        [Authorize(Roles = "Admin")]
+        public RedirectToActionResult EditMovie(AddEditMovieViewModel addEditMovie)
         {
             var movietoEdit = _movieFactory.CreateMovie(addEditMovie.Request);
 
@@ -176,20 +183,23 @@ namespace StarCinema.Controllers.CRUDControllers
         [HttpPost]
         public RedirectToActionResult AddRate(AddRateRequest request)
         {
+            this.ViewData["ReturnUrl"] = "";
 
-            var user = this._usrRepo.GetUser(request.UserId);
-            if (this._rateRepo.UserRated(request.MovieId, user.Id))
-            {
-                TempData["RateErrorData"] = "You already have rated this addEditMovie";
+            var user = this._usrRepo.GetUser(request.Username);
+            if (!this._rateRepo.UserRated(request.MovieId, user.Id))
+            {            
+                Rate rateToAdd = new Rate()
+                {
+                    User = user,
+                    IfLike = request.ThumbUp
+                }; 
+                _rateRepo.AddRate(request.MovieId, rateToAdd);
+                return RedirectToAction("ShowMovie", new ShowMovieRequest() { MovieId = request.MovieId });
+
             }
+            TempData["RateErrorData"] = "You already have rated this addEditMovie";
 
-            Rate rateToAdd = new Rate()
-            {
-                User = user,
-                IfLike = request.ThumbUp
-            }; 
-            _rateRepo.AddRate(request.MovieId, rateToAdd);
-            return RedirectToAction("ShowMovie", new { id = request.MovieId });
+            return RedirectToAction("ShowMovie", new ShowMovieRequest() {MovieId = request.MovieId});
         }
 
         [HttpGet]

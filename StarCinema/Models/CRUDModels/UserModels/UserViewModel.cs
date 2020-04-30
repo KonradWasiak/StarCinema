@@ -1,10 +1,10 @@
 ﻿using StarCinema.Areas.Identity.Data;
-using StarCinema.Models.BookingModels;
 using StarCinema.Models.CRUDModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StarCinema.Models.CRUDModels.BookingModels;
 
 namespace StarCinema.Models.UserModels
 {
@@ -14,7 +14,7 @@ namespace StarCinema.Models.UserModels
         public string Email { get; set; }
         public List<CommentViewModel> Comments { get; set; }
         public List<RateViewModel> Rates { get; set; }
-        public List<BookingViewModel> Bookings { get; set; }
+        public List<BookingListingRowViewModel> Bookings { get; set; }
 
         public UserViewModel(StarCinemaUser user)
         {
@@ -37,9 +37,9 @@ namespace StarCinema.Models.UserModels
             
             if(this.Bookings == null)
             {
-                this.Bookings = new List<BookingViewModel>();
+                this.Bookings = new List<BookingListingRowViewModel>();
                 user.Bookings.ToList()
-                    .ForEach(x => this.Bookings.Add(new BookingViewModel(x)));
+                    .ForEach(x => this.Bookings.Add(new BookingListingRowViewModel(x)));
             }
         }
 

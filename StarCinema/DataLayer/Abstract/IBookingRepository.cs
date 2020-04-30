@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StarCinema.DomainModels;
 
 namespace StarCinema.DataLayer.Abstract
 {
-    interface IBookingRepository
+    public interface IBookingRepository
     {
+        void AddBooking(Booking booking);
+        IList<Booking> GetPaginatedBookings(int page, int pagesize, string orderBy, int movieId);
+        int MovieBookingsCount(int movieId);
     }
 }

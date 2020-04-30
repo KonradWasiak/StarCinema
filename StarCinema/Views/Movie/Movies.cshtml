@@ -51,49 +51,61 @@
                             </a>
                         </td>
                         <td>Comments</td>
-                        <td>ShowListings</td>
+                        <td>Shows</td>
+                        <td>Bookings</td>
                         <td>Action</td>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var c in Model.Models)
+                @if (!Model.Models.Any())
+                {
+                    <h2>No results found</h2>
+                }
+
+                @foreach (var c in Model.Models)
                     {
                         i++;
                         var imgSrc = "/images/MoviesPosters/" + c.Id.ToString() + ".jpg";
 
-                        <tr>
-                            <td>@i</td>
-                            <td><img class="img-table" src="@imgSrc" /></td>
-                            <td>
-                                <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@c.Id">
-                                    @c.Title
-                                </a>
-                            </td>
-                            <td>@c.Category</td>
-                            <td>@c.ReleaseDate.ToShortDateString()</td>
-                            <td>
-                                <form class="app-form-table" asp-action="MovieComments" asp-controller="Comment">
-                                    <input type="hidden" name="movieId" value="@c.Id" />
-                                    <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form class="app-form-table" asp-action="Shows" asp-controller="Show" method="get">
-                                    <input type="hidden" name="movieId" value="@c.Id" />
-                                    <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
-                                    <input type="hidden" name="movieId" value="@c.Id" />
-                                    <button type="submit" class="btn btn-xs btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
-                                </form>
-                                <form class="app-form-table" method="get" asp-action="EditMovie" asp-controller="Movie">
-                                    <input type="hidden" name="movieId" value="@c.Id" />
-                                    <button type="submit" class="btn btn-xs btn-warning app-form-table-submit"><i class="glyphicon glyphicon-pencil"></i> EDIT</button>
-                                </form>
-                            </td>
-                        </tr>
+                <tr>
+                    <td>@i</td>
+                    <td><img class="img-table" src="@imgSrc" /></td>
+                    <td>
+                        <a class="movie-card-a" asp-action="ShowMovie" asp-controller="Movie" asp-route-movieId="@c.Id">
+                            @c.Title
+                        </a>
+                    </td>
+                    <td>@c.Category</td>
+                    <td>@c.ReleaseDate.ToShortDateString()</td>
+                    <td>
+                        <form class="app-form-table" asp-action="MovieComments" asp-controller="Comment">
+                            <input type="hidden" name="movieId" value="@c.Id" />
+                            <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-comment"></i> COMMENTS</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="app-form-table" asp-action="Shows" asp-controller="Show" method="get">
+                            <input type="hidden" name="movieId" value="@c.Id" />
+                            <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> SHOWS</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="app-form-table" asp-action="Bookings" asp-controller="Booking" method="get">
+                            <input type="hidden" name="movieId" value="@c.Id" />
+                            <button type="submit" class="app-form-table-submit btn btn-info"><i class="glyphicon glyphicon-film"></i> BOOKINGS</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form class="app-form-table" asp-action="RemoveMovie" asp-controller="Movie">
+                            <input type="hidden" name="movieId" value="@c.Id" />
+                            <button type="submit" class="btn btn-xs btn-danger app-form-table-submit"><i class="glyphicon glyphicon-remove"></i> DELETE</button>
+                        </form>
+                        <form class="app-form-table" method="get" asp-action="EditMovie" asp-controller="Movie">
+                            <input type="hidden" name="movieId" value="@c.Id" />
+                            <button type="submit" class="btn btn-xs btn-warning app-form-table-submit"><i class="glyphicon glyphicon-pencil"></i> EDIT</button>
+                        </form>
+                    </td>
+                </tr>
                     }
                 </tbody>
             </table>

@@ -7,7 +7,9 @@ body {
     background-size: cover;
     background-attachment: fixed;
 }
-
+.body-container {
+    min-height: 74vh;
+}
 .img-carousel {
     opacity: 0.7;
 }
@@ -66,13 +68,16 @@ body {
     text-align-last: center !important;
 }
 
+.app-form-booking {
+    float: left;
+    margin: 1%;
+}
 
 .app-form-table-submit {
     height: 35px;
     min-width: 100px;
     border: none;
     border-radius: 0;
-
 }
 .actions-center{
     margin:0;
@@ -424,4 +429,7 @@ thead a:hover{
 .modal-xl{
     width: 90%;
     margin-top:10%;
+}
+.booking-code {
+    font-size: 20vh;
 }

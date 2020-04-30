@@ -25,15 +25,15 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
         public AddEditCinemaRequest Request { get; set; }
         public AddEditCinemaViewModel(List<City> citites)
         {
+            AllCities = new List<SelectListItem>();
             citites.ForEach(c => AllCities.Add(GetCitySelectListItem(c)));
-            AllCities.Where(x => x.Value == CityId.ToString()).FirstOrDefault().Selected = true;
         }
 
         public AddEditCinemaViewModel()
         {
             
         }
-        public AddEditCinemaViewModel(Cinema cinema, List<City> citites)
+        public AddEditCinemaViewModel(Cinema cinema, List<City> cities)
         {
             Request = new AddEditCinemaRequest();
             CinemaHalls = new List<AddEditCinemaHallRequest>();
@@ -46,7 +46,7 @@ namespace StarCinema.Models.CRUDModels.CinemaModels
             cinema.CinemaHalls.ToList().ForEach(x => CinemaHalls.Add(new AddEditCinemaHallRequest(x)));
 
             AllCities = new List<SelectListItem>();
-            citites.ForEach(c => AllCities.Add(GetCitySelectListItem(c)));
+            cities.ForEach(c => AllCities.Add(GetCitySelectListItem(c)));
             AllCities.Where(x => x.Value == CityId.ToString()).FirstOrDefault().Selected = true;
         }
 

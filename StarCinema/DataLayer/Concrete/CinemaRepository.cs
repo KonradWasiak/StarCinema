@@ -6,21 +6,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StarCinema.Models.CRUDModels.CinemaModels;
 
 namespace StarCinema.DataLayer.Concrete
 {
     public class CinemaRepository : ICinemaRepository
     {
-        private readonly StarCinemaContext context;
+        private readonly StarCinemaContext _context;
 
         public CinemaRepository(StarCinemaContext context)
         {
-            this.context = context;
+            this._context = context;
         }
         public void AddCinema(Cinema cinema)
         {
-            this.context.Cinemas.Add(cinema);
-            this.context.SaveChanges();
+            this._context.Cinemas.Add(cinema);
+            this._context.SaveChanges();
         }
 
         public IList<Cinema> AllCinemas(string orderBy)
@@ -28,19 +29,19 @@ namespace StarCinema.DataLayer.Concrete
             switch (orderBy)
             {
                 case "CityAsc":
-                    return context.Cinemas.Include(x => x.Address)
+                    return _context.Cinemas.Include(x => x.Address)
                         .Include(x => x.City)
                         .Include(x => x.CinemaHalls)
                         .OrderBy(x => x.City.CityName)
                         .ToList();
                 case "CityDesc":
-                    return context.Cinemas.Include(x => x.Address)
+                    return _context.Cinemas.Include(x => x.Address)
                         .Include(x => x.City)
                         .Include(x => x.CinemaHalls)
                         .OrderByDescending(x => x.City.CityName)
                         .ToList();
                 default:
-                    return context.Cinemas.Include(x => x.Address)
+                    return _context.Cinemas.Include(x => x.Address)
                         .Include(x => x.City)
                         .Include(x => x.CinemaHalls)
                         .OrderBy(x => x.City.CityName)
@@ -50,8 +51,10 @@ namespace StarCinema.DataLayer.Concrete
 
         public Cinema FindCinema(int cinemaId)
         { 
-            return context.Cinemas.Where(x => x.Id == cinemaId)
+            return _context.Cinemas.Where(x => x.Id == cinemaId)
                 .Include(x => x.Address)
+                .Include(x => x.CinemaHalls)
+                .ThenInclude(x => x.Shows)
                 .Include(x => x.CinemaHalls)
                 .ThenInclude(x => x.Seats)
                 .FirstOrDefault();
@@ -59,11 +62,11 @@ namespace StarCinema.DataLayer.Concrete
 
         public int CinemasCount()
         {
-            return context.Cinemas.Count();
+            return _context.Cinemas.Count();
         }
         public IList<Cinema> FindCinemasFromCity(int cityId)
         {
-            return context.Cinemas.Where(x => x.City.Id == cityId).ToList();
+            return _context.Cinemas.Where(x => x.City.Id == cityId).ToList();
         }
 
         public IList<Cinema> PaginatedCinemas(int page, int pageSize, string orderBy)
@@ -77,43 +80,64 @@ namespace StarCinema.DataLayer.Concrete
 
         public IList<Cinema> SearchCinema(string city)
         {
-            return context.Cinemas.Where(x => x.City.CityName.Contains(city))
+            return _context.Cinemas.Where(x => x.City.CityName.Contains(city))
                 .Include(x => x.Address)
                 .Include(x => x.City)
                 .Include(x => x.CinemaHalls)
                 .ToList();
         }
 
-        public void EditCinema(int cinemaId, Cinema cinema)
+        public void EditCinema(int cinemaId, AddEditCinemaRequest cinema)
         {
             var cinemaToEdit = FindCinema(cinemaId);
             if (cinemaToEdit != null)
             {
-                cinemaToEdit.Address = cinema.Address;
-                cinemaToEdit.CinemaHalls = cinema.CinemaHalls;
-                cinemaToEdit.City = cinema.City;
-                context.SaveChanges();
+                var newCity = _context.Cities.Where(x => x.Id == cinema.CityId).FirstOrDefault();
+                cinemaToEdit.Address.Street = cinema.Street;
+                cinemaToEdit.Address.BuildingNumber = cinema.BuildingNumber;
+                cinemaToEdit.Address.PostalCode = cinema.PostalCode;
+                cinemaToEdit.Address.City = newCity?.CityName;
+                cinemaToEdit.City = newCity;
+
+                foreach (var cinemaHall in cinema.CinemaHalls)
+                { 
+                    cinemaToEdit.CinemaHalls.Where(x => x.Id == cinemaHall.CinemaHallId).FirstOrDefault().Name = cinemaHall.Name;
+                }
+
+                _context.SaveChanges();
             }
+        }
+
+        public void AddHallsToCinema(int cinemaId, List<CinemaHall> halls)
+        {
+            var cinema = _context.Cinemas.Where(x => x.Id == cinemaId).FirstOrDefault();
+            halls.ForEach(x => cinema.CinemaHalls.Add(x));
+            _context.SaveChanges();
         }
 
         public Cinema RemoveCinema(int cinemaId)
         {
-            var cinemaToRemove = context.Cinemas.Where(x => x.Id == cinemaId).FirstOrDefault();
+            var cinemaToRemove = _context.Cinemas.Where(x => x.Id == cinemaId).FirstOrDefault();
             if (cinemaToRemove != null)
-                context.Cinemas.Remove(cinemaToRemove);
+                _context.Cinemas.Remove(cinemaToRemove);
             
-            context.SaveChanges();
+            _context.SaveChanges();
 
             return cinemaToRemove;
         }
 
         public IList<Cinema> FindCinemaWithMovieShows(int movieId)
         {
-            return context.Shows.Where(x => x.MovieId == movieId)
+            var shows = _context.Shows.Where(x => x.MovieId == movieId)
                 .Include(x => x.Hall)
                 .ThenInclude(x => x.Cinema)
                 .ThenInclude(x => x.Address)
-
+                .Include(x => x.Hall.Cinema.City)
+                .ToList();
+            var cinemas = shows.Select(x => x.Hall?.Cinema)
+                .Distinct()
+                .ToList();
+            return cinemas;
         }
     }
 }

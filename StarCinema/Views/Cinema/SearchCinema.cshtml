@@ -4,6 +4,16 @@
     ViewData["Title"] = "Search cinema";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="row">
+    <div class="col-xs-12">
+        <h2><i class="glyphicon glyphicon-th-lis"></i>Cinema search results</h2>
+        <hr />
+    </div>
+</div>
+@if (!Model.Any())
+{
+    <h2>No results found</h2>
+}
 @foreach (var cinema in Model)
 {
     <div class="row list-movie-panel">
@@ -14,18 +24,18 @@
             <h4>
                 <i class="glyphicon glyphicon-th"></i> Halls number: @cinema.CinemaHallsCount
             </h4>
-        </div>        
+        </div>
         <div class="col-md-3">
-            <br/>
+            <br />
             <form method="get" asp-action="" asp-controller="">
-                <input type="hidden" name="movieId" value="@cinema.Id"/>
+                <input type="hidden" name="movieId" value="@cinema.Id" />
                 <button class="btn btn-warning btn-big"> <i class="glyphicon glyphicon-zoom-in"></i> SHOW MORE</button>
             </form>
-            <br/>
+            <br />
         </div>
-        <br/>
-        <br/>
-        <br/>
+        <br />
+        <br />
+        <br />
         <div class="row">
             <div class="col-md-12">
                 @{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StarCinema.DataLayer.Abstract;
 using StarCinema.Models;
@@ -26,6 +27,7 @@ namespace StarCinema.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Shows(ShowListingRequest request)
         {
             var shows = _showRepository.GetPaginatedShows(request.MovieId, request.OrderBy, request.Page, request.PageSize).ToList();
@@ -37,6 +39,7 @@ namespace StarCinema.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddShow(int movieId)
         {
             var cinemaHalls = _cinemaHallRepository.AllCinemaHalls().ToList();
@@ -45,6 +48,7 @@ namespace StarCinema.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult AddShow(AddEditShowViewModel addEditShowViewModel)
         {
             var show = _showFactory.CreateShow(addEditShowViewModel.Request);
@@ -64,10 +68,25 @@ namespace StarCinema.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult RemoveShow(int showId, int MovieId)
         {
             _showRepository.DeleteShow(showId);
             return RedirectToAction("Shows", new ShowListingRequest() { MovieId = MovieId });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult ShowsForBooking(int movieId, int cinemaId)
+        {
+            var availableShows = _showRepository.GetShowsForMovieAndCinemaBetweenDates(DateTime.Now, 
+                DateTime.Now.AddDays(14), cinemaId, movieId).ToList();
+            
+            var movieTitle = _movieRepository.FindMovie(movieId).Title;
+            
+            var shows = new ShowsForBookingListingViewModel(movieId, movieTitle, availableShows);
+
+            return View(shows);
         }
 
     }
