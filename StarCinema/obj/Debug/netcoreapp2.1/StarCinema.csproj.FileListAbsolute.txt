@@ -91,3 +91,4 @@ C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.Views.p
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.csproj.CopyComplete
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\StarCinema.csprojAssemblyReference.cache
 C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\Razor\Views\Cinema\AddHallsToExistingCinema.cshtml.g.cs
+C:\Users\Konrad\StarCinema\StarCinema\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs

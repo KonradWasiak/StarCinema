@@ -63,7 +63,7 @@ namespace StarCinema.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddAdmin(string username, bool isAdmin)
+        public async Task<IActionResult> AddAdmin()
         {
             if (_userRepository.GetUser("Administrator") == null)
             {
@@ -77,7 +77,7 @@ namespace StarCinema.Controllers
                 await _userManager.AddToRoleAsync(user, "Admin");
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Users");
         }
 
 

@@ -15,7 +15,7 @@ namespace StarCinema.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -85,11 +85,9 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -120,11 +118,9 @@ namespace StarCinema.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -307,7 +303,7 @@ namespace StarCinema.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.AddEditMovie", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -374,7 +370,7 @@ namespace StarCinema.Migrations
                     b.ToTable("Seats");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.ShowListing", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Show", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -442,7 +438,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Booking", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.ShowListing", "ShowListing")
+                    b.HasOne("StarCinema.DomainModels.Show", "Show")
                         .WithMany("Bookings")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -475,7 +471,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Comment", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.AddEditMovie")
+                    b.HasOne("StarCinema.DomainModels.Movie")
                         .WithMany("Comments")
                         .HasForeignKey("MovieId");
 
@@ -484,7 +480,7 @@ namespace StarCinema.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.AddEditMovie", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Movie", b =>
                 {
                     b.HasOne("StarCinema.DomainModels.Category", "Category")
                         .WithMany("Movies")
@@ -494,7 +490,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Rate", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.AddEditMovie", "AddEditMovie")
+                    b.HasOne("StarCinema.DomainModels.Movie", "Movie")
                         .WithMany("Rates")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -512,13 +508,13 @@ namespace StarCinema.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.ShowListing", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Show", b =>
                 {
                     b.HasOne("StarCinema.DomainModels.CinemaHall", "Hall")
                         .WithMany("Shows")
                         .HasForeignKey("HallId");
 
-                    b.HasOne("StarCinema.DomainModels.AddEditMovie", "AddEditMovie")
+                    b.HasOne("StarCinema.DomainModels.Movie", "Movie")
                         .WithMany("Shows")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);

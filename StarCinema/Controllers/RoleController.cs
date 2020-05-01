@@ -18,7 +18,6 @@ namespace StarCinema.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddAdminRole()
         {
             var adminRole = new IdentityRole()
@@ -27,7 +26,7 @@ namespace StarCinema.Controllers
             };
 
             var result = await _roleManager.CreateAsync(adminRole);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Users", "User");
         }
     }
 }

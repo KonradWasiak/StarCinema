@@ -18,20 +18,10 @@
 {
     <div class="row list-movie-panel">
         <div class="col-md-9">
-            <a class="movie-card-a" asp-action="" asp-controller="" asp-route-id="@cinema.Id">
                 <h2><i class="glyphicon glyphicon-film"></i> @cinema.City, @cinema.Street, @cinema.BuildingNumber</h2>
-            </a>
             <h4>
                 <i class="glyphicon glyphicon-th"></i> Halls number: @cinema.CinemaHallsCount
             </h4>
-        </div>
-        <div class="col-md-3">
-            <br />
-            <form method="get" asp-action="" asp-controller="">
-                <input type="hidden" name="movieId" value="@cinema.Id" />
-                <button class="btn btn-warning btn-big"> <i class="glyphicon glyphicon-zoom-in"></i> SHOW MORE</button>
-            </form>
-            <br />
         </div>
         <br />
         <br />

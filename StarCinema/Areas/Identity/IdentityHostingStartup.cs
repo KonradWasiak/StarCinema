@@ -18,7 +18,7 @@ namespace StarCinema.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<StarCinemaContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("StarCinemaContextConnection")));
+                        context.Configuration.GetConnectionString("DefaultConnection")));
                 
                 services.AddIdentity<StarCinemaUser, IdentityRole>()
                     .AddRoles<IdentityRole>()

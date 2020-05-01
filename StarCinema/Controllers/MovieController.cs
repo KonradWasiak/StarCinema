@@ -151,7 +151,7 @@ namespace StarCinema.Controllers.CRUDControllers
 
             this._movieRepo.EditMovie(addEditMovie.Request.Id, movietoEdit);
 
-            int id = addEditMovie.Id;
+            int id = addEditMovie.Request.Id;
             var filePoster = addEditMovie.Request.PosterImage;
             var fileBanner = addEditMovie.Request.BannerImage;
             if (filePoster != null)

@@ -10,14 +10,14 @@ using StarCinema.Models;
 namespace StarCinema.Migrations
 {
     [DbContext(typeof(StarCinemaContext))]
-    [Migration("20190510103134_ChangedMovieCommentTable")]
-    partial class ChangedMovieCommentTable
+    [Migration("20200430234606_AzureDeployment")]
+    partial class AzureDeployment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -87,11 +87,9 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -122,11 +120,9 @@ namespace StarCinema.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -186,6 +182,25 @@ namespace StarCinema.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("StarCinema.DomainModels.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BuildingNumber");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("PostalCode");
+
+                    b.Property<string>("Street");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Address");
+                });
+
             modelBuilder.Entity("StarCinema.DomainModels.Booking", b =>
                 {
                     b.Property<int>("Id")
@@ -224,9 +239,13 @@ namespace StarCinema.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("AddressId");
+
                     b.Property<int>("CityId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CityId");
 
@@ -286,7 +305,7 @@ namespace StarCinema.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.AddEditMovie", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,6 +316,8 @@ namespace StarCinema.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("Directory");
+
+                    b.Property<int>("DurationTime");
 
                     b.Property<bool>("Is3D");
 
@@ -351,7 +372,7 @@ namespace StarCinema.Migrations
                     b.ToTable("Seats");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.ShowListing", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Show", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -419,7 +440,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Booking", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.ShowListing", "ShowListing")
+                    b.HasOne("StarCinema.DomainModels.Show", "Show")
                         .WithMany("Bookings")
                         .HasForeignKey("ShowId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -431,6 +452,11 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Cinema", b =>
                 {
+                    b.HasOne("StarCinema.DomainModels.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("StarCinema.DomainModels.City", "City")
                         .WithMany("Cinemas")
                         .HasForeignKey("CityId")
@@ -447,7 +473,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Comment", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.AddEditMovie")
+                    b.HasOne("StarCinema.DomainModels.Movie")
                         .WithMany("Comments")
                         .HasForeignKey("MovieId");
 
@@ -456,7 +482,7 @@ namespace StarCinema.Migrations
                         .HasForeignKey("UserId");
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.AddEditMovie", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Movie", b =>
                 {
                     b.HasOne("StarCinema.DomainModels.Category", "Category")
                         .WithMany("Movies")
@@ -466,7 +492,7 @@ namespace StarCinema.Migrations
 
             modelBuilder.Entity("StarCinema.DomainModels.Rate", b =>
                 {
-                    b.HasOne("StarCinema.DomainModels.AddEditMovie", "AddEditMovie")
+                    b.HasOne("StarCinema.DomainModels.Movie", "Movie")
                         .WithMany("Rates")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -484,13 +510,13 @@ namespace StarCinema.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("StarCinema.DomainModels.ShowListing", b =>
+            modelBuilder.Entity("StarCinema.DomainModels.Show", b =>
                 {
                     b.HasOne("StarCinema.DomainModels.CinemaHall", "Hall")
                         .WithMany("Shows")
                         .HasForeignKey("HallId");
 
-                    b.HasOne("StarCinema.DomainModels.AddEditMovie", "AddEditMovie")
+                    b.HasOne("StarCinema.DomainModels.Movie", "Movie")
                         .WithMany("Shows")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade);

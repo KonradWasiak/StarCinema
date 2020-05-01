@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>8d678594-8ba8-452f-9fa7-59b73bd56adf</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,5 +15,7 @@
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/bungee-plugin" /></VisualStudio></ProjectExtensions>
 
 </Project>
